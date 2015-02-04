@@ -25,7 +25,15 @@ class TabelogScraper
           tabelog_code = subarea['href'].split('/').last
           Subarea.create(name: subarea.text, tabelog_code: tabelog_code, area_id: area.id) if !Subarea.exists?(name: subarea.text)
         end
-	  end
+      end
+    end
+
+    def save_categories
+      page = fetch_page('tokyo/')
+      page.css('#contents-situation ul.list-genre li.genre a').each do |category|
+      	name = category['href'].split('/').last
+      	Category.create(name: name, name_jp: category.text) if !Category.exists?(name: name)
+      end
     end
   end
 end
