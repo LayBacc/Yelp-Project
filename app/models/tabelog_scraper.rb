@@ -36,24 +36,23 @@ class TabelogScraper
       end
     end
 
+    def num_pages(subarea, category)
+      page = fetch_page("#{subarea.tabelog_path}#{category.tabelog_path}")
+      page.css('.main-title span.count')[0].text.to_i / 20 + 1
+    end
+
     def bulk_add_restaurants
 	  Subarea.all.each do |subarea|
-	  	# Category.all.each do |category|
-	  	# end 
+	  	Category.all.each do |category|
+	  	  (1..num_pages(subarea, category)).each do |page_num|
+	  		add_page_restaurants(subarea, category, page_num)
+	  	  end
+	  	end
 	  end
-
-
-
-	  subarea = Subarea.first
-	  category = Category.first
-	  page_num = 1
-
-
-	  add_page_restaurants(subarea, category, page_num)
     end
 
     def add_page_restaurants(subarea, category, page_num=1)
-      path = page_num == 1 ? "#{subarea.tabelog_path}#{category.tabelog_path}" : "#{subarea.tabelog_path}#{category.tabelog_path}#{page}/"
+      path = page_num == 1 ? "#{subarea.tabelog_path}#{category.tabelog_path}" : "#{subarea.tabelog_path}#{category.tabelog_path}#{page_num}/"
       page = fetch_page(path)
       
       page.css('ul.rstlist-info li.rstlst-group').each do |listing|
@@ -66,15 +65,14 @@ class TabelogScraper
       	restaurant.subarea = subarea.id
 
       	RestaurantCategory.create(restaurant_id: restaurant.id, category_id: category.id) unless restaurant.categories.exists?(category)
-      	
+
         restaurant.save
       end
     end
 
-    # On the restaurant page
+    # TODO - on the restaurant page
     def fill_restaurant_detail
       
     end
-
   end
 end
