@@ -12,8 +12,8 @@ class CreateRestaurants < ActiveRecord::Migration
       t.string :dinner_price
       t.string :tabelog_url
       t.string :city
-      t.string :area
-      t.string :subarea
+      t.integer :area
+      t.integer :subarea
       t.float :latitude
       t.float :longitude
 

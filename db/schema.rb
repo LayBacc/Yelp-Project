@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204025710) do
+ActiveRecord::Schema.define(version: 20150204055008) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150204025710) do
   add_index "restaurant_categories", ["restaurant_id"], name: "index_restaurant_categories_on_restaurant_id", using: :btree
 
   create_table "restaurants", force: true do |t|
-    t.string   "name",           null: false
+    t.string   "name",                           null: false
     t.text     "description"
     t.string   "telephone"
     t.string   "hours"
@@ -56,12 +56,13 @@ ActiveRecord::Schema.define(version: 20150204025710) do
     t.string   "dinner_price"
     t.string   "tabelog_url"
     t.string   "city"
-    t.string   "area"
-    t.string   "subarea"
+    t.integer  "area"
+    t.integer  "subarea"
     t.float    "latitude"
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "with_details",   default: false
   end
 
   add_index "restaurants", ["area"], name: "index_restaurants_on_area", using: :btree
@@ -69,6 +70,7 @@ ActiveRecord::Schema.define(version: 20150204025710) do
   add_index "restaurants", ["latitude"], name: "index_restaurants_on_latitude", using: :btree
   add_index "restaurants", ["longitude"], name: "index_restaurants_on_longitude", using: :btree
   add_index "restaurants", ["subarea"], name: "index_restaurants_on_subarea", using: :btree
+  add_index "restaurants", ["tabelog_url"], name: "index_restaurants_on_tabelog_url", using: :btree
 
   create_table "subareas", force: true do |t|
     t.string   "name"
