@@ -9,6 +9,19 @@ class TabelogScraper
       Nokogiri::HTML(open(ROOT_URL + path))
     end
 
+    # to determine the 403 error came only from tabelog
+    def test_google
+      Nokogiri::HTML(open("http://google.com"))
+    end
+
+    def test_yelp
+      Nokogiri::HTML(open("http://yelp.com"))
+    end
+
+    def test_dummy
+      Nokogiri::HTML(open("http://bit.ly/gearshare"))
+    end
+
     def add_areas
       page = fetch_page('tokyo/')
       page.css('#contents-narrowarea ul.list-area li.area').each do |area|
