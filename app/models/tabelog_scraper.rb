@@ -12,7 +12,7 @@ class TabelogScraper
       @@proxies = load_proxies if @@proxies.empty?
       Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{select_proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
     rescue OpenURI::HTTPError
-      fetch_page(page)
+      fetch_page(path)
     rescue Errno
       Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
     end
