@@ -18,7 +18,7 @@ class TabelogScraper
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
       Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
-    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Net::ReadTimeout
+    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::ReadTimeout
       log_bad_proxy(proxy)
       fetch_page(path)  # try again
     end
@@ -47,7 +47,7 @@ class TabelogScraper
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
       Nokogiri::HTML(open('http://yelp.com', proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/', read_timeout: 5))
-    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Net::ReadTimeout
+    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::ReadTimeout
       log_bad_proxy(proxy)
       test_yelp
     end
