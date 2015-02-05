@@ -3,16 +3,18 @@ require 'open-uri'
 
 class TabelogScraper 
   ROOT_URL = 'http://tabelog.com/'
+  USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
   PROXY_LIST = "#{Rails.root}/lib/assets/proxy_ips.txt"
   @@proxies = Array.new
 
   class << self
     def fetch_page(path)
       @@proxies = load_proxies if @@proxies.empty?
-      user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
-      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{select_proxy}/", 'User-Agent' => user_agent))
-    rescue
-      Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => user_agent))
+      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{select_proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
+    rescue OpenURI::HTTPError
+      fetch_page(page)
+    rescue Errno
+      Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
     end
 
     def select_proxy
@@ -34,7 +36,11 @@ class TabelogScraper
 
     # to determine whether we are blocked by Tabelog
     def test_yelp
-      Nokogiri::HTML(open("http://yelp.com"))
+      @@proxies = load_proxies if @@proxies.empty?
+      puts select_proxy
+      Nokogiri::HTML(open('http://yelp.com', proxy: "http://#{select_proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/'))
+    rescue OpenURI::HTTPError
+      test_yelp
     end
 
     def test_dummy
@@ -74,13 +80,13 @@ class TabelogScraper
     end
 
     def bulk_add_restaurants
-	  Subarea.all.each do |subarea|
-	  	Category.all.each do |category|
-	  	  (1..num_pages(subarea, category)).each do |page_num|
-	  		add_page_restaurants(subarea, category, page_num)
-	  	  end
-	  	end
-	  end
+  	  Subarea.all.each do |subarea|
+  	  	Category.all.each do |category|
+  	  	  (1..num_pages(subarea, category)).each do |page_num|
+  	  		   add_page_restaurants(subarea, category, page_num)
+  	  	  end
+  	  	end
+  	  end
     end
 
     def add_page_restaurants(subarea, category, page_num=1)
