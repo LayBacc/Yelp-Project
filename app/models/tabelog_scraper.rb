@@ -2,15 +2,37 @@ require 'nokogiri'
 require 'open-uri'
 
 class TabelogScraper 
-  ROOT_URL = "http://tabelog.com/"
+  ROOT_URL = 'http://tabelog.com/'
+  PROXY_LIST = "#{Rails.root}/lib/assets/proxy_ips.txt"
+  @@proxies = Array.new
 
   class << self
     def fetch_page(path)
+      @@proxies = load_proxies if @@proxies.empty?
       user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
+      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{select_proxy}/", 'User-Agent' => user_agent))
+    rescue
       Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => user_agent))
     end
 
-    # to determine the 403 error came only from tabelog
+    def select_proxy
+      @@proxies[rand(@@proxies.count)]
+    end
+
+    def proxies
+      @@proxies
+    end
+
+    # load proxies into memory
+    def load_proxies
+      proxies = Array.new
+      File.open(PROXY_LIST, 'r').each_line do |line|
+        proxies << line.strip
+      end
+      proxies
+    end
+
+    # to determine whether we are blocked by Tabelog
     def test_yelp
       Nokogiri::HTML(open("http://yelp.com"))
     end
