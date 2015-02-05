@@ -6,14 +6,11 @@ class TabelogScraper
 
   class << self
     def fetch_page(path)
-      Nokogiri::HTML(open(ROOT_URL + path))
+      user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.854.0 Safari/535.2"
+      Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => user_agent))
     end
 
     # to determine the 403 error came only from tabelog
-    def test_google
-      Nokogiri::HTML(open("http://google.com"))
-    end
-
     def test_yelp
       Nokogiri::HTML(open("http://yelp.com"))
     end
