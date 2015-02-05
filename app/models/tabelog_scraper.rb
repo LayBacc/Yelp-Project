@@ -5,24 +5,32 @@ class TabelogScraper
   ROOT_URL = 'http://tabelog.com/'
   USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
   PROXY_LIST = "#{Rails.root}/lib/assets/proxy_ips.txt"
+
+  BAD_PROXY_LIST = "#{Rails.root}/lib/assets/bad_proxies.txt"
   @@proxies = Array.new
 
   class << self
+    def proxies
+      @@proxies
+    end
+
     def fetch_page(path)
       @@proxies = load_proxies if @@proxies.empty?
-      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{select_proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
-    rescue OpenURI::HTTPError
-      fetch_page(path)
-    rescue Errno
-      Nokogiri::HTML(open(ROOT_URL + path, 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
+      proxy = select_proxy
+      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
+    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Net::ReadTimeout
+      log_bad_proxy(proxy)
+      fetch_page(path)  # try again
     end
 
     def select_proxy
       @@proxies[rand(@@proxies.count)]
     end
 
-    def proxies
-      @@proxies
+    def log_bad_proxy(proxy)
+      File.open(BAD_PROXY_LIST, 'a') do |file|
+        file.write("#{proxy}\n")
+      end
     end
 
     # load proxies into memory
@@ -37,9 +45,10 @@ class TabelogScraper
     # to determine whether we are blocked by Tabelog
     def test_yelp
       @@proxies = load_proxies if @@proxies.empty?
-      puts select_proxy
-      Nokogiri::HTML(open('http://yelp.com', proxy: "http://#{select_proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/'))
-    rescue OpenURI::HTTPError
+      proxy = select_proxy
+      Nokogiri::HTML(open('http://yelp.com', proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/', read_timeout: 5))
+    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Net::ReadTimeout
+      log_bad_proxy(proxy)
       test_yelp
     end
 
