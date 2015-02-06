@@ -98,7 +98,7 @@ class TabelogScraper
     # TODO - add page offset
     def bulk_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_offset=0, page_limit=nil)
       Subarea.offset(offset_s).limit(limit_s).each do |subarea|
-        Category.offset(offset_c).limit(limit_s).each do |category|
+        Category.offset(offset_c).limit(limit_c).each do |category|
           end_page = page_limit.present? ? page_limit : num_pages(subarea, category)
           (page_offset+1..end_page).each do |page_num|
             log_progress(subarea, category, page_num)
