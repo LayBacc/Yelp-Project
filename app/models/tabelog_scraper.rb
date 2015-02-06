@@ -89,18 +89,19 @@ class TabelogScraper
       page.css('.main-title span.count')[0].text.to_i / 20 + 1
     end
 
-    def log_progress(subarea, category)
+    def log_progress(subarea, category, page_num)
       File.open(PROGRESS_LOG, 'a') do |file|
-        file.write("#{subarea.id}-#{subarea.name}\t#{category.id}-#{category.name}\n")
+        file.write("#{subarea.id}-#{subarea.name}\t#{category.id}-#{category.name}\tp.#{page_num}\n")
       end
     end
 
-    def bulk_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10) 
-  	  Subarea.offset(offset_s).each do |subarea|
-  	  	Category.offset(offset_c).each do |category|
-          log_progress(subarea, category)
-  	  	  (1..num_pages(subarea, category)).each do |page_num|
-  	  		   add_page_restaurants(subarea, category, page_num)
+    def bulk_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_limit=nil)
+      Subarea.offset(offset_s).each do |subarea|
+        Category.offset(offset_c).each do |category|
+          end_page = page_limit.present? ? page_limit : num_pages(subarea, category)
+          (1..num_pages(subarea, category)).each do |page_num|
+            log_progress(subarea, category, page_num)
+  	  		  add_page_restaurants(subarea, category, page_num)
   	  	  end
   	  	end
   	  end
