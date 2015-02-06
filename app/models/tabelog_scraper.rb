@@ -112,13 +112,9 @@ class TabelogScraper
   	  end
     end
 
-    def next_batch
+    def next_subarea_offset
       tag = RestaurantCategory.last
-      return [0, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0, nil] unless tag.present?
-
-      offset_s = Restaurant.subareas[tag.restaurant.subarea]
-      offset_c = tag.category.id - Category.first.id  # IDs may not start at 1
-      [offset_s, SUBAREA_BATCH_SIZE, offset_c, CATEGORY_BATCH_SIZE, 0, nil]
+      tag.present? ? Restaurant.subareas[tag.restaurant.subarea] : 0
     end
 
     def add_page_restaurants(subarea, category, page_num=1)
