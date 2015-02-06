@@ -4,10 +4,15 @@ require 'open-uri'
 class TabelogScraper 
   ROOT_URL = 'http://tabelog.com/'
   USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
+
   FILE_PATH = "#{Rails.root}/lib/assets/"
   PROXY_LIST = "#{FILE_PATH}proxy_ips.txt"
   BAD_PROXY_LIST = "#{FILE_PATH}bad_proxies.txt"
   PROGRESS_LOG = "#{Rails.root}/log/scraping.log"
+
+  SUBAREA_BATCH_SIZE = 3
+  CATEGORY_BATCH_SIZE = 42
+
   @@proxies = Array.new
 
   class << self
@@ -105,6 +110,15 @@ class TabelogScraper
   	  	  end
   	  	end
   	  end
+    end
+
+    def next_batch
+      tag = RestaurantCategory.last
+      return [0, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0, nil] unless tag.present?
+
+      offset_s = Restaurant.subareas[tag.restaurant.subarea]
+      offset_c = tag.category.id - Category.first.id  # IDs may not start at 1
+      [offset_s, SUBAREA_BATCH_SIZE, offset_c, CATEGORY_BATCH_SIZE, 0, nil]
     end
 
     def add_page_restaurants(subarea, category, page_num=1)
