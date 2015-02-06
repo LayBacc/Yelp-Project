@@ -10,7 +10,7 @@ class TabelogScraper
   BAD_PROXY_LIST = "#{FILE_PATH}bad_proxies.txt"
   PROGRESS_LOG = "#{Rails.root}/log/scraping.log"
 
-  SUBAREA_BATCH_SIZE = 3
+  SUBAREA_BATCH_SIZE = 5
   CATEGORY_BATCH_SIZE = 42
 
   @@proxies = Array.new
@@ -21,13 +21,14 @@ class TabelogScraper
     end
 
     def run_batch
-      bulk_add_restaurants(next_subarea_offset, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0)
+      batch_add_restaurants(next_subarea_offset, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0)
     end
 
-    def fetch_page(path)
+    def fetch_page(path, with_root=true)
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
-      Nokogiri::HTML(open(ROOT_URL + path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
+      path = ROOT_URL + path if with_root
+      Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
     rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::ReadTimeout
       log_bad_proxy(proxy)
       fetch_page(path)  # try again
@@ -104,7 +105,7 @@ class TabelogScraper
       end
     end
 
-    def bulk_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_offset=0, page_limit=nil)
+    def batch_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_offset=0, page_limit=nil)
       Subarea.offset(offset_s).limit(limit_s).each do |subarea|
         Category.offset(offset_c).limit(limit_c).each do |category|
           end_page = page_limit.present? ? page_limit : num_pages(subarea, category)
@@ -140,9 +141,36 @@ class TabelogScraper
       end
     end
 
+    def batch_fill_restaurant_details
+      restaurant = Restaurant.last
+
+      fill_restaurant_detail(restaurant)
+    end
+
     # TODO - on the restaurant page
-    def fill_restaurant_detail
-      
+    def fill_restaurant_detail(restaurant)
+      page = fetch_page(restaurant.tabelog_url, false)
+      tel = page.css('#tel_info strong')[0].text
+      addr_nodes = page.css('tr.address span a').map { |node| node.text }.join('')
+      direction = page.at('th:contains("交通手段")')  # TODO - from here, get the next node with .next_element
+      hours = page.at('th:contains("営業時間")')
+      holiday = page.at('th:contains("定休日")')
+      dinner_price = page.css('span.dinner')  # TODO - get next
+      dinner_price = page.css('span.lunch')
+
+      seats = page.css('th:contains("席数")')
+      parking = page.css('th:contains("駐車場")')
+      facilities = page.css('th:contains("空間・設備")')
+
+      good_for = page.css('th:contains("こんな時に")')
+      home_page = page.css('th:contains("ホームページ")')
+      opening_date = page.css('th:contains("オープン日")')
+      related_restaurants = page.css('th:contains("関連店舗情報")')
+
+      puts tel, addr_nodes
+      puts direction.next_element
+      puts hours.next_element
+      puts holiday.next_element
     end
   end
 end
