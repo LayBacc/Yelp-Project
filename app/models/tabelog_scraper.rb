@@ -7,7 +7,7 @@ class TabelogScraper
   FILE_PATH = "#{Rails.root}/lib/assets/"
   PROXY_LIST = "#{FILE_PATH}proxy_ips.txt"
   BAD_PROXY_LIST = "#{FILE_PATH}bad_proxies.txt"
-  PROGRESS_LOG = "#{FILE_PATH}bad_proxies.txt"
+  PROGRESS_LOG = "#{Rails.root}/log/scraping.log"
   @@proxies = Array.new
 
   class << self
@@ -96,11 +96,11 @@ class TabelogScraper
     end
 
     def bulk_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_limit=nil)
-      Subarea.offset(offset_s).each do |subarea|
-        Category.offset(offset_c).each do |category|
+      Subarea.offset(offset_s).limit(limit_s).each do |subarea|
+        Category.offset(offset_c).limit(limit_s).each do |category|
           end_page = page_limit.present? ? page_limit : num_pages(subarea, category)
-          (1..num_pages(subarea, category)).each do |page_num|
-            log_progress(subarea, category, page_num)
+          (1..end_page).each do |page_num|
+            # log_progress(subarea, category, page_num)
   	  		  add_page_restaurants(subarea, category, page_num)
   	  	  end
   	  	end
@@ -109,21 +109,22 @@ class TabelogScraper
 
     def add_page_restaurants(subarea, category, page_num=1)
       path = page_num == 1 ? "#{subarea.tabelog_path}#{category.tabelog_path}" : "#{subarea.tabelog_path}#{category.tabelog_path}#{page_num}/"
-      page = fetch_page(path)
+      puts path
+      # page = fetch_page(path)
       
-      page.css('ul.rstlist-info li.rstlst-group').each do |listing|
-      	title_node = listing.css('.rstname a')[0]
-      	tabelog_url = title_node['href']
+      # page.css('ul.rstlist-info li.rstlst-group').each do |listing|
+      # 	title_node = listing.css('.rstname a')[0]
+      # 	tabelog_url = title_node['href']
 
-      	restaurant = Restaurant.find_or_create_by(name: title_node.text, tabelog_url: tabelog_url)
-      	restaurant.city = 'Tokyo'
-      	restaurant.area = subarea.area_id
-      	restaurant.subarea = subarea.id
+      # 	restaurant = Restaurant.find_or_create_by(name: title_node.text, tabelog_url: tabelog_url)
+      # 	restaurant.city = 'Tokyo'
+      # 	restaurant.area = subarea.area_id
+      # 	restaurant.subarea = subarea.id
 
-      	RestaurantCategory.create(restaurant_id: restaurant.id, category_id: category.id) unless restaurant.categories.exists?(category)
+      # 	RestaurantCategory.create(restaurant_id: restaurant.id, category_id: category.id) unless restaurant.categories.exists?(category)
 
-        restaurant.save
-      end
+      #   restaurant.save
+      # end
     end
 
     # TODO - on the restaurant page
