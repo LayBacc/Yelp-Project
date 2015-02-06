@@ -18,7 +18,3 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
-every :hour do
-  runner TabelogScraper.run_batch
-end
