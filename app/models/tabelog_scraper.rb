@@ -4,9 +4,10 @@ require 'open-uri'
 class TabelogScraper 
   ROOT_URL = 'http://tabelog.com/'
   USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
-  PROXY_LIST = "#{Rails.root}/lib/assets/proxy_ips.txt"
-
-  BAD_PROXY_LIST = "#{Rails.root}/lib/assets/bad_proxies.txt"
+  FILE_PATH = "#{Rails.root}/lib/assets/"
+  PROXY_LIST = "#{FILE_PATH}proxy_ips.txt"
+  BAD_PROXY_LIST = "#{FILE_PATH}bad_proxies.txt"
+  PROGRESS_LOG = "#{FILE_PATH}bad_proxies.txt"
   @@proxies = Array.new
 
   class << self
