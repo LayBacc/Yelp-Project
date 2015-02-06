@@ -20,6 +20,10 @@ class TabelogScraper
       @@proxies
     end
 
+    def run_batch
+      bulk_add_restaurants(next_subarea_offset, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0)
+    end
+
     def fetch_page(path)
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
