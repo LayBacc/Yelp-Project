@@ -1,2 +1,0 @@
-s = "<td><p>hello</p></td>"
-s.gsub(/[\<\>tdp]/, '')
