@@ -147,30 +147,56 @@ class TabelogScraper
       fill_restaurant_detail(restaurant)
     end
 
-    # TODO - on the restaurant page
+    def strip_table_cell(text, with_space=false)
+      with_space ? text.gsub(/\<\/*td\>|\<\/*p\>/, '') : text.gsub(/\<\/*td\>|\<\/*p\>|\s/, '')
+    end
+
+    def scrape_ratings
+      
+    end
+
+    def scrape_scores
+      
+    end
+
+    # aggergate all bucket and save
+    # a tabelog_price model that has buckets as attributes
+    def scrape_prices
+      
+    end
+
+    def scrape_purposes
+      
+    end
+
+    # TODO - on the dtlratings (details) page, there's much more data 
+    # TODO - new data models
+    # TODO - refactor each data component into separate functions
     def fill_restaurant_detail(restaurant)
-      page = fetch_page(restaurant.tabelog_url, false)
+      page = fetch_page("#{restaurant.tabelog_url}dtlratings", false)
       tel = page.css('#tel_info strong')[0].text
-      addr_nodes = page.css('tr.address span a').map { |node| node.text }.join('')
-      direction = page.at('th:contains("交通手段")')  # TODO - from here, get the next node with .next_element
-      hours = page.at('th:contains("営業時間")')
-      holiday = page.at('th:contains("定休日")')
-      dinner_price = page.css('span.dinner')  # TODO - get next
-      dinner_price = page.css('span.lunch')
+      address = page.css('tr.address span a').map { |node| node.text }.join('')
+      direction = strip_table_cell(page.at('th:contains("交通手段")').next_element.text)
+      hours = strip_table_cell(page.at('th:contains("営業時間")').next_element.text, true).strip
+      holiday = strip_table_cell(page.at('th:contains("定休日")').next_element.text)
 
-      seats = page.css('th:contains("席数")')
-      parking = page.css('th:contains("駐車場")')
-      facilities = page.css('th:contains("空間・設備")')
+      # dinner_price = page.css('td p span.dinner').first.next_element.text.gsub(/\<span class="price"\>|\<\/span\>/, '')
+      # lunch_price = page.css('td p span.lunch').first.next_element.text.gsub(/\<span class="price"\>|\<\/span\>/, '')
 
-      good_for = page.css('th:contains("こんな時に")')
-      home_page = page.css('th:contains("ホームページ")')
-      opening_date = page.css('th:contains("オープン日")')
-      related_restaurants = page.css('th:contains("関連店舗情報")')
+      seats = page.at('th:contains("席数")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
+      parking = page.at('th:contains("駐車場")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
+      facilities = page.at('th:contains("空間・設備")').next_element.css('p').text.strip
 
-      puts tel, addr_nodes
-      puts direction.next_element
-      puts hours.next_element
-      puts holiday.next_element
+      home_page = page.at('th:contains("ホームページ")').next_element.css('a').text.strip
+      opening_date = strip_table_cell(page.at('th:contains("オープン日")').next_element.text)
+      tabelog_group_id = page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last
+
+      puts tabelog_group_id
+    end
+
+    # add groups to the restaurant
+    def add_groups
+      
     end
   end
 end
