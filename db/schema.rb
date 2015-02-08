@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208051131) do
+ActiveRecord::Schema.define(version: 20150208144330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 20150208051131) do
   create_table "matches", force: true do |t|
     t.integer  "first_id"
     t.integer  "second_id"
-    t.integer  "winnter"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "winner"
   end
 
   create_table "restaurant_categories", force: true do |t|

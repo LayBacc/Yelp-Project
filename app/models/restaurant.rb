@@ -3,9 +3,7 @@ class Restaurant < ActiveRecord::Base
 
   has_many :restaurant_categories, dependent: :destroy
   has_many :categories, through: :restaurant_categories
-
   has_many :matches
-  # has_many :opponents
 
   enum area: Area.all.pluck(:name)
   enum subarea: Subarea.all.pluck(:name)
@@ -18,6 +16,6 @@ class Restaurant < ActiveRecord::Base
     joins('INNER JOIN restaurant_categories ON restaurants.id = restaurant_categories.restaurant_id')
     .where('restaurant_categories.category_id = ?', cat_id)
   end
-  scope :any_two, -> { order('RANDOM()').limit(2) }
-  scope :pick_two, ->(lat, lng, cat_id) { in_category(cat_id).near(lat, lng).any_two }
+  scope :random, ->(num) { order('RANDOM()').limit(num) }
+  scope :match, ->(lat, lng, cat_id, num) { in_category(cat_id).near(lat, lng).random(num) }
 end
