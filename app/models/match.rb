@@ -12,6 +12,7 @@ class Match < ActiveRecord::Base
       match
     end
 
+    # inefficient
     def opponent_for(restaurant, category)
       loop do
       	opponent = Restaurant.match(restaurant.latitude, restaurant.longitude, category, 1)
