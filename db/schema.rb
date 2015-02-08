@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150204055008) do
+ActiveRecord::Schema.define(version: 20150208051131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20150204055008) do
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
+
+  create_table "matches", force: true do |t|
+    t.integer  "first_id"
+    t.integer  "second_id"
+    t.integer  "winnter"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "restaurant_categories", force: true do |t|
     t.integer  "restaurant_id"
@@ -82,5 +91,13 @@ ActiveRecord::Schema.define(version: 20150204055008) do
 
   add_index "subareas", ["name"], name: "index_subareas_on_name", using: :btree
   add_index "subareas", ["tabelog_code"], name: "index_subareas_on_tabelog_code", using: :btree
+
+  create_table "tabelog_prices", force: true do |t|
+    t.string   "ratings"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "price_type"
+    t.integer  "price"
+  end
 
 end

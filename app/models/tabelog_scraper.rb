@@ -151,10 +151,6 @@ class TabelogScraper
       with_space ? text.gsub(/\<\/*td\>|\<\/*p\>/, '') : text.gsub(/\<\/*td\>|\<\/*p\>|\s/, '')
     end
 
-    def scrape_ratings
-      
-    end
-
     def scrape_scores
       
     end
@@ -174,6 +170,8 @@ class TabelogScraper
     # TODO - refactor each data component into separate functions
     def fill_restaurant_detail(restaurant)
       page = fetch_page("#{restaurant.tabelog_url}dtlratings", false)
+      # description??
+
       tel = page.css('#tel_info strong')[0].text
       address = page.css('tr.address span a').map { |node| node.text }.join('')
       direction = strip_table_cell(page.at('th:contains("交通手段")').next_element.text)

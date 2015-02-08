@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_id: 1
+  second_id: 1
+  winnter: 1
+  user_id: 1
+
+two:
+  first_id: 1
+  second_id: 1
+  winnter: 1
+  user_id: 1
