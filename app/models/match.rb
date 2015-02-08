@@ -19,8 +19,6 @@ class Match < ActiveRecord::Base
       end
       opponent
     end
-    	
-    private
 
     def matched?(first_id, second_id, user_id)
       where(user_id: user_id).where('(first_id = ? AND second_id = ?) OR (first_id = ? AND second_id = ?)', first_id, second_id, second_id, first_id).any?
