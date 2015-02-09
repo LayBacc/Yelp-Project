@@ -3,7 +3,7 @@ require 'open-uri'
 
 class TabelogScraper 
   ROOT_URL = 'http://tabelog.com/'
-  USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
+  USER_AGENT = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)' #'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
 
   FILE_PATH = "#{Rails.root}/lib/assets/"
   PROXY_LIST = "#{FILE_PATH}proxy_ips.txt"
