@@ -154,7 +154,7 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      Restaurant.where('with_details = false OR with_details IS NULL').limit(1000) do |restaurant|
+      Restaurant.where('with_details = false OR with_details IS NULL').limit(1000).each do |restaurant|
         fill_restaurant_detail(restaurant)
       end
     end
@@ -175,12 +175,9 @@ class TabelogScraper
       page.css('li p.rate-icon').map { |node| node.next_element.css('strong').text }.join('-')
     end
 
-    # TODO - new data models
-    # TODO - refactor each data component into separate functions
     def fill_restaurant_detail(restaurant)
       page = fetch_page("#{restaurant.tabelog_url}dtlratings/", false)
-      # description??
-
+      
       telephone = page.css('#tel_info strong')[0].text
       street_address = page.css('tr.address span a').map { |node| node.text }.join('')
       direction = strip_table_cell(page.at('th:contains("交通手段")').next_element.text)
@@ -193,14 +190,13 @@ class TabelogScraper
 
       home_page = page.at('th:contains("ホームページ")').next_element.css('a').text.strip
       opening_date = strip_table_cell(page.at('th:contains("オープン日")').next_element.text)
-      tabelog_group_id = page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last
+      tabelog_group_id = page.at('th:contains("関連店舗情報")').present? ? page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last : nil
 
       latitude, longitude = page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',')
 
       dinner_prices, lunch_prices = scrape_prices(page)
       purposes = scrape_purposes(page)
 
-      # STORE
       restaurant.update({
         telephone: telephone,
         street_address: street_address,
@@ -213,10 +209,11 @@ class TabelogScraper
         home_page: home_page,
         opening_date: opening_date,
         tabelog_group_id: tabelog_group_id,
-        latitude: latitude,
-        longitude: longitude,
+        latitude: latitude.to_f,
+        longitude: longitude.to_f,
         lunch_prices: lunch_prices,
         dinner_prices: dinner_prices,
+        purposes: purposes,
         with_details: true
       })
     end
