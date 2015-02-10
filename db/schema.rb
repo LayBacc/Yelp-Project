@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208230012) do
+ActiveRecord::Schema.define(version: 20150210084440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150208230012) do
   add_index "restaurant_categories", ["restaurant_id"], name: "index_restaurant_categories_on_restaurant_id", using: :btree
 
   create_table "restaurants", force: true do |t|
-    t.string   "name",                           null: false
+    t.string   "name",                             null: false
     t.text     "description"
     t.string   "telephone"
     t.string   "hours"
@@ -71,7 +71,16 @@ ActiveRecord::Schema.define(version: 20150208230012) do
     t.float    "longitude"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "with_details",   default: false
+    t.boolean  "with_details",     default: false
+    t.string   "seats"
+    t.string   "parking"
+    t.string   "facilities"
+    t.string   "home_page"
+    t.string   "opening_date"
+    t.string   "tabelog_group_id"
+    t.string   "lunch_prices"
+    t.string   "dinner_prices"
+    t.string   "purposes"
   end
 
   add_index "restaurants", ["area"], name: "index_restaurants_on_area", using: :btree
@@ -91,14 +100,6 @@ ActiveRecord::Schema.define(version: 20150208230012) do
 
   add_index "subareas", ["name"], name: "index_subareas_on_name", using: :btree
   add_index "subareas", ["tabelog_code"], name: "index_subareas_on_tabelog_code", using: :btree
-
-  create_table "tabelog_prices", force: true do |t|
-    t.string   "ratings"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "price_type"
-    t.integer  "price"
-  end
 
   create_table "user_restaurants", force: true do |t|
     t.integer  "user_id"

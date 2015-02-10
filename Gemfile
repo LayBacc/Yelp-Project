@@ -17,6 +17,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'nokogiri'
 gem 'yelp', require: 'yelp'
 gem 'whenever'
+gem 'backbone-on-rails'
+
+gem 'rails-i18n', '~> 4.0.0'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development

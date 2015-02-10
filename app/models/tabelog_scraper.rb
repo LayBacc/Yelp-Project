@@ -67,6 +67,18 @@ class TabelogScraper
       Nokogiri::HTML(open("http://bit.ly/gearshare"))
     end
 
+    # TODO - tentative method to get images from google
+    def add_image(restaurant)
+      @@proxies = load_proxies if @@proxies.empty?
+      proxy = select_proxy
+
+      query = URI::encode("#{restaurant.name}#{restaurant.subarea}")
+      url = "https://www.google.co.jp/search?q=#{query}&tbm=isch"
+      page = Nokogiri::HTML(open(url, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT))
+
+      puts page.css('img')
+    end
+
     def add_areas
       page = fetch_page('tokyo/')
       page.css('#contents-narrowarea ul.list-area li.area').each do |area|
@@ -142,44 +154,38 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      restaurant = Restaurant.last
-
-      fill_restaurant_detail(restaurant)
+      Restaurant.where('with_details = false OR with_details IS NULL').limit(1000) do |restaurant|
+        fill_restaurant_detail(restaurant)
+      end
     end
 
     def strip_table_cell(text, with_space=false)
       with_space ? text.gsub(/\<\/*td\>|\<\/*p\>/, '') : text.gsub(/\<\/*td\>|\<\/*p\>|\s/, '')
     end
 
-    def scrape_scores
-      
-    end
-
     # aggergate all bucket and save
     # a tabelog_price model that has buckets as attributes
-    def scrape_prices
-      
+    def scrape_prices(page)
+      dinner = page.css('.chart-left li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-')
+      lunch = page.css('.chart-right li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-')
+      [dinner, lunch]
     end
 
-    def scrape_purposes
-      
+    def scrape_purposes(page)
+      page.css('li p.rate-icon').map { |node| node.next_element.css('strong').text }.join('-')
     end
 
-    # TODO - on the dtlratings (details) page, there's much more data 
     # TODO - new data models
     # TODO - refactor each data component into separate functions
     def fill_restaurant_detail(restaurant)
-      page = fetch_page("#{restaurant.tabelog_url}dtlratings", false)
+      page = fetch_page("#{restaurant.tabelog_url}dtlratings/", false)
       # description??
 
-      tel = page.css('#tel_info strong')[0].text
-      address = page.css('tr.address span a').map { |node| node.text }.join('')
+      telephone = page.css('#tel_info strong')[0].text
+      street_address = page.css('tr.address span a').map { |node| node.text }.join('')
       direction = strip_table_cell(page.at('th:contains("交通手段")').next_element.text)
       hours = strip_table_cell(page.at('th:contains("営業時間")').next_element.text, true).strip
       holiday = strip_table_cell(page.at('th:contains("定休日")').next_element.text)
-
-      # dinner_price = page.css('td p span.dinner').first.next_element.text.gsub(/\<span class="price"\>|\<\/span\>/, '')
-      # lunch_price = page.css('td p span.lunch').first.next_element.text.gsub(/\<span class="price"\>|\<\/span\>/, '')
 
       seats = page.at('th:contains("席数")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
       parking = page.at('th:contains("駐車場")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
@@ -189,7 +195,35 @@ class TabelogScraper
       opening_date = strip_table_cell(page.at('th:contains("オープン日")').next_element.text)
       tabelog_group_id = page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last
 
-      puts tabelog_group_id
+      latitude, longitude = page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',')
+
+      dinner_prices, lunch_prices = scrape_prices(page)
+      purposes = scrape_purposes(page)
+
+      # STORE
+      restaurant.update({
+        telephone: telephone,
+        street_address: street_address,
+        direction: direction,
+        hours: hours,
+        holiday: holiday,
+        seats: seats,
+        parking: parking,
+        facilities: facilities,
+        home_page: home_page,
+        opening_date: opening_date,
+        tabelog_group_id: tabelog_group_id,
+        latitude: latitude,
+        longitude: longitude,
+        lunch_prices: lunch_prices,
+        dinner_prices: dinner_prices,
+        with_details: true
+      })
+    end
+
+    # steal images off of the site, and google
+    def add_images
+      
     end
 
     # add groups to the restaurant

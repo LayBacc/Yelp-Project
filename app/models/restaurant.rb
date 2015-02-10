@@ -7,6 +7,7 @@ class Restaurant < ActiveRecord::Base
 
   enum area: Area.all.pluck(:name)
   enum subarea: Subarea.all.pluck(:name)
+  enum price_bucket: ['～￥999', '￥1,000～￥1,999', '￥2,000～￥2,999', '￥3,000～￥3,999', '￥4,000～￥4,999', '￥5,000～￥5,999', '￥6,000～￥7,999', '￥8,000～￥9,999', '￥10,000～￥14,999', '￥15,000～￥19,999', '￥20,000～￥29,999', '￥30,000～'] 
 
   scope :near, ->(lat, lng) do
   	where('latitude BETWEEN ? AND ?', lat - DISTANCE_RADIUS, lat + DISTANCE_RADIUS)
@@ -18,4 +19,10 @@ class Restaurant < ActiveRecord::Base
   end
   scope :random, ->(num) { order('RANDOM()').limit(num) }
   scope :match, ->(lat, lng, cat_id, num) { in_category(cat_id).near(lat, lng).random(num) }
+
+  class << self
+    def query(params)
+      
+    end
+  end
 end
