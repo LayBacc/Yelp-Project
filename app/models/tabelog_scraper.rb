@@ -154,7 +154,7 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      Restaurant.where('with_details = false OR with_details IS NULL').limit(1000).each do |restaurant|
+      Restaurant.where('with_details = false OR with_details IS NULL').limit(2000).each do |restaurant|
         fill_restaurant_detail(restaurant)
       end
     end
