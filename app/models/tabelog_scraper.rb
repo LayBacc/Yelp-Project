@@ -188,8 +188,8 @@ class TabelogScraper
       parking = page.at('th:contains("駐車場")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
       facilities = page.at('th:contains("空間・設備")').next_element.css('p').text.strip
 
-      home_page = page.at('th:contains("ホームページ")').next_element.css('a').text.strip
-      opening_date = strip_table_cell(page.at('th:contains("オープン日")').next_element.text)
+      home_page = page.at('th:contains("ホームページ")').present? ? page.at('th:contains("ホームページ")').next_element.css('a').text.strip : nil
+      opening_date = page.at('th:contains("オープン日")').present? ? strip_table_cell(page.at('th:contains("オープン日")').next_element.text) : nil
       tabelog_group_id = page.at('th:contains("関連店舗情報")').present? ? page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last : nil
 
       latitude, longitude = page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',')
