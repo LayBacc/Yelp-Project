@@ -172,14 +172,14 @@ class TabelogScraper
     end
 
     def scrape_purposes(page)
-      page.css('li p.rate-icon').map { |node| node.next_element.css('strong').text }.join('-')
+      page.css('li p.rate-icon').present? ? page.css('li p.rate-icon').map { |node| node.next_element.css('strong').text }.join('-') : nil
     end
 
     def fill_restaurant_detail(restaurant)
       page = fetch_page("#{restaurant.tabelog_url}dtlratings/", false)
       
-      telephone = page.css('#tel_info strong')[0].text
-      street_address = page.css('tr.address span a').map { |node| node.text }.join('')
+      telephone = page.css('#tel_info strong')[0].present? ? page.css('#tel_info strong')[0].text : nil
+      street_address = page.css('tr.address span a').present? ? page.css('tr.address span a').map { |node| node.text }.join('') : nil
       direction = page.at('th:contains("交通手段")').present? ? strip_table_cell(page.at('th:contains("交通手段")').next_element.text) : nil
       hours = page.at('th:contains("営業時間")').present? ? strip_table_cell(page.at('th:contains("営業時間")').next_element.text, true).strip : nil
       holiday = page.at('th:contains("定休日")').present? ? strip_table_cell(page.at('th:contains("定休日")').next_element.text) : nil
