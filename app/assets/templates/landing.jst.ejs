@@ -1,14 +1,69 @@
 <div class="col-md-4">
   <div class="match-restaurant left-restaurant">
-  	image 1
+    image 1
+    TODO - check if image exists, if not, show placeholder
   </div>
 </div>
-<div class="col-md-4">
-  <button class="btn btn-primary"><%= console.log(window.I18n) %></button><br>
-  <button class="btn btn-default"></button>
+
+<div class="col-md-4 text-center">
+  <div class="left-select">
+    <div class="match-arrow arrow-left">
+      <img src="http://cdn.flaticon.com/png/64/48358.png" /> 
+    </div>
+    <button class="btn btn-primary match-button"><%= t['landing.vote'] %></button><br>
+    <button class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
+  </div>
+  <br>
+  <div class="draw-select">
+    <button class="btn btn-default match-button"><%= t['landing.draw'] %></button>
+  </div>
+  <br>
+  <div class="right-select">
+    <button class="btn btn-primary match-button"><%= t['landing.vote'] %></button><br>
+    <button class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
+    <div class="match-arrow arrow-right">
+      <img src="http://cdn.flaticon.com/png/64/48320.png" /> 
+    </div>
+  </div>
 </div>
 <div class="col-md-4">
   <div class="match-restaurant left-restaurant">
-  	image 2
+    image 2
   </div>
 </div>
+
+
+<style>
+.left-select,
+.draw-select,
+.right-select {
+  position: relative;
+  padding: 1em 1em 1em 1em;
+  background-color: #f0f0f0;
+}
+
+.match-button {
+  width: 80%;
+}
+
+.match-arrow {
+  position: absolute;
+  width: 8%;
+  height: 5em;
+}
+
+.arrow-left {
+  top: 0.8em;
+  left: 0.5em;
+}
+
+.arrow-right {
+  top: 0.8em;
+  right: 0.5em;
+}
+
+.match-arrow img {
+  width: 50%;
+  height: 100%;
+}
+</style>
