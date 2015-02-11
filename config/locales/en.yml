@@ -20,4 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  landing_title: Reliable restaurant reviews
+  landing:
+    title: Reliable restaurant reviews
+    vote: Winner
+    never_been: Never been there

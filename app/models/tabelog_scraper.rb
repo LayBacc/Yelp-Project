@@ -154,7 +154,7 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      Restaurant.where('with_details = false OR with_details IS NULL').limit(2000).each do |restaurant|
+      Restaurant.where('with_details = false OR with_details IS NULL').limit(2).each do |restaurant|
         fill_restaurant_detail(restaurant)
       end
     end
@@ -166,8 +166,8 @@ class TabelogScraper
     # aggergate all bucket and save
     # a tabelog_price model that has buckets as attributes
     def scrape_prices(page)
-      dinner = page.css('.chart-left li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-')
-      lunch = page.css('.chart-right li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-')
+      dinner = page.css('.chart-left li p.rate-price').present? ? page.css('.chart-left li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-') : nil
+      lunch = page.css('.chart-right li p.rate-price').present? ? page.css('.chart-right li p.rate-price').map { |node| node.next_element.text.gsub(/\[|\]/, '') }.join('-') : nil
       [dinner, lunch]
     end
 
@@ -192,7 +192,7 @@ class TabelogScraper
       opening_date = page.at('th:contains("オープン日")').present? ? strip_table_cell(page.at('th:contains("オープン日")').next_element.text) : nil
       tabelog_group_id = page.at('th:contains("関連店舗情報")').present? ? page.at('th:contains("関連店舗情報")').next_element.css('a')[0]['href'].split("/").last : nil
 
-      latitude, longitude = page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',')
+      latitude, longitude = page.css('.rst-map img').present? ? page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',') : [nil, nil]
 
       dinner_prices, lunch_prices = scrape_prices(page)
       purposes = scrape_purposes(page)
