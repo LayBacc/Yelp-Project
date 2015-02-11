@@ -180,13 +180,13 @@ class TabelogScraper
       
       telephone = page.css('#tel_info strong')[0].text
       street_address = page.css('tr.address span a').map { |node| node.text }.join('')
-      direction = strip_table_cell(page.at('th:contains("交通手段")').next_element.text)
-      hours = strip_table_cell(page.at('th:contains("営業時間")').next_element.text, true).strip
-      holiday = strip_table_cell(page.at('th:contains("定休日")').next_element.text)
+      direction = page.at('th:contains("交通手段")').present? ? strip_table_cell(page.at('th:contains("交通手段")').next_element.text) : nil
+      hours = page.at('th:contains("営業時間")').present? ? strip_table_cell(page.at('th:contains("営業時間")').next_element.text, true).strip : nil
+      holiday = page.at('th:contains("定休日")').present? ? strip_table_cell(page.at('th:contains("定休日")').next_element.text) : nil
 
-      seats = page.at('th:contains("席数")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
-      parking = page.at('th:contains("駐車場")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip
-      facilities = page.at('th:contains("空間・設備")').next_element.css('p').text.strip
+      seats = page.at('th:contains("席数")').present? ? page.at('th:contains("席数")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip : nil
+      parking = page.at('th:contains("駐車場")').present? ? page.at('th:contains("駐車場")').next_element.css('p').text.gsub(/\<\/*strong\>/, '').strip : nil
+      facilities = page.at('th:contains("空間・設備")').present? ? page.at('th:contains("空間・設備")').next_element.css('p').text.strip : nil
 
       home_page = page.at('th:contains("ホームページ")').present? ? page.at('th:contains("ホームページ")').next_element.css('a').text.strip : nil
       opening_date = page.at('th:contains("オープン日")').present? ? strip_table_cell(page.at('th:contains("オープン日")').next_element.text) : nil
