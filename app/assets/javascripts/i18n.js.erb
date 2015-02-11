@@ -1,5 +1,6 @@
-var English = {
-  'landing.title': <%= t('landing.title') %>,
-  'landing.vote': <%= t('landing.vote') %>,
-  'landing.never_been': <%= t('landing.never_been') %>
-};
+// var English = {
+//   'landing.title': <%= t('landing.title') %>,
+//   'landing.vote': <%= t('landing.vote') %>,
+//   'landing.never_been': <%= t('landing.never_been') %>
+// };
+window.I18n = <%= I18n.backend.send(:translations).to_json.html_safe %>
