@@ -4,6 +4,7 @@ class Restaurant < ActiveRecord::Base
   has_many :restaurant_categories, dependent: :destroy
   has_many :categories, through: :restaurant_categories
   has_many :matches
+  has_many :images, class_name: 'RestaurantImage', dependent: :destroy
 
   enum area: Area.all.pluck(:name)
   enum subarea: Subarea.all.pluck(:name)
@@ -18,7 +19,9 @@ class Restaurant < ActiveRecord::Base
     .where('restaurant_categories.category_id = ?', cat_id)
   end
   scope :random, ->(num) { order('RANDOM()').limit(num) }
-  scope :match, ->(lat, lng, cat_id, num) { in_category(cat_id).near(lat, lng).random(num) }
+  scope :match_latlng, ->(lat, lng, cat_id, num) { in_category(cat_id).near(lat, lng).random(num) }
+
+  scope :in_subarea, ->(subarea_name) { where('subarea <> ?', Restaurant.subareas[subarea_name]) }
 
   class << self
     def query(params)

@@ -68,7 +68,7 @@ class TabelogScraper
     end
 
     # TODO - tentative method to get images from google
-    def add_image(restaurant)
+    def add_google_image(restaurant)
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
 
@@ -216,11 +216,17 @@ class TabelogScraper
         purposes: purposes,
         with_details: true
       })
+
+      add_tabelog_images(restaurant)
     end
 
-    # steal images off of the site, and google
-    def add_images
-      
+    def add_tabelog_images(restaurant)
+      page = fetch_page("#{restaurant.tabelog_url}", false)
+      images = page.css('.mainphoto-box img.mainphoto-image').present? ? page.css('.mainphoto-box img.mainphoto-image').map { |node| node['src'] } : Array.new
+
+      images.each do |url|
+        restaurant.images.create(url: url)
+      end
     end
 
     # add groups to the restaurant

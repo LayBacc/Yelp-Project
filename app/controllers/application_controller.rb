@@ -26,11 +26,10 @@ class ApplicationController < ActionController::Base
   	lng = query_params[:longitude].present? ? is_float?(query_params[:longitude]) : true
   	invalid_fields and return unless lat && lng
 
-  	missing_parameters unless query_params[:location].present? || (lat && lng)
+  	missing_parameters unless query_params[:location].present? || query_params[:subarea].present? || (lat && lng)
   end
 
   def query_params
-  	# params.require(:category)
-  	params.permit(:location, :latitude, :longitude, :order, :category)
+  	params.permit(:location, :subarea, :latitude, :longitude, :order, :category, :category_id)
   end
 end

@@ -4,13 +4,16 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	events: {
-		'click .match-button': 'matchResult'
+		'click .match-button': 'matchResult',
+		'change #subarea_autocomplete': 'fetchMatches',
+		'change #categories_select': 'fetchMatches'
 	},
 
 	render: function() {
 		var _this = this;
 		this.collection.deferred.done(function() {
 			var data = _this.collection.toJSON();
+			console.log('matches: ', data);
 			_this.initializeContestants();
 		});
 
@@ -129,5 +132,22 @@ App.Views.Landing = Backbone.View.extend({
 			$('.' + side + '-image').html('<img src="http://placehold.it/300x300" />');	
 		}
 		$('.' + side + '-description').html(name);
+	},
+
+	fetchMatches: function() {
+		var subarea = $('#subarea_autocomplete').val();
+		var category_id = $('#categories_select').val();
+
+		if (subarea == undefined || subarea == '') {
+			return;
+		}
+
+		// TODO - fix this 
+		this.deferred = this.collection.fetch({
+			data: {
+				category_id: category_id,
+				subarea: subarea
+			}
+		});
 	}
 });
