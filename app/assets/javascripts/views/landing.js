@@ -102,24 +102,23 @@ App.Views.Landing = Backbone.View.extend({
 		// TODO - save never_been in server
 	},
 
-	nextRestaurant: function() {
-		var restaurant = this.collection.pop().attributes;
-		if (restaurant == undefined) {
-			// fetch()  but we need to know current category and location!
+	nextRestaurant: function(curr) {
+		if (this.collection.length == 0) {
+			this.fetchMatches();
+			return curr;
 		}
-		// TODO - check if there are no more restaurants from the server
-		return restaurant;
+		return this.collection.pop().attributes;
 	},
 
 	updateContestant: function(side) {
 		var front_image_url;
 		if (side == 'left') {
-			this.curr_left = this.nextRestaurant();
+			this.curr_left = this.nextRestaurant(this.curr_left);
 			front_image_url = this.curr_left.front_image_url;
 			name = this.curr_left.name;
 		}
 		else {
-			this.curr_right = this.nextRestaurant();
+			this.curr_right = this.nextRestaurant(this.curr_right);
 			front_image_url = this.curr_right.front_image_url;
 			name = this.curr_right.name;
 		}
