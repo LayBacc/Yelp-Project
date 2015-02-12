@@ -1,39 +1,67 @@
-<div class="col-md-4">
+<div class="match-restaurant-box">
   <div class="match-restaurant left-restaurant">
-    image 1
-    TODO - check if image exists, if not, show placeholder
+  	<div class="match-image left-image">
+      image 1
+  	</div>
+  	<div class="left-description">
+
+  	</div>
   </div>
 </div>
-
-<div class="col-md-4 text-center">
+<div class="win-box text-center">
   <div class="left-select">
     <div class="match-arrow arrow-left">
       <img src="http://cdn.flaticon.com/png/64/48358.png" /> 
     </div>
-    <button class="btn btn-primary match-button"><%= t['landing.vote'] %></button><br>
-    <button class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
+    <button id="left_win" class="btn btn-primary match-button"><%= t['landing.win'] %></button><br>
+    <button id="left_never_been" class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
   </div>
   <br>
   <div class="draw-select">
-    <button class="btn btn-default match-button"><%= t['landing.draw'] %></button>
+    <button id="draw" class="btn btn-default match-button"><%= t['landing.draw'] %></button>
   </div>
   <br>
   <div class="right-select">
-    <button class="btn btn-primary match-button"><%= t['landing.vote'] %></button><br>
-    <button class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
+    <button id="right_win" class="btn btn-primary match-button"><%= t['landing.win'] %></button><br>
+    <button id="right_never_been" class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
     <div class="match-arrow arrow-right">
       <img src="http://cdn.flaticon.com/png/64/48320.png" /> 
     </div>
   </div>
 </div>
-<div class="col-md-4">
-  <div class="match-restaurant left-restaurant">
-    image 2
+<div class="match-restaurant-box">
+  <div class="match-restaurant right-restaurant">
+  	<div class="right-description">
+  	  
+  	</div>
+    <div class="match-image right-image">
+      image 2
+  	</div>
   </div>
 </div>
 
 
 <style>
+.match-container {
+  
+}
+
+.match-restaurant-box,
+.win-box {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.match-restaurant-box {
+  width: 21.429em;
+  height: 21.429em;
+}
+
+.win-box {
+  height: 21.429em;
+  width: 15em;
+}
+
 .left-select,
 .draw-select,
 .right-select {
@@ -65,5 +93,32 @@
 .match-arrow img {
   width: 50%;
   height: 100%;
+}
+
+.match-restaurant {
+  position: relative;
+  width: 100%;
+}
+
+.match-image {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.left-description,
+.right-description {
+  position: absolute;
+  width: 21.429em;
+  height: 4em;
+  background-color: rgba(250, 250, 250, 0.5);
+}
+
+.left-description {
+  top: 0em;
+}
+
+.right-description {
+  bottom: 0em;
 }
 </style>

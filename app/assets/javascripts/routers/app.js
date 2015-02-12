@@ -15,7 +15,7 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 		this.matches = new App.Collections.Matches({ category: '和食', latitude: 35.6895, longitude: 139.6917 });
 
 		var view = new App.Views.Landing({ collection: this.matches });
-		$('.match-container').html(view.render().$el);	// change to a container
+		$('.match-container').html(view.render().$el); // change to a container
 	},
 
 	restaurants: function() {

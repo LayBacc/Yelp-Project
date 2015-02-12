@@ -29,7 +29,7 @@ class TabelogScraper
       proxy = select_proxy
       path = ROOT_URL + path if with_root
       Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
-    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::ReadTimeout
+    rescue OpenURI::HTTPError, Errno::ECONNREFUSED, Net::ReadTimeout
       log_bad_proxy(proxy)
       fetch_page(path)  # try again
     end
