@@ -13,7 +13,6 @@ App.Views.Landing = Backbone.View.extend({
 		var _this = this;
 		this.collection.deferred.done(function() {
 			var data = _this.collection.toJSON();
-			console.log('matches: ', data);
 			_this.initializeContestants();
 		});
 
@@ -143,11 +142,16 @@ App.Views.Landing = Backbone.View.extend({
 		}
 
 		// TODO - fix this 
-		this.deferred = this.collection.fetch({
+		this.collection.deferred = this.collection.fetch({
 			data: {
 				category_id: category_id,
 				subarea: subarea
 			}
+		});
+
+		var _this = this;
+		this.collection.deferred.done(function() {
+			_this.initializeContestants();
 		});
 	}
 });
