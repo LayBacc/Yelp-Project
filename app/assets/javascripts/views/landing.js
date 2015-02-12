@@ -141,7 +141,6 @@ App.Views.Landing = Backbone.View.extend({
 			return;
 		}
 
-		// TODO - fix this 
 		this.collection.deferred = this.collection.fetch({
 			data: {
 				category_id: category_id,
