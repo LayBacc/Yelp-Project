@@ -217,7 +217,7 @@ class TabelogScraper
         with_details: true
       })
 
-      # add_tabelog_images(restaurant)
+      add_tabelog_images(restaurant)
     end
 
     def add_tabelog_images(restaurant)
