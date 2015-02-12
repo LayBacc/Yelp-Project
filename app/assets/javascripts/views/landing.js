@@ -1,7 +1,6 @@
 App.Views.Landing = Backbone.View.extend({
-	initialize: function() {
-		this.curr_left;
-		this.curr_right;
+	initialize: function(params) {
+		this.categories = params.categories;
 	},
 
 	events: {
@@ -13,7 +12,18 @@ App.Views.Landing = Backbone.View.extend({
 		this.collection.deferred.done(function() {
 			var data = _this.collection.toJSON();
 			_this.initializeContestants();
-			console.log('Backbone view landing render()');
+		});
+
+		this.categories.deferred.done(function() {
+			var categories = _this.categories.toJSON();
+			for (var i = 0; i < categories.length; ++i) {
+				var option = categories[i];
+				$('#categories_select').append('<option value="' + option[0] + '">' + option[1] + '</option>');
+			}
+
+			$('#subarea_autocomplete').autocomplete({
+				source: 'api/v1/locations/subareas'
+			});
 		});
 
 		this.$el.html(JST['landing']({ matches: this.colleciton }));
@@ -21,25 +31,8 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	initializeContestants: function() {
-		// Populate the first two contestants
-		this.curr_left = this.collection.pop().attributes;
-		this.curr_right = this.collection.pop().attributes;
-
-		if (this.curr_left.front_image_url) {
-			$('.left-image').html('<img src="' + this.curr_left.front_image_url + '" />');
-		}
-		else {
-			$('.left-image').html('<img src="http://placehold.it/300x300" />');	
-		}
-		$('.left-description').html(this.curr_left.name);
-
-		if (this.curr_right.front_image_url) {
-			$('.right-image').html('<img src="' + this.curr_right.front_image_url + '" />');
-		}
-		else {
-			$('.right-image').html('<img src="http://placehold.it/300x300" />');	
-		}
-		$('.right-description').html(this.curr_right.name);
+		this.updateContestant('left');
+		this.updateContestant('right');
 	},
 
 	matchResult: function(e) {
@@ -48,38 +41,93 @@ App.Views.Landing = Backbone.View.extend({
 			return;
 		}
 
+		var side = e.target.id.split('_')[0];
 		var restaurant = this.curr_left;
-		if (e.target.id.split('_')[0] == 'right') {
+		if (side == 'right') {
 			restaurant = this.curr_right;
 		}
 
 		var status = e.target.id.split('_')[1];
 		if (status == 'win') {
-			this.matchWinner(restaurant);
+			this.matchWinner(side);
 		}
 		else {
-			this.matchNeverBeen(restaurant);
+			this.matchNeverBeen(side);
 		}
 	},
 
+	matchData: function(winner) {
+		return {
+			match: {
+				first_id: this.curr_left.id,
+				second_id: this.curr_right.id,
+				winner: winner
+			}
+		};
+	},
+
 	matchDraw: function() {
-		console.log('match draw');
+		var _this = this;
+
 		$.ajax({
 			url: 'api/v1/matches',
 			type: 'post',
-			data: { 
-				first_id: this.curr_left.id,
-				second_id: this.curr_right.id,
-				
+			data: _this.matchData(0),
+			success: function(data) {
+				_this.updateContestant('left');
+				_this.updateContestant('right');
 			}
 		});
 	},
 
-	matchWinner: function(restaurant) {
-		console.log('winner: ', restaurant.name);
+	matchWinner: function(side) {
+		var _this = this;
+		var winner = side == 'left' ? 1 : 2;
+		
+		$.ajax({
+			url: 'api/v1/matches',
+			type: 'post',
+			data: _this.matchData(winner),
+			success: function(data) {
+				_this.updateContestant(side);
+			}
+		});
 	},
 
-	matchNeverBeen: function(restaurant) {
-		console.log('never been to ', restaurant.name);
+
+	matchNeverBeen: function(side) {
+		this.updateContestant(side);
+		// TODO - save never_been in server
+	},
+
+	nextRestaurant: function() {
+		var restaurant = this.collection.pop().attributes;
+		if (restaurant == undefined) {
+			// fetch()  but we need to know current category and location!
+		}
+		// TODO - check if there are no more restaurants from the server
+		return restaurant;
+	},
+
+	updateContestant: function(side) {
+		var front_image_url;
+		if (side == 'left') {
+			this.curr_left = this.nextRestaurant();
+			front_image_url = this.curr_left.front_image_url;
+			name = this.curr_left.name;
+		}
+		else {
+			this.curr_right = this.nextRestaurant();
+			front_image_url = this.curr_right.front_image_url;
+			name = this.curr_right.name;
+		}
+
+		if (front_image_url) {
+			$('.' + side + '-image').html('<img src="' + front_image_url + '" />');
+		}
+		else {
+			$('.' + side + '-image').html('<img src="http://placehold.it/300x300" />');	
+		}
+		$('.' + side + '-description').html(name);
 	}
 });

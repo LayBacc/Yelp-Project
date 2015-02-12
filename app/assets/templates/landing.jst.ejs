@@ -1,3 +1,11 @@
+<div id="match_config">
+  <%= t['area'] %>
+  <input type="text" id="subarea_autocomplete" class="form-control" />
+  <%= t['category'] %>
+  <select id="categories_select" class="form-control" style=""></select>
+</div>
+<br>
+
 <div class="match-restaurant-box">
   <div class="match-restaurant left-restaurant">
   	<div class="match-image left-image">
@@ -40,10 +48,14 @@
   </div>
 </div>
 
-
 <style>
-.match-container {
-  
+#match_config {
+  margin-bottom: 3em;
+}
+
+#match_config .form-control {
+  width: 10em;
+  display: inline-block;
 }
 
 .match-restaurant-box,
@@ -120,5 +132,11 @@
 
 .right-description {
   bottom: 0em;
+}
+
+.ui-menu .ui-menu-item a{
+  color: #96f226;
+  border-radius: 0px;
+  border: 1px solid #454545;
 }
 </style>

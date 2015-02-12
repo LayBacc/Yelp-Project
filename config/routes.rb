@@ -8,6 +8,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :restaurants
       resources :matches
+      resources :categories
+      resources :locations do
+        collection do
+          get :subareas
+        end
+      end
     end
   end
 

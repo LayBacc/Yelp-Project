@@ -25,3 +25,5 @@ en:
     win: Winner
     never_been: Never been there
     draw: Draw
+  category: Category
+  area: Area

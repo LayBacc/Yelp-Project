@@ -6,16 +6,18 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 
 	initialize: function() {
 		console.log('initialize router');
-		// TODO - randomly get a category
+		// TODO - randomly get a category the first time
 	},
 
 	landing: function() {
-		console.log('TODO - fetch matches for landing page');
 		// TODO - start with random category, in a central location, instead of hard-coding
-		this.matches = new App.Collections.Matches({ category: '和食', latitude: 35.6895, longitude: 139.6917 });
+		// select an index from 1 to 42
 
-		var view = new App.Views.Landing({ collection: this.matches });
-		$('.match-container').html(view.render().$el); // change to a container
+		this.matches = new App.Collections.Matches({ category: '和食', latitude: 35.6895, longitude: 139.6917 });
+		this.categories = new App.Collections.Categories();
+		var view = new App.Views.Landing({ collection: this.matches, categories: this.categories });
+
+		$('.match-container').html(view.render().$el);
 	},
 
 	restaurants: function() {
