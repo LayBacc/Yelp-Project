@@ -21,7 +21,7 @@
     <div class="match-arrow arrow-left">
       <img src="http://cdn.flaticon.com/png/64/48358.png" /> 
     </div>
-    <button id="left_win" class="btn btn-primary match-button"><%= t['landing.win'] %></button><br>
+    <button id="left_win" class="btn btn-success match-button"><%= t['landing.win'] %></button><br>
     <button id="left_never_been" class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
   </div>
   <br>
@@ -30,7 +30,7 @@
   </div>
   <br>
   <div class="right-select">
-    <button id="right_win" class="btn btn-primary match-button"><%= t['landing.win'] %></button><br>
+    <button id="right_win" class="btn btn-success match-button"><%= t['landing.win'] %></button><br>
     <button id="right_never_been" class="btn btn-default match-button"><%= t['landing.never_been'] %></button>
     <div class="match-arrow arrow-right">
       <img src="http://cdn.flaticon.com/png/64/48320.png" /> 
@@ -103,7 +103,7 @@
 }
 
 .match-arrow img {
-  width: 50%;
+  width: 100%;
   height: 100%;
 }
 
@@ -132,6 +132,16 @@
 
 .right-description {
   bottom: 0em;
+}
+
+.left-select,
+.left-description {
+  background-color: #ff5050;
+}
+
+.right-select,
+.right-description {
+  background-color: #3399ff;
 }
 
 .ui-menu .ui-menu-item a{
