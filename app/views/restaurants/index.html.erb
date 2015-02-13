@@ -1,0 +1,26 @@
+<div class="text-center">
+  <%= t('restaurants.index.results', category: params[:category], location: params[:subarea]) %><br>
+  <%= will_paginate @posts, renderer: BootstrapPagination::Rails %><br>
+<br>
+
+<table id="restaurants_list">
+  <% @restaurants.each do |r| %>
+    <tr class="list-restaurant">
+      <td class="image"><%= image_tag r.front_image %></td>
+      <td class="name"><%= r.name %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br><br>
+
+<style>
+.list-restaurant {
+  height: 11em;
+}
+
+.list-restaurant .name {
+  text-align: left;
+  padding: 2em 2em 2em 2em;
+}
+</style>

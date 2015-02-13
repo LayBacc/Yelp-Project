@@ -4,7 +4,7 @@ module Api
       respond_to :json
 
       def subareas
-        @subareas = Subarea.where("name LIKE '%#{params[:term]}%'").map(&:name)
+        @subareas = Subarea.where("name LIKE '%#{params[:term]}%'").pluck(:name)
         render json: @subareas
       end
     end

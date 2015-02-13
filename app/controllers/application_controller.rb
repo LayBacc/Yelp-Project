@@ -30,6 +30,6 @@ class ApplicationController < ActionController::Base
   end
 
   def query_params
-  	params.permit(:location, :subarea, :latitude, :longitude, :order, :category, :category_id)
+  	params.permit(:location, :subarea, :latitude, :longitude, :order, :category, :category_id, :page)
   end
 end

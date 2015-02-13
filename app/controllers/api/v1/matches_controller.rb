@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def index
-        @restaurants = Restaurant.in_category(query_params[:category_id]).in_subarea(query_params[:subarea]).random(10)
+        @restaurants = Restaurant.query(query_params).random(10)
         render json: { restaurants: @restaurants }
       end
 

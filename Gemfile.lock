@@ -143,6 +143,9 @@ GEM
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    will_paginate (3.0.7)
+    will_paginate-bootstrap (1.0.1)
+      will_paginate (>= 3.0.3)
     yelp (2.0.4)
       faraday (~> 0.8, >= 0.8.0)
       faraday_middleware (~> 0.8, >= 0.8.0)
@@ -166,4 +169,6 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   whenever
+  will_paginate
+  will_paginate-bootstrap
   yelp

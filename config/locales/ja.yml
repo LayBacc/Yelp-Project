@@ -2,7 +2,9 @@ ja:
   landing:
     title: 一番頼もしいグルメサイト
     win: 優勝
-    never_been: 行ったこどがない
+    never_been: 行ったことがない
     draw: 引き分け
   category: ジャンル
   area: エリア
+  search_subarea_hint: 例：新宿
+  search_category_hint: 例：和食、寿司

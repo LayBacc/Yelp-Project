@@ -8,35 +8,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">Restaurant Reviews</a>
     </div>
 
        <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          Find <input id="search_category" type="text" class="form-control" placeholder="<%= t('search_category_hint') %>">&nbsp;&nbsp;
+          Near <input id="search_subarea" type="text" class="form-control" placeholder="<%= t('search_subarea_hint') %>">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <div id="search_submit" class="btn btn-default"><i class="fa fa-search"></i></div>
+        <div id="search_error_msg"></div>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -51,3 +36,29 @@
     </div><!-- /.navbar-collapse -->
   </div>
 </nav>
+
+<script>
+$('#search_subarea').autocomplete({
+  source: 'api/v1/locations/subareas'
+});
+
+$('#search_category').autocomplete({
+  source: 'api/v1/categories'
+});
+
+$('#search_submit').click(function() {
+  var category = $('#search_category').val();
+  var subarea = $('#search_subarea').val();
+
+  if (category == '') {
+    $('#search_error_msg').html('You must select a category');
+    return;
+  }  
+  if (subarea == '') {
+    $('#search_error_msg').html('You must input a location');
+    return;
+  }
+
+  window.location = encodeURI('/restaurants?category=' + category + '&subarea=' + subarea);
+});
+</script>
