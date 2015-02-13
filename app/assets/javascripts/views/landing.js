@@ -111,24 +111,33 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	updateContestant: function(side) {
-		var front_image_url;
+		var name, front_image_url;
 		if (side == 'left') {
 			this.curr_left = this.nextRestaurant(this.curr_left);
-			front_image_url = this.curr_left.front_image_url;
-			name = this.curr_left.name;
+			restaurant = this.curr_left;
 		}
 		else {
 			this.curr_right = this.nextRestaurant(this.curr_right);
-			front_image_url = this.curr_right.front_image_url;
-			name = this.curr_right.name;
+			restaurant = this.curr_right;
+		}
+
+		if (restaurant == undefined) {
+			name = 'There are no more restaurants';
+			front_image_url = 'http://placehold.it/300x300"';
+		}
+		else if (restaurant.front_image_url == undefined) {
+			name = restaurant.name;
+			front_image_url = 'http://placehold.it/300x300"';
+		}
+		else {
+			name = restaurant.name;
+			front_image_url = restaurant.front_image_url;
 		}
 
 		if (front_image_url) {
 			$('.' + side + '-image').html('<img src="' + front_image_url + '" />');
 		}
-		else {
-			$('.' + side + '-image').html('<img src="http://placehold.it/300x300" />');	
-		}
+
 		$('.' + side + '-description').html(name);
 	},
 
@@ -149,7 +158,12 @@ App.Views.Landing = Backbone.View.extend({
 
 		var _this = this;
 		this.collection.deferred.done(function() {
-			_this.initializeContestants();
+			if (_this.collection.length > 1) {
+				_this.initializeContestants();
+			}
+			else {
+				console.log('no more restaurants, please change parameters');
+			}
 		});
 	}
 });

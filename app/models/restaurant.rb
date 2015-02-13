@@ -20,8 +20,7 @@ class Restaurant < ActiveRecord::Base
   end
   scope :random, ->(num) { order('RANDOM()').limit(num) }
   scope :match_latlng, ->(lat, lng, cat_id, num) { in_category(cat_id).near(lat, lng).random(num) }
-
-  scope :in_subarea, ->(subarea_name) { where('subarea <> ?', Restaurant.subareas[subarea_name]) }
+  scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
   class << self
     def query(params)
