@@ -29,10 +29,9 @@ class TabelogScraper
       proxy = select_proxy
       path = ROOT_URL + path if with_root
       Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
-    rescue OpenURI::HTTPError
-      puts "HTTPError: ", path
-    #   log_bad_proxy(proxy)
-    #   fetch_page(path)  # try again
+    rescue OpenURI::HTTPError, Errno::ETIMEDOUT
+      puts "fetch_page error, url: #{path}" 
+      return
     end
 
     def select_proxy
@@ -178,6 +177,7 @@ class TabelogScraper
 
     def fill_restaurant_detail(restaurant)
       page = fetch_page("#{restaurant.tabelog_url}dtlratings/", false)
+      return unless page.present?
       
       telephone = page.css('#tel_info strong')[0].present? ? page.css('#tel_info strong')[0].text : nil
       street_address = page.css('tr.address span a').present? ? page.css('tr.address span a').map { |node| node.text }.join('') : nil
@@ -223,6 +223,8 @@ class TabelogScraper
 
     def add_tabelog_images(restaurant)
       page = fetch_page("#{restaurant.tabelog_url}", false)
+      return unless page.present?
+      
       images = page.css('.mainphoto-box img.mainphoto-image').present? ? page.css('.mainphoto-box img.mainphoto-image').map { |node| node['src'] } : Array.new
 
       images.each do |url|
