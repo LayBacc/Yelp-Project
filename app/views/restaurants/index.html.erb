@@ -4,10 +4,15 @@
 <br>
 
 <table id="restaurants_list">
+  <!-- TODO - this is n + 1 query!!! -->
   <% @restaurants.each do |r| %>
     <tr class="list-restaurant">
-      <td class="image"><%= image_tag r.front_image %></td>
-      <td class="name"><%= r.name %></td>
+      <td class="image">
+        <%= link_to r do %>
+          <%= image_tag r.front_image %>
+        <% end %>
+      </td>
+      <td class="name"><%= link_to r.name, r %></td>
     </tr>
   <% end %>
 </table>

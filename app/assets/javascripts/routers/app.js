@@ -1,7 +1,6 @@
 RestaurantReviews.Routers.App = Backbone.Router.extend({
 	routes: {
-		'': 'landing',
-		'restaurants': 'restaurants'
+		'': 'landing'
 	},
 
 	initialize: function() {
@@ -18,9 +17,5 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 		var view = new App.Views.Landing({ collection: this.matches, categories: this.categories });
 
 		$('.match-container').html(view.render().$el);
-	},
-
-	restaurants: function() {
-		console.log('TODO - fetch restaurants and matches for search results');
 	}
 });

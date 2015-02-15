@@ -6,4 +6,8 @@ class RestaurantsController < ApplicationController
   def index
     @restaurants = Restaurant.query(query_params).paginate(page: params[:page], per_page: PER_PAGE)
   end
+
+  def show
+  	@restaurant = Restaurant.find(params[:id])
+  end
 end

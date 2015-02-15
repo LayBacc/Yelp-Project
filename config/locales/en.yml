@@ -11,3 +11,5 @@ en:
   restaurants:
     index:
       results: "Showing results for %{category} in %{location}"
+  feedback:
+    bar: Feedback? We'd love to hear!

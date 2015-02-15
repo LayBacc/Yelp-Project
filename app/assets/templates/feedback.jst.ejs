@@ -1,0 +1,36 @@
+<div id="feedback_trigger"></div>
+<div id="feedback_box" class="hidden">
+  <!-- TODO - render questions if any -->
+  <p>Any feedback would be very much appreciated!</p>
+  <textarea id="feedback_body" class="form-control" placeholder="e.g. the review system isn't intuitive, there aren't enough images etc."></textarea>
+  <button id="send_feedback" class="btn btn-primary">Send</button>
+</div>
+
+<style>
+#feedback_trigger {
+  cursor: pointer;
+  position: fixed;
+
+  height: 3em;
+  width: 20em;
+  bottom: 2em;
+  right: 2em;
+  z-index: 5;
+}
+
+#feedback_box {
+  position: fixed;
+  bottom: 5em;
+  right: 2em;
+  padding: 1em 1em 1em 1em;
+
+  width: 20em;
+  height: 20em;
+  background-color: #f0f0f0;
+}
+
+#feedback_box textarea {
+
+}
+
+</style>

@@ -8,3 +8,8 @@ ja:
   area: エリア
   search_subarea_hint: 例：新宿
   search_category_hint: 例：和食、寿司
+  restaurants:
+    index:
+      results: "%{location}、%{category}："
+  feedback:
+    bar: フィードバックを教えてね

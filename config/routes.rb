@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root to: 'static_pages#home'
 
   resources :restaurants
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
       resources :restaurants
       resources :matches
       resources :categories
+      resources :feedbacks
       resources :locations do
         collection do
           get :subareas
