@@ -45,7 +45,7 @@ App.Views.Feedback = Backbone.View.extend({
 
 	feedbackForm: function() {
 		var header = '<p>Any feedback would be very much appreciated!</p>';
-		var form = '<textarea id="feedback_body" class="form-control" placeholder="e.g. the review system ist\'t intuitive, there aren\'t enough images etc."></textarea>';
+		var form = '<textarea id="feedback_body" class="form-control" placeholder="e.g. the review system ist\'t intuitive, there aren\'t enough images etc."></textarea><br>';
 		var submit = '<button id="send_feedback" class="btn btn-primary">Send</button>';
 		$('#feedback_box').html(header + form + submit);
 

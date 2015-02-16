@@ -4,7 +4,7 @@ class RestaurantsController < ApplicationController
   before_action :sanitize_query, only: [:index, :random]
 
   def index
-    @restaurants = Restaurant.query(query_params).paginate(page: params[:page], per_page: PER_PAGE)
+    @restaurants = Restaurant.query(query_params).with_front_image.paginate(page: params[:page], per_page: PER_PAGE)
   end
 
   def show

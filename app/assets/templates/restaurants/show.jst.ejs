@@ -1,0 +1,36 @@
+<div class="col-md-10 col-md-offset-1">
+  <h2><%= restaurant.escape('name') %></h2>
+  <br>
+  <div class="col-md-3">
+    % Win   % Draw
+  </div>
+  <div class="col-md-9" style="text-align: right;">
+    <button id="add_image" class="btn btn-primary">Write a Review</button>
+    <div class="btn-group" role="group">
+    <button id="add_image" type="button" class="btn btn-default">Add Photo</button>
+    <button id="share_restaurant" type="button" class="btn btn-default">Middle</button>
+    <button id="bookmark_restaurant" type="button" class="btn btn-default">Right</button>
+  </div>
+  </div>
+
+  <br>
+  <div id="restaurant_map"></div>
+  <!-- <div class="col-md-3">
+  </div>
+   <div class="col-md-9">
+  </div>
+   -->
+  Pictures
+
+  <br>
+  <h4>TODO - render matching here</h4>
+</div>
+
+<style>
+#restaurant_map {
+  height: 15em;
+  width: 15em;
+  margin: 0;
+  padding: 0;
+}
+</style>

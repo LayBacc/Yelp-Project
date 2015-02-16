@@ -1,6 +1,7 @@
 RestaurantReviews.Routers.App = Backbone.Router.extend({
 	routes: {
-		'': 'landing'
+		'': 'landing',
+		'restaurants/:id': 'showRestaurant'
 	},
 
 	initialize: function() {
@@ -17,5 +18,15 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 		var view = new App.Views.Landing({ collection: this.matches, categories: this.categories });
 
 		$('.match-container').html(view.render().$el);
+	},
+
+	showRestaurant: function(id) {
+		var restaurant = new App.Models.Restaurant({ id: id });
+		restaurant.fetch({ 
+			success: function(r) {
+				var view = new App.Views.Restaurant({ model: r });
+				$('#restaurant_container').html(view.render().$el);
+			} 
+		});
 	}
 });

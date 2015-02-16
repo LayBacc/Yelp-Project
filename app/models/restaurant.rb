@@ -23,15 +23,18 @@ class Restaurant < ActiveRecord::Base
     .joins('INNER JOIN categories ON restaurant_categories.category_id = categories.id')
     .where('categories.name = ?', category)
   end
+  scope :with_front_image, ->() do
+    select("DISTINCT ON (restaurants.id) restaurants.*, 
+      COALESCE(restaurant_images.url, 'http://placehold.it/150x150') AS front_image_url")
+    .joins('LEFT JOIN restaurant_images ON restaurants.id = restaurant_images.restaurant_id')
+  end
 
   scope :random, ->(num) { order('RANDOM()').limit(num) }
   scope :match_latlng, ->(lat, lng, cat_id, num) { with_category_id(cat_id).near(lat, lng).random(num) }
   scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
-  # TODO - this is n + 1 query
-  def front_image
-    image = images.first
-    image.present? ? image.url : 'http://placehold.it/150x150'
+  def fill_latlng
+    
   end
 
   class << self
