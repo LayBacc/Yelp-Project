@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :reviews
+
   root to: 'static_pages#home'
 
   resources :restaurants

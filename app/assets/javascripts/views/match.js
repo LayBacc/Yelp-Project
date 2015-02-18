@@ -17,7 +17,6 @@ App.Views.Match = Backbone.View.extend({
 	},
 
  	initializeContestants: function() {
- 		console.log('init contestants: ', this.collection);
 		this.updateContestant('left');
 		this.updateContestant('right');
 	},
@@ -57,7 +56,7 @@ App.Views.Match = Backbone.View.extend({
 		var _this = this;
 
 		$.ajax({
-			url: 'api/v1/matches',
+			url: '/api/v1/matches',
 			type: 'post',
 			data: _this.matchData(0),
 			success: function(data) {
@@ -72,7 +71,7 @@ App.Views.Match = Backbone.View.extend({
 		var winner = side == 'left' ? 1 : 2;
 		
 		$.ajax({
-			url: 'api/v1/matches',
+			url: '/api/v1/matches',
 			type: 'post',
 			data: _this.matchData(winner),
 			success: function(data) {
@@ -126,8 +125,17 @@ App.Views.Match = Backbone.View.extend({
 	},
 
 	fetchMatches: function() {
-		var subarea = $('#subarea_autocomplete').val();
-		var category_id = $('#categories_select').val();
+		var subarea;
+		var category_id;
+		
+		if (this.model) {
+			subarea = this.model.attributes.subarea;
+			category_id = this.model.attributes.categories[0].id;
+		}
+		else {
+			subarea = $('#subarea_autocomplete').val();
+			category_id = $('#categories_select').val();
+		}
 
 		if (subarea == undefined || subarea == '') {
 			return;

@@ -44,22 +44,6 @@ class Restaurant < ActiveRecord::Base
 
   def set_display_address
     self.display_address = street_address.present? ? "#{street_address}, #{city}" : "In #{city}, exact location unknown"
-
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info 'self'
-    Rails.logger.info self.inspect
-    Rails.logger.info self.display_address
   end
 
   def fill_location

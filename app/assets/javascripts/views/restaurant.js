@@ -4,7 +4,7 @@ App.Views.Restaurant = Backbone.View.extend({
 		var matches = new App.Collections.Matches({ category_id: this.model.attributes.categories[0].id, 
 			subarea: this.model.attributes.subarea 
 		});
-		this.match_view = new App.Views.Match({ collection: matches });
+		this.match_view = new App.Views.Match({ collection: matches, model: this.model });
 	},
 
 	render: function() {
