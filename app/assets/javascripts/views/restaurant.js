@@ -1,17 +1,15 @@
 App.Views.Restaurant = Backbone.View.extend({
 	initialize: function() {
 		$(document).ready($.proxy(this.loadGMScript, this));
+		var matches = new App.Collections.Matches({ category_id: this.model.attributes.categories[0].id, 
+			subarea: this.model.attributes.subarea 
+		});
+		this.match_view = new App.Views.Match({ collection: matches });
 	},
 
 	render: function() {
-		var _this = this;
-		this.collection.deferred.done(function() {
-			var data = _this.collection.toJSON();
-			_this.initializeContestants();
-		});
-
 		this.$el.html(JST['restaurants/show']({ restaurant: this.model }));
-
+		this.$('#match_form').html(this.match_view.render().el);
 		return this;
 	},
 
