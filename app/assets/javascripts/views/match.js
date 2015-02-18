@@ -107,11 +107,11 @@ App.Views.Match = Backbone.View.extend({
 
 		if (restaurant == undefined) {
 			name = 'There are no more restaurants';
-			front_image_url = 'http://placehold.it/300x300"';
+			front_image_url = 'http://placehold.it/200x200"';
 		}
 		else if (restaurant.front_image_url == undefined) {
 			name = restaurant.name;
-			front_image_url = 'http://placehold.it/300x300"';
+			front_image_url = 'http://placehold.it/200x200"';
 		}
 		else {
 			name = restaurant.name;
