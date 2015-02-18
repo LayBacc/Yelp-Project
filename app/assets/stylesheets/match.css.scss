@@ -20,8 +20,7 @@
   display: inline-block;
 }
 
-.match-restaurant-box,
-.win-box {
+.match-restaurant-box {
   display: inline-block;
   vertical-align: top;
 }
@@ -29,11 +28,6 @@
 .match-restaurant-box {
   width: 21.429em;
   height: 21.429em;
-}
-
-.win-box {
-  height: 21.429em;
-  width: 15em;
 }
 
 .left-select,
@@ -44,29 +38,11 @@
   background-color: #f0f0f0;
 }
 
-.match-button {
-  width: 80%;
-}
-
-.match-arrow {
-  position: absolute;
-  width: 8%;
-  height: 5em;
-}
-
-.arrow-left {
-  top: 0.8em;
-  left: 0.5em;
-}
-
-.arrow-right {
-  top: 0.8em;
-  right: 0.5em;
-}
-
-.match-arrow img {
-  width: 100%;
-  height: 100%;
+#left_never_been,
+#right_never_been,
+#draw {
+  width: 11em;
+  display: inline;
 }
 
 .match-restaurant {
@@ -82,16 +58,14 @@
 
 .left-description,
 .right-description {
+  cursor: pointer;
   position: absolute;
   width: 21.429em;
   height: 4em;
   background-color: rgba(250, 250, 250, 0.5);
 }
 
-.left-description {
-  top: 0em;
-}
-
+.left-description,
 .right-description {
   bottom: 0em;
 }
