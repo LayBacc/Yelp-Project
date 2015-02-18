@@ -11,7 +11,8 @@
   </div>
 
   <div class="restaurant-buttons" style="text-align: right;">
-    <button id="add_image" class="btn btn-primary">Write a Review</button>
+    <% var review_path = '/restaurants/' + restaurant.escape('id') + '/reviews/new'; %>
+    <a href="<%= review_path %>" class="btn btn-primary">Write a Review</a>
     <div class="btn-group" role="group">
       <button id="add_image" type="button" class="btn btn-default">Add Photo</button>
       <button id="share_restaurant" type="button" class="btn btn-default">Share</button>

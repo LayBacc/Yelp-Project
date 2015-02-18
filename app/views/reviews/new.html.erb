@@ -1,0 +1,65 @@
+<div class="col-md-4">
+  <div id="review_errors"></div>
+  <%= form_for(@review) do |f| %>
+    <div class="btn-group" role="group">
+      <button id="negative_rating" type="button" class="btn btn-default review-rating"><i class="fa fa-frown-o"></i> Negative</button>
+      <button id="neutral_rating" type="button" class="btn btn-default review-rating"><i class="fa fa-meh-o"></i> Neutral</button>
+      <button id="positive_rating" type="button" class="btn btn-default review-rating"><i class="fa fa-smile-o"></i> Positive</button>
+    </div>
+    <%= f.hidden_field :restaurant_id, value: params[:restaurant_id]  %>
+
+    <br><br>
+    <%= f.text_area :body, placeholder: 'Your review for the restaurant', class: 'form-control' %>
+    <br>
+    <%= f.submit 'Submit', id: 'submit_review', class: 'btn btn-large btn-primary' %>
+  <% end %>
+</div>
+
+<style>
+.review-rating.selected {
+	background-color: #337ab7;
+	color: white;
+}
+</style>
+
+
+<script>
+function review_rating() {
+ 	var selected = $('.review-rating.selected');
+ 	if (selected.length == 0) {
+ 		return;
+ 	}
+
+ 	return selected.get(0).id.split('_')[0];
+}
+
+$('#new_review').submit(function(e) {
+ 	$('#review_errors').html('');
+	$('#submit_review').fadeOut();
+
+	var rating = review_rating();
+	if (rating == undefined) {
+ 		$('#review_errors').html('You must select a rating.');
+		$('#submit_review').fadeIn();
+		e.preventDefault();
+		return;
+	}
+
+	if ($('#review_body').val() == '') {
+		$('#review_errors').html('Please write something meaningful in the review.');
+		$('#submit_review').fadeIn();
+		e.preventDefault();
+		return;
+	}
+
+	var rating_input = $('<input id="review_rating">').attr('type', 'hidden').attr('name', 'review[rating]').val(rating);
+	$('#new_review').append($(rating_input));
+	// console.log($('#new_review').get(0));
+	// e.preventDefault();
+});
+
+$('.review-rating').click(function() {
+	$('.review-rating').removeClass('selected');
+	$(this).addClass('selected');
+});
+</script>

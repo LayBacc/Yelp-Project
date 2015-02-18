@@ -7,6 +7,7 @@ class Restaurant < ActiveRecord::Base
   has_many :categories, through: :restaurant_categories
   has_many :matches
   has_many :images, class_name: 'RestaurantImage', dependent: :destroy
+  has_many :reviews
 
   enum area: Area.all.pluck(:name)
   enum subarea: Subarea.all.pluck(:name)

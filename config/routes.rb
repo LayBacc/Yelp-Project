@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-
-  resources :reviews
-
   root to: 'static_pages#home'
 
-  resources :restaurants
+  resources :reviews
+  resources :restaurants do
+    resources :reviews
+  end
   resources :matches
 
   namespace :api do
