@@ -1,36 +1,97 @@
 <div class="col-md-10 col-md-offset-1">
   <h2><%= restaurant.escape('name') %></h2>
   <br>
-  <div class="col-md-3">
-    % Win   % Draw
+  <div class="restaurant-info">
+    <div id="price">
+      $ Price
+    </div>
+    <div id="tags">
+      and tags here   <a href="#">Edit</a>
+    </div>
   </div>
-  <div class="col-md-9" style="text-align: right;">
+
+  <div class="restaurant-buttons" style="text-align: right;">
     <button id="add_image" class="btn btn-primary">Write a Review</button>
     <div class="btn-group" role="group">
-    <button id="add_image" type="button" class="btn btn-default">Add Photo</button>
-    <button id="share_restaurant" type="button" class="btn btn-default">Middle</button>
-    <button id="bookmark_restaurant" type="button" class="btn btn-default">Right</button>
-  </div>
+      <button id="add_image" type="button" class="btn btn-default">Add Photo</button>
+      <button id="share_restaurant" type="button" class="btn btn-default">Share</button>
+      <button id="bookmark_restaurant" type="button" class="btn btn-default">Bookmark</button>
+    </div>
   </div>
 
   <br>
-  <div id="restaurant_map"></div>
-  <!-- <div class="col-md-3">
+  
+  <div id="restaurant_location">
+    <div id="restaurant_map"></div>
+    <div id="restaurant_address">
+      TODO - add restaurant info
+      <% if (restaurant.attributes.street_address) {  } %>
+      <%= console.log(restaurant) %>
+    </div>
   </div>
-   <div class="col-md-9">
-  </div>
-   -->
-  Pictures
 
   <br>
-  <h4>TODO - render matching here</h4>
+
+  <div id="match_container">
+    <div id="match_stats">
+      regional ranking by top three categories
+    </div>
+    <div id="match_form">
+      <!-- New design, with buttons on the bottom -->
+       
+    </div>
+  </div>
 </div>
 
 <style>
 #restaurant_map {
-  height: 15em;
-  width: 15em;
+  height: 12em;
+  width: 19em;
   margin: 0;
   padding: 0;
 }
+
+.restaurant-info {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.restaurant-info #price,
+.restaurant-info #tags {
+  display: inline-block;
+}
+
+.restaurant-buttons {
+  position: absolute;
+  right: 0em;
+  top: 2em;
+}
+
+#restaurant_location {
+  padding: 0.5em;
+  border: #aaa solid 1px;
+}
+
+#restaurant_location,
+#match_stats {
+  width: 20em;
+}
+
+#match_container {
+  position: relative;
+  top: 0;
+}
+
+#match_form {
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  padding: 2em;
+  width: 40em;
+  height: 20em;
+  background-color: #f0f0f0;
+}
+
 </style>
+

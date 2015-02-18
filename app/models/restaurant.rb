@@ -1,6 +1,8 @@
 class Restaurant < ActiveRecord::Base
   DISTANCE_RADIUS = 0.005
 
+  attr_accessor :display_address
+
   has_many :restaurant_categories, dependent: :destroy
   has_many :categories, through: :restaurant_categories
   has_many :matches
@@ -33,8 +35,40 @@ class Restaurant < ActiveRecord::Base
   scope :match_latlng, ->(lat, lng, cat_id, num) { with_category_id(cat_id).near(lat, lng).random(num) }
   scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
+  geocoded_by :full_address
+
+  # Used for geocoding
+  def full_address
+    [street_address, subarea, city].compact.join(', ')
+  end
+
+  def set_display_address
+    self.display_address = street_address.present? ? "#{street_address}, #{city}" : "In #{city}, exact location unknown"
+
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info 'self'
+    Rails.logger.info self.inspect
+    Rails.logger.info self.display_address
+  end
+
+  def fill_location
+    fill_latlng
+    set_display_address
+  end
+
   def fill_latlng
-    
+    geocode unless latitude.present? && longitude.present?
   end
 
   class << self

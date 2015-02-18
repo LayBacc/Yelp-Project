@@ -10,3 +10,104 @@
 .hidden {
   display: none;
 }
+
+#match_config {
+  margin-bottom: 3em;
+}
+
+#match_config .form-control {
+  width: 10em;
+  display: inline-block;
+}
+
+.match-restaurant-box,
+.win-box {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.match-restaurant-box {
+  width: 21.429em;
+  height: 21.429em;
+}
+
+.win-box {
+  height: 21.429em;
+  width: 15em;
+}
+
+.left-select,
+.draw-select,
+.right-select {
+  position: relative;
+  padding: 1em 1em 1em 1em;
+  background-color: #f0f0f0;
+}
+
+.match-button {
+  width: 80%;
+}
+
+.match-arrow {
+  position: absolute;
+  width: 8%;
+  height: 5em;
+}
+
+.arrow-left {
+  top: 0.8em;
+  left: 0.5em;
+}
+
+.arrow-right {
+  top: 0.8em;
+  right: 0.5em;
+}
+
+.match-arrow img {
+  width: 100%;
+  height: 100%;
+}
+
+.match-restaurant {
+  position: relative;
+  width: 100%;
+}
+
+.match-image {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.left-description,
+.right-description {
+  position: absolute;
+  width: 21.429em;
+  height: 4em;
+  background-color: rgba(250, 250, 250, 0.5);
+}
+
+.left-description {
+  top: 0em;
+}
+
+.right-description {
+  bottom: 0em;
+}
+
+.left-select,
+.left-description {
+  background-color: #ff5050;
+}
+
+.right-select,
+.right-description {
+  background-color: #3399ff;
+}
+
+.ui-menu .ui-menu-item a{
+  color: #96f226;
+  border-radius: 0px;
+  border: 1px solid #454545;
+}
