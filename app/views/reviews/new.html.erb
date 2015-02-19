@@ -54,8 +54,6 @@ $('#new_review').submit(function(e) {
 
 	var rating_input = $('<input id="review_rating">').attr('type', 'hidden').attr('name', 'review[rating]').val(rating);
 	$('#new_review').append($(rating_input));
-	// console.log($('#new_review').get(0));
-	// e.preventDefault();
 });
 
 $('.review-rating').click(function() {
