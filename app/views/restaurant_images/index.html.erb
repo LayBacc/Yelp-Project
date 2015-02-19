@@ -1,0 +1,23 @@
+<% if @images.empty? %>
+  There are currently no images for the restaurant.
+<% end %>
+<%= link_to "Upload Photos", new_restaurant_restaurant_image_path, class: "btn btn-primary" %>
+<br>
+
+<% @images.each do |image| %>
+  <%= image_tag image.url %>
+  <% if image.description.blank? %>
+  	<div class="description-form">
+  	<%= form_for(image) do |f| %>
+  	  <%= f.text_area :description, class: 'form-control' %>
+  	  <%= f.submit 'Save', class: "btn btn-primary" %>
+  	<% end %>
+  	</div>
+  <% end %>
+<% end %>
+
+<style>
+.description-form {
+  display: inline-block;
+}
+</style>

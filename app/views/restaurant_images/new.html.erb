@@ -1,0 +1,84 @@
+<%= stylesheet_link_tag "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" %>
+<%= javascript_include_tag "//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js" %>
+
+<h4 style="display: inline;"><%= @restaurant.name %></h4>
+<div style="display: inline;">
+  Add Photos
+</div>
+<br>
+<%= link_to "View all photos", restaurant_restaurant_images_path(@restaurant) %>
+<br><br>
+
+<div id="file_dropzone" class="text-center">
+  Drag and drop feature coming soon...<br>
+  <hr>
+  For now, <br><br>
+  <div id="browse_files" class="btn btn-primary">Browse Files</div>
+</div>
+
+<%= form_for(@restaurant_image, url: restaurant_restaurant_images_path, html: { multipart: true }) do |f| %>
+  <div style="height: 0px; overflow: hidden;">
+  	<%= f.file_field :url, multiple: true %>
+  </div>
+<% end %>
+
+<script>
+$('#browse_files').click(function() {
+	$('#restaurant_image_url').click();
+});
+
+var dropzone = $('#file_dropzone');
+dropzone.on('dragenter', function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+});
+
+dropzone.on('dragover', function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+});
+
+dropzone.on('drop', function(e) {
+	e.preventDefault();
+	var files = e.originalEvent.dataTransfer.files;
+	console.log(files);
+});
+
+function double_digit(number) {
+	if ((number / 10) < 1) {
+		return "0" + number.toString();
+	}	
+	return number.toString();
+}
+
+function format_transloadit_date(date) {
+	return date.getUTCFullYear().toString() + "/" + double_digit(date.getUTCMonth() + 1) + "/" + double_digit(date.getUTCDate()) + " " + double_digit(date.getUTCHours()) + ":" + double_digit(date.getUTCMinutes()) + ":" + double_digit(date.getUTCSeconds()) + "+00:00";
+}
+
+$(function() {
+	var expiry = new Date();
+	expiry.setHours(expiry.getHours() + 1);
+
+	$('#new_restaurant_image').transloadit({
+		wait: true,
+		triggerUploadOnFileSelection: true,
+		params: {
+			auth: {
+				key: '<%= ENV["TRANSLOADIT_KEY"] %>',
+				expires: format_transloadit_date(expiry)
+			},
+			template_id: '<%= ENV["S3_STORE_TEMPLATE_ID"] %>'
+		}
+	});
+});
+
+</script>
+
+<style>
+#file_dropzone {
+  width: 100%;
+  height: 25em;
+  padding: 3em;
+  border: dashed #e0e0e0 1px;
+}
+</style>

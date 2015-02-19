@@ -12,11 +12,12 @@
 
   <div class="restaurant-buttons" style="text-align: right;">
     <% var review_path = '/restaurants/' + restaurant.escape('id') + '/reviews/new'; %>
+    <% var images_path = '/restaurants/' + restaurant.escape('id') + '/restaurant_images/new'; %>
     <a href="<%= review_path %>" class="btn btn-primary">Write a Review</a>
     <div class="btn-group" role="group">
-      <button id="add_image" type="button" class="btn btn-default">Add Photo</button>
-      <button id="share_restaurant" type="button" class="btn btn-default">Share</button>
-      <button id="bookmark_restaurant" type="button" class="btn btn-default">Bookmark</button>
+      <a href="<%= images_path %>" id="add_image" class="btn btn-default">Add Photo</a>
+      <button id="share_restaurant" class="btn btn-default">Share</button>
+      <button id="bookmark_restaurant" class="btn btn-default">Bookmark</button>
     </div>
   </div>
 
@@ -37,10 +38,7 @@
     <div id="match_stats">
       regional ranking by top three categories
     </div>
-    <div id="match_form">
-      <!-- New design, with buttons on the bottom -->
-      
-    </div>
+    <div id="match_form"></div>
   </div>
 </div>
 

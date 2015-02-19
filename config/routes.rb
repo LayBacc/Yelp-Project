@@ -2,8 +2,10 @@ Rails.application.routes.draw do
   root to: 'static_pages#home'
 
   resources :reviews
+  resources :restaurant_images
   resources :restaurants do
     resources :reviews
+    resources :restaurant_images
   end
   resources :matches
 
