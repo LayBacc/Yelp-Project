@@ -20,4 +20,16 @@ class RestaurantImagesController < ApplicationController
 
     redirect_to restaurant_restaurant_images_path(params[:restaurant_id])
   end
+
+  def update
+    @restaurant_image = RestaurantImage.find(params[:id])
+    @restaurant_image.update(image_params)
+    redirect_to restaurant_restaurant_images_path(params[:restaurant_id])
+  end
+
+  private
+
+  def image_params
+    params.require(:restaurant_image).permit(:url, :description)
+  end
 end

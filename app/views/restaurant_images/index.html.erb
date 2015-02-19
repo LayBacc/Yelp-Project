@@ -1,23 +1,49 @@
 <% if @images.empty? %>
   There are currently no images for the restaurant.
 <% end %>
-<%= link_to "Upload Photos", new_restaurant_restaurant_image_path, class: "btn btn-primary" %>
-<br>
 
-<% @images.each do |image| %>
-  <%= image_tag image.url %>
-  <% if image.description.blank? %>
-  	<div class="description-form">
-  	<%= form_for(image) do |f| %>
-  	  <%= f.text_area :description, class: 'form-control' %>
-  	  <%= f.submit 'Save', class: "btn btn-primary" %>
-  	<% end %>
-  	</div>
+<%= link_to "Upload Photos", new_restaurant_restaurant_image_path, class: "btn btn-primary" %>
+
+<div class="restaurant-images-container">
+  <% @images.each do |image| %>
+    <div class="restaurant-image-frame">
+      <%= image_tag image.url %>
+    </div>
+      <div class="description-box">
+      <% if image.description.present? %>
+        <%= image.description %>
+      <% else %>
+        <%= form_for(image, url: restaurant_restaurant_image_path(id: image.id)) do |f| %>
+          <%= f.text_area :description, class: 'form-control', placeholder: 'Add photo caption here.' %><br>
+          <%= f.submit 'Save', class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+      </div>
+    <br>
   <% end %>
-<% end %>
+</div>
 
 <style>
-.description-form {
+.restaurant-images-container {
+  margin-top: 2em;
+}
+
+.description-box {
   display: inline-block;
+  margin-left: 2em;
+  width: 20em;
+}
+
+.restaurant-image-frame {
+  height: 10em;
+  width: 10em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.restaurant-image-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: top;
 }
 </style>
