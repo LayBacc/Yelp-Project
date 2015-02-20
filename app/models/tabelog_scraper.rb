@@ -216,8 +216,6 @@ class TabelogScraper
         dinner_price: dinner_price,
         purposes: purposes
       })
-
-      # add_tabelog_images(restaurant)
     end
 
     def batch_add_tabelog_images
@@ -229,14 +227,14 @@ class TabelogScraper
     def add_tabelog_images(restaurant)
       page = fetch_page(restaurant.tabelog_url, false)
       return unless page.present?
-      
+
       images = page.css('.mainphoto-box img.mainphoto-image').present? ? page.css('.mainphoto-box img.mainphoto-image').map { |node| node['src'] } : Array.new
+
+      images = (page.css('.photoimg .photo-box img').present? ? page.css('.photoimg .photo-box img').map { |node| node['src'] } : Array.new) if images.empty?
 
       images.each do |url|
         restaurant.images.create(url: url)
       end
-
-      restaurant.update(with_images: true)
     end
 
     # add groups to the restaurant
@@ -245,3 +243,4 @@ class TabelogScraper
     end
   end
 end
+

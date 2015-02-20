@@ -1,6 +1,6 @@
-TODO - add questionaire!!
 <div class="col-md-4">
   <div id="review_errors"></div>
+  <h4>How would you rate this restaurant?</h4>
   <%= form_for(@review) do |f| %>
     <div class="btn-group" role="group">
       <button id="negative_rating" type="button" class="btn btn-default review-rating"><i class="fa fa-frown-o"></i> Negative</button>
@@ -14,6 +14,10 @@ TODO - add questionaire!!
     <br>
     <%= f.submit 'Submit', id: 'submit_review', class: 'btn btn-large btn-primary' %>
   <% end %>
+</div>
+<div class="col-md-4">
+<h4>Questionnaire</h4>
+
 </div>
 
 <style>
