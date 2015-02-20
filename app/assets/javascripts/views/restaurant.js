@@ -1,10 +1,17 @@
 App.Views.Restaurant = Backbone.View.extend({
-	initialize: function() {
+	initialize: function(params) {
 		$(document).ready($.proxy(this.loadGMScript, this));
 		var matches = new App.Collections.Matches({ category_id: this.model.attributes.categories[0].id, 
 			subarea: this.model.attributes.subarea 
 		});
 		this.match_view = new App.Views.Match({ collection: matches, model: this.model });
+
+		var _this = this;
+		this.reviews = params.reviews;
+		this.reviews.deferred.done(function() {
+			var reviews = _this.reviews.toJSON();
+			_this.renderReviews(reviews);
+		});
 	},
 
 	render: function() {
@@ -34,5 +41,13 @@ App.Views.Restaurant = Backbone.View.extend({
 				_this.initMap();
 			}
 		});
+	},
+
+	renderReviews: function(reviews) {
+		for (var i = 0; i < reviews.length; ++i) {
+			var review = reviews[i];
+			console.log(review.body);
+			$('#restaurant_reviews').append(review.body);
+		}
 	}
 });

@@ -5,9 +5,5 @@ App.Collections.Categories = Backbone.Collection.extend({
 
 	url: function() {
 		return '/api/v1/categories';
-	},
-
-	parse: function(resp, xhr) {
-		return resp.categories;
 	}
 });

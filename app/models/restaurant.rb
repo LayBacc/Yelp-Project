@@ -1,5 +1,6 @@
 class Restaurant < ActiveRecord::Base
   DISTANCE_RADIUS = 0.005
+  PRICE_DEFAULT = 'No price data available'
 
   attr_accessor :display_address
 
@@ -43,17 +44,23 @@ class Restaurant < ActiveRecord::Base
     [street_address, subarea, city].compact.join(', ')
   end
 
-  def set_display_address
+  def fill_display_address
     self.display_address = street_address.present? ? "#{street_address}, #{city}" : "In #{city}, exact location unknown"
-  end
-
-  def fill_location
-    fill_latlng
-    set_display_address
   end
 
   def fill_latlng
     geocode unless latitude.present? && longitude.present?
+  end
+
+  def fill_prices
+    self.lunch_price = lunch_price || PRICE_DEFAULT
+    self.dinner_price = dinner_price || PRICE_DEFAULT
+  end
+
+  def fill_missing
+    fill_latlng
+    fill_display_address
+    fill_prices
   end
 
   class << self

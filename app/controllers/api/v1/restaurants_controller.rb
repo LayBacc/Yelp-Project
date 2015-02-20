@@ -9,7 +9,7 @@ module Api
 
       def show
       	@restaurant = Restaurant.find(params[:id])
-      	@restaurant.fill_location
+      	@restaurant.fill_missing
       end
     end
   end

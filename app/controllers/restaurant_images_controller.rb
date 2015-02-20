@@ -3,7 +3,11 @@ class RestaurantImagesController < ApplicationController
 
   def index
   	@restaurant = Restaurant.find(params[:restaurant_id])
-  	@images = @restaurant.images
+    if params[:user]
+      # TODO - select all images uploaded by user
+    else
+     	@images = @restaurant.images
+    end
   end
 
   def new

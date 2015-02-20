@@ -7,11 +7,11 @@ module Api
 
       def index
       	if params[:term].present?
-      	  @categories = Category.where("name LIKE '%#{params[:term]}%'").pluck(:name)
+      	  @categories = Category.where("name LIKE '#{params[:term]}%'").pluck(:name)
         else
           @categories = Category.all.pluck(:id, :name_jp)
         end
-        render json: { categories: @categories }
+        render json: @categories
       end
 
       private

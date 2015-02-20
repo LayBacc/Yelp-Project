@@ -21,12 +21,14 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 
 	showRestaurant: function(id) {
 		var restaurant = new App.Models.Restaurant({ id: id });
+		var reviews = new App.Collections.Reviews({ restaurant_id: id });
 		restaurant.fetch({
 			success: function(r) {
 				var matches = new App.Collections.Matches({ category_id: r.attributes.categories[0].id, subarea: r.attributes.subarea });
-				var view = new App.Views.Restaurant({ model: r, collection: matches });
+				var view = new App.Views.Restaurant({ model: r, collection: matches, reviews: reviews });
 				$('#restaurant_container').html(view.render().$el);
 			} 
 		});
+		
 	}
 });
