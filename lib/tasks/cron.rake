@@ -7,4 +7,8 @@ namespace :cron do
   task :fill_details => :environment do
   	TabelogScraper.batch_fill_restaurant_details
   end
+
+  task :add_images => :environment do
+  	TabelogScraper.batch_add_tabelog_images
+  end
 end

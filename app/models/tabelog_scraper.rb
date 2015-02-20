@@ -219,7 +219,10 @@ class TabelogScraper
     end
 
     def batch_add_tabelog_images
-      Restaurant.where('with_images = false OR with_images IS NULL').limit(2).each do |restaurant|
+      # TODO - this query can't scale, bringing all entries to memory, and would be slow...
+      res_ids = RestaurantImage.pluck(:restaurant_id).uniq
+      Restaurant.where.not(id: res_ids).limit(100).each do |restaurant|
+      # Restaurant.where('with_images = false OR with_images IS NULL').limit(100).each do |restaurant|
         add_tabelog_images(restaurant)
       end
     end
