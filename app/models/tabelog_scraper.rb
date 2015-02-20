@@ -154,7 +154,7 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      Restaurant.where('with_details = false OR with_details IS NULL').limit(100).each do |restaurant|
+      Restaurant.where('lunch_price IS NULL').limit(100).each do |restaurant|
         fill_restaurant_detail(restaurant)
       end
     end
@@ -195,7 +195,7 @@ class TabelogScraper
 
       latitude, longitude = page.css('.rst-map img').present? ? page.css('.rst-map img')[0]['src'].match(/center=[0-9]*\.*[0-9]*,[0-9]*\.*[0-9]*/).to_s.gsub(/center=/, '').split(',') : [nil, nil]
 
-      dinner_prices, lunch_prices = scrape_prices(page)
+      dinner_price, lunch_price = scrape_prices(page)
       purposes = scrape_purposes(page)
 
       restaurant.update({
@@ -212,17 +212,22 @@ class TabelogScraper
         tabelog_group_id: tabelog_group_id,
         latitude: latitude.to_f,
         longitude: longitude.to_f,
-        lunch_prices: lunch_prices,
-        dinner_prices: dinner_prices,
-        purposes: purposes,
-        with_details: true
+        lunch_price: lunch_price,
+        dinner_price: dinner_price,
+        purposes: purposes
       })
 
       # add_tabelog_images(restaurant)
     end
 
+    def batch_add_tabelog_images
+      Restaurant.where('with_images = false OR with_images IS NULL').limit(2).each do |restaurant|
+        add_tabelog_images(restaurant)
+      end
+    end
+
     def add_tabelog_images(restaurant)
-      page = fetch_page("#{restaurant.tabelog_url}", false)
+      page = fetch_page(restaurant.tabelog_url, false)
       return unless page.present?
       
       images = page.css('.mainphoto-box img.mainphoto-image').present? ? page.css('.mainphoto-box img.mainphoto-image').map { |node| node['src'] } : Array.new
@@ -230,6 +235,8 @@ class TabelogScraper
       images.each do |url|
         restaurant.images.create(url: url)
       end
+
+      restaurant.update(with_images: true)
     end
 
     # add groups to the restaurant

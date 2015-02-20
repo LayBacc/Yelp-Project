@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  # before_action :authenticate_user, only: [:create]
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
   end
@@ -18,6 +18,6 @@ class ReviewsController < ApplicationController
   private
 
   def review_params
-  	params.require(:review).permit(:body, :rating, :restaurant_id)
+  	params.require(:review).permit(:body, :rating, :restaurant_id).merge({ user_id: current_user.id })
   end
 end

@@ -1,6 +1,8 @@
 class RestaurantImagesController < ApplicationController
   include Transloadit::Rails::ParamsDecoder
 
+  before_action :authenticate_user!, only: [:new, :create]
+
   def index
   	@restaurant = Restaurant.find(params[:restaurant_id])
     if params[:user]
