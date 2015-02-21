@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  resources :users
   root to: 'static_pages#home'
 
   resources :reviews
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
   resources :restaurants do
     resources :reviews
     resources :restaurant_images
+    resources :questionnaires
   end
   resources :matches
 

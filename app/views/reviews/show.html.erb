@@ -1,0 +1,7 @@
+<div class="col-md-4">
+  <h4>Your review for <%= link_to @restaurant.name, @restaurant, 'data-no-turbolink' => true %>:</h4>
+  Rating: <%= @review.rating %><br>
+  Content: <%= @review.body %><br>
+  <%= link_to 'Edit', edit_restaurant_review_path(restaurant_id: params[:restaurant_id], id: params[:id]) %>
+</div>
+<%= render '/questionnaires/form' %>

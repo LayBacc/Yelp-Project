@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-1">
+<div id="restaurant_container">
   <h2><%= restaurant.escape('name') %></h2>
   <br>
   <div class="restaurant-info">
@@ -7,7 +7,7 @@
       <%= restaurant.escape('lunch_price') %>
     </div>
     <i class="fa fa-moon-o"></i>
-    <%= restaurant.escape('dinner_price') %>
+    <%= restaurant.escape('dinner_price') %>x
 
     <br>
     <div id="tags">
@@ -22,9 +22,9 @@
     <% var images_path = '/restaurants/' + restaurant.escape('id') + '/restaurant_images/new'; %>
     <a href="<%= review_path %>" class="btn btn-primary">Write a Review</a>
     <div class="btn-group" role="group">
-      <a href="<%= images_path %>" id="add_image" class="btn btn-default">Add Photo</a>
-      <button id="share_restaurant" class="btn btn-default">Share</button>
-      <button id="bookmark_restaurant" class="btn btn-default">Bookmark</button>
+      <a href="<%= images_path %>" id="add_image" class="btn btn-default"><i class="fa fa-camera"></i> Add Photo</a>
+      <button id="share_restaurant" class="btn btn-default"><i class="fa fa-share"></i> Share</button>
+      <button id="bookmark_restaurant" class="btn btn-default"><i class="fa fa-bookmark"></i> Bookmark</button>
     </div>
   </div>
 
@@ -72,6 +72,19 @@
 </div>
 
 <style>
+@media (min-width: 1190px) {
+  #restaurant_container {
+    position: relative;
+    padding: 0em 3em 3em 3em;
+  }
+}
+@media (max-width: 1189px) {
+  #restaurant_container {
+    position: relative;
+    padding: 0em 0em 3em 0em;
+  }
+}
+
 #restaurant_map {
   height: 12em;
   width: 19em;
@@ -165,21 +178,19 @@
   margin-top: 2em;
 }
 
-@media(min-width: 1196px) {
-  #restaurant_reviews,
-  #restaurant_details {
-    width: 32.5em;
-    display: inline-block;
-  }
+#restaurant_reviews,
+#restaurant_details {
+  width: 32.5em;
+  display: inline-block;
+}
 
-  #restaurant_details {
-    padding: 0em 2em 2em 2em;
-  }
+#restaurant_details {
+  padding: 0em 2em 2em 2em;
+}
 
-  #restaurant_reviews {
-    padding: 0em 2em 2em 0em;
-    border-right: solid #f0f0f0 1px;
-    margin-bottom: 5em;
-  }
+#restaurant_reviews {
+  padding: 0em 2em 2em 0em;
+  border-right: solid #f0f0f0 1px;
+  margin-bottom: 5em;
 }
 </style>
