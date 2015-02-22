@@ -33,7 +33,11 @@
   <div id="restaurant_location">
     <div id="restaurant_map"></div>
     <div id="restaurant_address">
-      <%= restaurant.escape('display_address') %>
+      <p><%= restaurant.escape('display_address') %></p>
+      <p><i class="fa fa-phone"></i> <%= restaurant.escape('telephone') %></p>
+      <p><i class="fa fa-external-link"></i> <a href="<%= restaurant.escape('home_page') %>"><%= restaurant.escape('home_page') %></a></p>
+      <p></p>
+      <p></p>
     </div>
   </div>
   <div id="restaurant_images">
@@ -66,8 +70,39 @@
       </ul>
     </div>
     <div id="restaurant_details">
-      details
+      <%= console.log(restaurant) %>
       <table>
+        <tr>
+          <th>
+            Hours
+          </th>
+          <td>
+            <%= restaurant.escape('hours') %>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Parking
+          </th>
+          <td>
+            <%= restaurant.escape('parking') %>
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Facilities
+          </th>
+          <td>
+            <%= restaurant.escape('facilities') %>
+          </td>
+        </tr>
+        <tr>
+          <th>
+
+          </th>
+          <td>
+          </td>
+        </tr>
       </table>
     </div>
   </div>
@@ -184,6 +219,7 @@
 #restaurant_details {
   width: 32.5em;
   display: inline-block;
+  vertical-align: top;
 }
 
 #restaurant_details {
@@ -211,4 +247,13 @@
 .review-first-name {
   padding: 0em 1em 0em 1em;
 }
+
+#restaurant_details th {
+  width: 30%;
+}
+
+#restaurant_details {
+  margin-bottom: 0.5em;
+}
+
 </style>

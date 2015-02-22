@@ -47,8 +47,7 @@ App.Views.Restaurant = Backbone.View.extend({
 	renderReviews: function(reviews) {
 		for (var i = 0; i < reviews.length; ++i) {
 			var review = reviews[i];
-			console.log(review);
-
+			
 			// TODO - use jquery to write clear code
 			var html = '<li><div class="review-profile-pic"><a href="/users/' + review.user_id + '"><img src="' + review.profile_image_url + '" /></a></div>';
 			html += '<div class="review-first-name"><a href="/users/' + review.user_id + '">' + review.first_name + '</a></div>';
