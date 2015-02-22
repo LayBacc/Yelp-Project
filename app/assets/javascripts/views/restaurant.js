@@ -1,22 +1,23 @@
 App.Views.Restaurant = Backbone.View.extend({
 	initialize: function(params) {
-		$(document).ready($.proxy(this.loadGMScript, this));
+		$(document).ready($.proxy(this.loadGMScripts, this));
 		var matches = new App.Collections.Matches({ category_id: this.model.attributes.categories[0].id, 
 			subarea: this.model.attributes.subarea 
 		});
 		this.match_view = new App.Views.Match({ collection: matches, model: this.model });
-
-		var _this = this;
 		this.reviews = params.reviews;
-		this.reviews.deferred.done(function() {
-			var reviews = _this.reviews.toJSON();
-			_this.renderReviews(reviews);
-		});
 	},
 
 	render: function() {
 		this.$el.html(JST['restaurants/show']({ restaurant: this.model }));
 		this.$('#match_form').html(this.match_view.render().el);
+
+		var _this = this;
+		this.reviews.deferred.done(function() {
+			var reviews = _this.reviews.toJSON();
+			_this.renderReviews(reviews);
+		});
+
 		return this;
 	},
 
@@ -34,7 +35,7 @@ App.Views.Restaurant = Backbone.View.extend({
 		new google.maps.Map(document.getElementById('restaurant_map'), mapOptions);
 	},
 
-	loadGMScript: function() {
+	loadGMScripts: function() {
 		var _this = this;
 		google.load('maps', '3', {
 			callback: function() {
@@ -46,8 +47,13 @@ App.Views.Restaurant = Backbone.View.extend({
 	renderReviews: function(reviews) {
 		for (var i = 0; i < reviews.length; ++i) {
 			var review = reviews[i];
-			console.log(review.body);
-			$('#restaurant_reviews').append(review.body);
+			console.log(review);
+
+			// TODO - use jquery to write clear code
+			var html = '<li><div class="review-profile-pic"><a href="/users/' + review.user_id + '"><img src="' + review.profile_image_url + '" /></a></div>';
+			html += '<div class="review-first-name"><a href="/users/' + review.user_id + '">' + review.first_name + '</a></div>';
+			html += '<div class="review-body">' + review.rating + '<br>' + review.body + '</div></li>';
+			this.$('#restaurant_reviews').append(html);
 		}
 	}
 });
