@@ -26,13 +26,20 @@ App.Views.Restaurant = Backbone.View.extend({
 			center: { 
 				lat: this.model.attributes.latitude,
 				lng: this.model.attributes.longitude 
-			},
+			},	
 			disableDefaultUI: true,
 			draggable: false,
+			scrollwheel: false,
 			zoom: 15
 		};
 
-		new google.maps.Map(document.getElementById('restaurant_map'), mapOptions);
+		this.map = new google.maps.Map(document.getElementById('restaurant_map'), mapOptions);
+
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(this.model.attributes.latitude, this.model.attributes.longitude),
+			map: this.map
+		});
+
 	},
 
 	loadGMScripts: function() {
