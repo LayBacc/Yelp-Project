@@ -154,7 +154,19 @@ class TabelogScraper
     end
 
     def batch_fill_restaurant_details
-      Restaurant.where(lunch_price: nil).where(telephone: nil).where(street_address: nil).limit(100).each do |restaurant|
+      Restaurant.where(lunch_price: nil).where(telephone: nil).where(street_address: nil).first(100).each do |restaurant|
+        fill_restaurant_detail(restaurant)
+      end
+    end
+
+    def reversed_batch_fill_restaurant_details
+      Restaurant.where(lunch_price: nil).where(telephone: nil).where(street_address: nil).last(100).each do |restaurant|
+        fill_restaurant_detail(restaurant)
+      end
+    end
+
+    def random_batch_fill_restaurant_details
+      Restaurant.where(lunch_price: nil).where(telephone: nil).where(street_address: nil).random(100).each do |restaurant|
         fill_restaurant_detail(restaurant)
       end
     end
@@ -221,8 +233,7 @@ class TabelogScraper
     def batch_add_tabelog_images
       # TODO - this query can't scale, bringing all entries to memory, and would be slow...
       res_ids = RestaurantImage.pluck(:restaurant_id).uniq
-      Restaurant.where.not(id: res_ids).limit(100).each do |restaurant|
-      # Restaurant.where('with_images = false OR with_images IS NULL').limit(100).each do |restaurant|
+      Restaurant.where.not(id: res_ids).random(100).each do |restaurant|
         add_tabelog_images(restaurant)
       end
     end

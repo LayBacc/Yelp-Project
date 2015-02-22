@@ -8,6 +8,14 @@ namespace :cron do
   	TabelogScraper.batch_fill_restaurant_details
   end
 
+  task :reverse_fill_details => :environment do
+    TabelogScraper.reversed_batch_fill_restaurant_details
+  end
+
+  task :random_fill_details => :environment do
+    TabelogScraper.random_batch_fill_restaurant_details
+  end
+
   task :add_images => :environment do
   	TabelogScraper.batch_add_tabelog_images
   end
