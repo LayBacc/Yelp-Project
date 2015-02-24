@@ -28,6 +28,7 @@ App.Views.Restaurant = Backbone.View.extend({
 				lng: this.model.attributes.longitude 
 			},	
 			disableDefaultUI: true,
+			disableDoubleClickZoom: true,
 			draggable: false,
 			scrollwheel: false,
 			zoom: 15

@@ -47,6 +47,7 @@ App.Views.Match = Backbone.View.extend({
 			match: {
 				first_id: this.curr_left.id,
 				second_id: this.curr_right.id,
+				category_id: this.collection.category_id,
 				winner: winner
 			}
 		};

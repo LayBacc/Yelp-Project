@@ -10,14 +10,16 @@ module Api
       end
 
       def create
-        @match = Match.new(match_params)
+        @match = Match.create(match_params)
+        # TODO - create or increment match stat
+        MatchStat.add_match(@match)
         render json: { status: 'OK' }
       end
 
       private
 
       def match_params
-        params.require(:match).permit(:first_id, :second_id, :winner, :user_id)
+        params.require(:match).permit(:first_id, :second_id, :winner, :user_id, :category_id)
       end
     end
   end
