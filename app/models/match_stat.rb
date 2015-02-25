@@ -2,7 +2,8 @@ class MatchStat < ActiveRecord::Base
   belongs_to :category
   belongs_to :restaurant
 
-  scope :fetch, ->(restaurant_ids, category_id) { where(restaurant_id: restaurant_ids).where(category_id: category_id) }
+  scope :by_restaurant_id, ->(restaurant_id) { where(restaurant_id: restaurant_id).order(:win_rate) }
+  scope :fetch, ->(restaurant_ids, category_id) { by_restaurant_id(restaurant_ids).where(category_id: category_id) }
 
   def update_rates
   	update(win_rate: num_wins/num_matches, draw_rate: num_draws/num_matches)
@@ -18,7 +19,7 @@ class MatchStat < ActiveRecord::Base
 
   def increment_total
   	update(num_matches: num_matches + 1)
-  end
+  end 
 
   class << self
     def add_match(match)

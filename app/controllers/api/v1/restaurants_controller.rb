@@ -8,7 +8,7 @@ module Api
       end
 
       def show
-      	@restaurant = Restaurant.find(params[:id])
+        @restaurant = Restaurant.find(params[:id])
       	@restaurant.fill_missing
       end
     end

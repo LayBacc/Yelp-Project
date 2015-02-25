@@ -64,11 +64,12 @@ class Restaurant < ActiveRecord::Base
     fill_prices
   end
 
-  def top_three_rankings
-    self.categories.each do |category|
-      matches = Match.by_restaurant_id(id).by_category_id(category.id)
-      matches.count
-    end
+  def top_three_stats
+    MatchStat.by_restaurant_id(id).limit(3)
+  end
+
+  def positive_rate
+    reviews.any? ? reviews.positive_rate.percentage : 0.0
   end
 
   class << self

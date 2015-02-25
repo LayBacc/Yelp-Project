@@ -9,6 +9,7 @@ App.Views.Restaurant = Backbone.View.extend({
 	},
 
 	render: function() {
+		console.log(this.model);
 		this.$el.html(JST['restaurants/show']({ restaurant: this.model }));
 		this.$('#match_form').html(this.match_view.render().el);
 
@@ -25,7 +26,7 @@ App.Views.Restaurant = Backbone.View.extend({
 		var mapOptions = {
 			center: { 
 				lat: this.model.attributes.latitude,
-				lng: this.model.attributes.longitude 
+				lng: this.model.attributes.longitude
 			},	
 			disableDefaultUI: true,
 			disableDoubleClickZoom: true,
@@ -53,6 +54,14 @@ App.Views.Restaurant = Backbone.View.extend({
 	},
 
 	renderReviews: function(reviews) {
+		if (reviews.length == 0) { 
+			var notice = '<p>There are no reviews for this restaurant.</p>';
+			var review_path = '/restaurants/' + this.model.escape('id') + '/reviews/new';
+			var button = '<a href="' + review_path + '" class="btn btn-primary">Write a Review</a>'
+			this.$('#restaurant_reviews').html(notice + button);
+			return;
+		}
+		
 		for (var i = 0; i < reviews.length; ++i) {
 			var review = reviews[i];
 			
