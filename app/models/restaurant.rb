@@ -64,14 +64,6 @@ class Restaurant < ActiveRecord::Base
     fill_prices
   end
 
-  # TODO - store the league results somewhere?
-  # computing all restaurants in the category for ranking every time is expensive!
-  # have one copy of the current 
-  # increment counts - match count, draw count, overall count
-  def category_win_rate
-    
-  end
-
   def top_three_rankings
     self.categories.each do |category|
       matches = Match.by_restaurant_id(id).by_category_id(category.id)

@@ -11,7 +11,6 @@ module Api
 
       def create
         @match = Match.create(match_params)
-        # TODO - create or increment match stat
         MatchStat.add_match(@match)
         render json: { status: 'OK' }
       end

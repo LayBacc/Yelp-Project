@@ -69,14 +69,22 @@ App.Views.Match = Backbone.View.extend({
 
 	matchWinner: function(side) {
 		var _this = this;
-		var winner = side == 'left' ? 1 : 2;
-		
+		var winner, other_side;
+		if (side == 'left') {
+			winner = 1;
+			other_side = 'right';
+		}
+		else {
+			winner = 2;
+			other_side = 'left';
+		}
+
 		$.ajax({
 			url: '/api/v1/matches',
 			type: 'post',
 			data: _this.matchData(winner),
 			success: function(data) {
-				_this.updateContestant(side);
+				_this.updateContestant(other_side);
 			}
 		});
 	},

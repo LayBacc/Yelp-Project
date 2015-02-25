@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224094718) do
+ActiveRecord::Schema.define(version: 20150225001538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20150224094718) do
     t.integer  "num_matches",   default: 0
     t.integer  "num_wins",      default: 0
     t.integer  "num_draws",     default: 0
+    t.float    "win_rate"
+    t.float    "draw_rate"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
