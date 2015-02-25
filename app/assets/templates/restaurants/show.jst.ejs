@@ -13,18 +13,18 @@
     <div id="tags">
       <% _.each(restaurant.attributes.categories, function(c) { %>
         <%= c.name %>   <!-- TODO - link to category -->
-      <% }) %>   <a id="edit_tags" href="#">Edit</a>
+      <% }) %>   <!-- <a id="edit_tags" href="#">Edit</a> -->
     </div>
   </div>
 
   <div class="restaurant-buttons" style="text-align: right;">
     <% var review_path = '/restaurants/' + restaurant.escape('id') + '/reviews/new'; %>
     <% var images_path = '/restaurants/' + restaurant.escape('id') + '/restaurant_images/new'; %>
-    <a href="<%= review_path %>" class="btn btn-primary">Write a Review</a>
+    <a href="<%= review_path %>" class="btn btn-primary"><%= I18n.write_review %></a>
     <div class="btn-group" role="group">
-      <a href="<%= images_path %>" id="add_image" class="btn btn-default"><i class="fa fa-camera"></i> Add Photo</a>
-      <button id="share_restaurant" class="btn btn-default"><i class="fa fa-share"></i> Share</button>
-      <button id="bookmark_restaurant" class="btn btn-default"><i class="fa fa-bookmark"></i> Bookmark</button>
+      <a href="<%= images_path %>" id="add_image" class="btn btn-default"><i class="fa fa-camera"></i> <%= I18n.add_photo %></a>
+      <button id="share_restaurant" class="btn btn-default"><i class="fa fa-share"></i> <%= I18n.share %></button>
+      <button id="bookmark_restaurant" class="btn btn-default"><i class="fa fa-bookmark"></i> <%= I18n.bookmark %></button>
     </div>
   </div>
 
@@ -52,7 +52,7 @@
         <img class="center-cropped" src="<%= images[images.length - 1].url %>"/>
       </div>
     <% } else { %>
-      There aren't any photos yet. <a href="<%= images_path %>" id="add_image" class="btn btn-default"><i class="fa fa-camera"></i> Add some!</a>
+      <%= I18n.no_images %> <a href="<%= images_path %>" id="add_image" class="btn btn-default"><i class="fa fa-camera"></i> Add some!</a>
     <% } %>
   </div>
 
@@ -60,7 +60,7 @@
 
   <div id="match_container">
     <div id="match_stats">
-      <h2>Scores</h2>
+      <h2><%= I18n.scores %></h2>
       <h3><%= restaurant.escape('positive_rate') %>%</h3><div class="stat-description"> positive review</div>
       <% _.each(restaurant.attributes.stats, function(stat) { %>
         <h3><%= stat %>%</h3><div class="stat-description"> win rate in category ____</div>
@@ -73,7 +73,7 @@
 
   <div class="info-row">
     <div id="reviews_container">
-      <h4>Reviews</h4>
+      <h4><%= I18n.reviews %></h4>
       <ul id="restaurant_reviews">
       </ul>
     </div>

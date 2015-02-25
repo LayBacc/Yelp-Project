@@ -114,7 +114,7 @@ App.Views.Match = Backbone.View.extend({
 		}
 
 		if (restaurant == undefined) {
-			name = 'There are no more restaurants';
+			name = I18n.no_more_restaurants;
 			front_image_url = 'http://placehold.it/200x200"';
 		}
 		else if (restaurant.front_image_url == undefined) {

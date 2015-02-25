@@ -1,10 +1,11 @@
 App.Collections.Matches = Backbone.Collection.extend({
 	initialize: function(models, options) {
 		this.category_id = models.category_id;
+		this.subarea = models.subarea;
 		this.deferred = this.fetch({
 			data: {
 				category_id: this.category_id,
-				subarea: models.subarea
+				subarea: this.subarea
 			}
 		});
 	},

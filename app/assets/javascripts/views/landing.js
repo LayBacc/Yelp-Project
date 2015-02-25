@@ -1,8 +1,8 @@
 App.Views.Landing = Backbone.View.extend({
 	initialize: function(params) {
 		this.categories = params.categories;
-		var matches = new App.Collections.Matches({ category_id: 1, subarea: '新宿' });
-		this.match_view = new App.Views.Match({ collection: matches });
+		this.matches = new App.Collections.Matches({ category_id: 1, subarea: '新宿' });
+		this.match_view = new App.Views.Match({ collection: this.matches });
 	},
 
 	events: {
@@ -27,6 +27,7 @@ App.Views.Landing = Backbone.View.extend({
 
 		this.$el.html(JST['landing']());
 		this.$el.append(this.match_view.render().el);
+		this.$('#subarea_autocomplete').val(this.matches.subarea);
 		return this;
 	},
 

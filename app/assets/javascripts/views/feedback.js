@@ -38,17 +38,15 @@ App.Views.Feedback = Backbone.View.extend({
 	},
 
 	afterSend: function() {
-		var header = '<p>Thank you for your valuable feedback!</p>';
-		var button = '<button id="more_feedback" class="btn btn-primary">More Feedback</button>';
+		var header = '<p>' + I18n.feedback.thanks + '</p>';
+		var button = '<button id="more_feedback" class="btn btn-primary">' + I18n.feedback.more + '</button>';
 		$('#feedback_box').html(header + button);
 	},
 
 	feedbackForm: function() {
-		var header = '<p>Any feedback would be very much appreciated!</p>';
+		var header = '<p>' + I18n.feedback.heading + '</p>';
 		var form = '<textarea id="feedback_body" class="form-control" placeholder="e.g. the review system ist\'t intuitive, there aren\'t enough images etc."></textarea><br>';
 		var submit = '<button id="send_feedback" class="btn btn-primary">Send</button>';
 		$('#feedback_box').html(header + form + submit);
-
-		console.log('initializing feedback form')
 	}
 });

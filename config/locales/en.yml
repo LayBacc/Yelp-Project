@@ -6,10 +6,24 @@ en:
     draw: Draw
   category: Category
   area: Area
-  search_subarea_hint: 'Toronto, Tokyo'
-  search_category_hint: 'tacos, burgers, sushi'
+  search:
+    category: Find
+    category_hint: 'tacos, burgers, sushi'
+    subarea: Near
+    subarea_hint: 'Toronto, Tokyo'
   restaurants:
     index:
       results: "Showing results for %{category} in %{location}"
   feedback:
     bar: Feedback? We'd love to hear!
+    thanks: Thank you for your valuable feedback!
+    more: More Feedback
+    heading: Any feedback would be very much appreciated!
+  write_review: Write a Review
+  add_photo: Add Photo
+  share: Share
+  bookmark: Bookmark
+  no_images: There aren't any photos yet.
+  scores: Scores
+  reviews: Reviews
+  no_more_restaurants: There are no more restaurants
