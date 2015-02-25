@@ -16,7 +16,7 @@
 
   <!-- Font Awesome -->
   <%= stylesheet_link_tag 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' %>
-  
+
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -27,6 +27,10 @@
 
 <%= render '/layouts/feedback' %>
 
+<script>
+window.I18n = <%= current_translations.to_json.html_safe %>
+console.log(I18n);
+</script>
 
 </body>
 </html>
