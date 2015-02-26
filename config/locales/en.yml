@@ -4,7 +4,7 @@ en:
     win: Winner
     never_been: Never been there
     draw: Draw
-    instruction: Which is better?
+    instruction: Which one is better?
   category: Category
   area: Area
   search:

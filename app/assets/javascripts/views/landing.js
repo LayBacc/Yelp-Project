@@ -6,7 +6,7 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	events: {
-		'blur #subarea_autocomplete': 'fetchMatches',
+		'blur #subarea_autocomplete': 'checkSubarea',
 		'change #categories_select': 'fetchMatches'
 	},
 
@@ -33,5 +33,14 @@ App.Views.Landing = Backbone.View.extend({
 
 	fetchMatches: function() {
 		this.match_view.fetchMatches();
+	},
+
+	checkSubarea: function() {
+		console.log($('#subarea_autocomplete').val(), this.matches.subarea);
+		this.matches.subarea = $('#subarea_autocomplete').val();
+		this.matches.category_id = $('#categories_select').val();
+		if ($('#subarea_autocomplete').val() != this.matches.subarea) {
+			this.match_view.fetchMatches();
+		}
 	}
 });

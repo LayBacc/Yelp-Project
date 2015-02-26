@@ -113,8 +113,6 @@ App.Views.Match = Backbone.View.extend({
 			restaurant = this.curr_right;
 		}
 
-		console.log(restaurant);
-
 		if (restaurant == undefined) {
 			name = I18n.no_more_restaurants;
 			front_image_url = 'http://placehold.it/200x200"';
