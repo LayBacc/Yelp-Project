@@ -1,84 +1,10 @@
-require 'nokogiri'
-require 'open-uri'
-
-class TabelogScraper 
+class TabelogScraper < Scraper
   ROOT_URL = 'http://tabelog.com/'
-  USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.16 Safari/537.36' #'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36'
-
-  FILE_PATH = "#{Rails.root}/lib/assets/"
-  PROXY_LIST = "#{FILE_PATH}proxy_ips.txt"
-  BAD_PROXY_LIST = "#{FILE_PATH}bad_proxies.txt"
-  PROGRESS_LOG = "#{Rails.root}/log/scraping.log"
-
+  
   SUBAREA_BATCH_SIZE = 5
   CATEGORY_BATCH_SIZE = 42
 
-  @@proxies = Array.new
-
   class << self
-    def proxies
-      @@proxies
-    end
-
-    def run_batch
-      batch_add_restaurants(next_subarea_offset, SUBAREA_BATCH_SIZE, 0, CATEGORY_BATCH_SIZE, 0)
-    end
-
-    def fetch_page(path, with_root=true)
-      @@proxies = load_proxies if @@proxies.empty?
-      proxy = select_proxy
-      path = ROOT_URL + path if with_root
-      Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
-    rescue OpenURI::HTTPError, Errno::ETIMEDOUT
-      puts "fetch_page error, url: #{path}" 
-      return
-    end
-
-    def select_proxy
-      @@proxies[rand(@@proxies.count)]
-    end
-
-    def log_bad_proxy(proxy)
-      File.open(BAD_PROXY_LIST, 'a') do |file|
-        file.write("#{proxy}\n")
-      end
-    end
-
-    # load proxies into memory
-    def load_proxies
-      proxies = Array.new
-      File.open(PROXY_LIST, 'r').each_line do |line|
-        proxies << line.strip
-      end
-      proxies
-    end
-
-    # to determine whether we are blocked by Tabelog
-    def test_yelp
-      @@proxies = load_proxies if @@proxies.empty?
-      proxy = select_proxy
-      Nokogiri::HTML(open('http://yelp.com', proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/', read_timeout: 5))
-    rescue OpenURI::HTTPError, Errno::ETIMEDOUT, Errno::ECONNREFUSED, Net::ReadTimeout
-      log_bad_proxy(proxy)
-      test_yelp
-    end
-
-    def test_dummy
-      Nokogiri::HTML(open("http://bit.ly/gearshare"))
-    end
-
-    # TODO - tentative method to get images from google
-    def add_google_image(restaurant)
-      @@proxies = load_proxies if @@proxies.empty?
-      proxy = select_proxy
-
-      query = URI::encode("#{restaurant.name}#{restaurant.subarea}")
-      url = "https://www.google.co.jp/search?q=#{query}&tbm=isch"
-      page = Nokogiri::HTML(open(url, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT))
-
-      puts page.css('img')
-    end
-
     def add_areas
       page = fetch_page('tokyo/')
       page.css('#contents-narrowarea ul.list-area li.area').each do |area|
@@ -111,19 +37,12 @@ class TabelogScraper
       page.css('.main-title span.count')[0].text.to_i / 20 + 1
     end
 
-    def log_progress(subarea, category, page_num)
-      File.open(PROGRESS_LOG, 'a') do |file|
-        file.write("#{subarea.id}-#{subarea.name}\t#{category.id}-#{category.name}\tp.#{page_num}\n")
-      end
-    end
-
     def batch_add_restaurants(offset_s=0, limit_s=1, offset_c=0, limit_c=10, page_offset=0, page_limit=nil)
       Subarea.offset(offset_s).limit(limit_s).each do |subarea|
         Category.offset(offset_c).limit(limit_c).each do |category|
           end_page = page_limit.present? ? page_limit : num_pages(subarea, category)
           (page_offset+1..end_page).each do |page_num|
-            log_progress(subarea, category, page_num)
-  	  		  add_page_restaurants(subarea, category, page_num)
+            add_page_restaurants(subarea, category, page_num)
   	  	  end
   	  	end
   	  end
