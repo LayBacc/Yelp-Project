@@ -62,11 +62,14 @@
     <div id="match_stats">
       <h2><%= I18n.scores %></h2>
       <h3><%= restaurant.escape('positive_rate') %>%</h3><div class="stat-description"> positive review</div>
+      <br>
       <% _.each(restaurant.attributes.stats, function(stat) { %>
-        <h3><%= stat %>%</h3><div class="stat-description"> win rate in category ____</div>
+        <h3><%= stat.win_rate %>%</h3><div class="stat-description"> win rate in <%= stat.category_name %></div>
       <% }) %>
     </div>
-    <div id="match_form"></div>
+    <div id="match_form">
+      <h4><%= I18n.match.instruction %></h4>
+    </div>
   </div>
 
   <br>
@@ -165,7 +168,7 @@
 #match_stats {
   margin-top: 3em;
   width: 20em;
-  height: 20em;
+  height: 22em;
   background-color: #f0f0f0;
   display: inline-block;
 }
@@ -181,25 +184,23 @@
   right: -1em;
   padding: 2em;
   width: 33em;
-  height: 20em;
+  height: 22em;
   background-color: #f0f0f0;
 }
 
-.center-cropped {
+.restaurant-image img {
   width: 14.286em;
   height: 14.286em;
-  object-fit: none; /* Do not scale the image */
-  object-position: center; /* center the image within the element */
-
   -webkit-transition: width 1s;
   transition: width 1s;
 }
 
-.center-cropped:hover {
+.restaurant-image img:hover {
   width: 17.857em;
   height: 17.857em;
   object-fit: none; /* Do not scale the image */
   object-position: center; /* center the image within the element */
+  
 }
 
 .restaurant-image {

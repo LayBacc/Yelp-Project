@@ -1,9 +1,10 @@
 en:
-  landing:
+  match:
     title: Reliable restaurant reviews
     win: Winner
     never_been: Never been there
     draw: Draw
+    instruction: Which is better?
   category: Category
   area: Area
   search:

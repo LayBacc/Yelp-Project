@@ -1,9 +1,10 @@
 ja:
-  landing:
+  match:
     title: 一番頼もしいグルメサイト
     win: 優勝
     never_been: 行ったことがない
     draw: 引き分け
+    instruction: Which is better?
   category: ジャンル
   area: エリア
   search:

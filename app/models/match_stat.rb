@@ -3,10 +3,11 @@ class MatchStat < ActiveRecord::Base
   belongs_to :restaurant
 
   scope :by_restaurant_id, ->(restaurant_id) { where(restaurant_id: restaurant_id).order(:win_rate) }
+  scope :with_category_names, ->() { select('match_stats.*, categories.name AS category_name').joins('INNER JOIN categories ON match_stats.category_id = categories.id') }
   scope :fetch, ->(restaurant_ids, category_id) { by_restaurant_id(restaurant_ids).where(category_id: category_id) }
 
   def update_rates
-  	update(win_rate: num_wins/num_matches, draw_rate: num_draws/num_matches)
+  	update(win_rate: num_wins/num_matches * 100, draw_rate: num_draws/num_matches * 100)
   end
 
   def increment_draw

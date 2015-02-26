@@ -10,6 +10,7 @@ class Restaurant < ActiveRecord::Base
   has_many :images, class_name: 'RestaurantImage', dependent: :destroy
   has_many :reviews
   has_many :questionnaires
+  has_many :match_stats
 
   enum area: Area.all.pluck(:name)
   enum subarea: Subarea.all.pluck(:name)
@@ -29,8 +30,8 @@ class Restaurant < ActiveRecord::Base
     .where('categories.name = ?', category)
   end
   scope :with_front_image, ->() do
-    select("DISTINCT ON (restaurants.id) restaurants.*, 
-      COALESCE(restaurant_images.url, 'http://placehold.it/150x150') AS front_image_url")
+    select("restaurants.*, 
+      COALESCE(restaurant_images.url, 'http://placehold.it/200x200') AS front_image_url")
     .joins('LEFT JOIN restaurant_images ON restaurants.id = restaurant_images.restaurant_id')
   end
 
@@ -65,7 +66,7 @@ class Restaurant < ActiveRecord::Base
   end
 
   def top_three_stats
-    MatchStat.by_restaurant_id(id).limit(3)
+    match_stats.with_category_names.limit(3)
   end
 
   def positive_rate

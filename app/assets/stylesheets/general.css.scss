@@ -22,3 +22,9 @@ input.signup-name {
 .signin-field {
   margin-bottom: 0.6em;
 }
+
+
+.center-cropped {
+  object-fit: none; /* Do not scale the image */
+  object-position: center; /* center the image within the element */
+}

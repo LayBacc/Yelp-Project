@@ -11,7 +11,7 @@ App.Views.Restaurant = Backbone.View.extend({
 	render: function() {
 		console.log(this.model);
 		this.$el.html(JST['restaurants/show']({ restaurant: this.model }));
-		this.$('#match_form').html(this.match_view.render().el);
+		this.$('#match_form').append(this.match_view.render().el);
 
 		var _this = this;
 		this.reviews.deferred.done(function() {

@@ -8,11 +8,11 @@
   <% @restaurants.each do |r| %>
     <tr class="list-restaurant">
       <td class="image">
-        <%= link_to r do %>
+        <a href="/restaurants/<%= r.id %>" data-no-turbolink="true">
           <%= image_tag r.front_image_url %>
-        <% end %>
+        </a>
       </td>
-      <td class="name"><%= link_to r.name, r %></td>
+      <td class="name"><%= link_to r.name, r, data: { no_turbolink: true } %></td>
     </tr>
   <% end %>
 </table>
@@ -27,5 +27,9 @@
 .list-restaurant .name {
   text-align: left;
   padding: 2em 2em 2em 2em;
+}
+
+.list-restaurant img {
+  max-width: 150px;
 }
 </style>
