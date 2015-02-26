@@ -38,9 +38,9 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	checkSubarea: function() {
-		this.matches.subarea = $('#subarea_autocomplete').val();
 		if ($('#subarea_autocomplete').val() != this.matches.subarea) {
 			this.fetchMatches();
 		}
+		this.matches.subarea = $('#subarea_autocomplete').val();
 	}
 });
