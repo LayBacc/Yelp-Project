@@ -16,9 +16,11 @@ class Restaurant < ActiveRecord::Base
   enum subarea: Subarea.all.pluck(:name)
   enum price_bucket: ['～￥999', '￥1,000～￥1,999', '￥2,000～￥2,999', '￥3,000～￥3,999', '￥4,000～￥4,999', '￥5,000～￥5,999', '￥6,000～￥7,999', '￥8,000～￥9,999', '￥10,000～￥14,999', '￥15,000～￥19,999', '￥20,000～￥29,999', '￥30,000～']
 
+  default_scope { select("restaurants.*, COALESCE(restaurants.front_image_url, 'http://placehold.it/200x200') AS front_image_url") }
+
   scope :near, ->(lat, lng) do
-  	where('latitude BETWEEN ? AND ?', lat - DISTANCE_RADIUS, lat + DISTANCE_RADIUS)
-  	.where('longitude BETWEEN ? AND ?', lng - DISTANCE_RADIUS, lng + DISTANCE_RADIUS)
+    where('latitude BETWEEN ? AND ?', lat - DISTANCE_RADIUS, lat + DISTANCE_RADIUS)
+    .where('longitude BETWEEN ? AND ?', lng - DISTANCE_RADIUS, lng + DISTANCE_RADIUS)
   end
   scope :with_category_id, ->(cat_id) do
     joins('INNER JOIN restaurant_categories ON restaurants.id = restaurant_categories.restaurant_id')
@@ -28,11 +30,6 @@ class Restaurant < ActiveRecord::Base
     joins('INNER JOIN restaurant_categories ON restaurants.id = restaurant_categories.restaurant_id')
     .joins('INNER JOIN categories ON restaurant_categories.category_id = categories.id')
     .where('categories.name = ?', category)
-  end
-  scope :with_front_image, ->() do
-    select("restaurants.*, 
-      COALESCE(restaurant_images.url, 'http://placehold.it/200x200') AS front_image_url")
-    .joins('LEFT JOIN restaurant_images ON restaurants.id = restaurant_images.restaurant_id')
   end
 
   scope :random, ->(num) { order('RANDOM()').limit(num) }

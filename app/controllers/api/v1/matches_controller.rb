@@ -5,7 +5,7 @@ module Api
       respond_to :json
 
       def index
-        @restaurants = Restaurant.query(query_params).with_front_image.random(10)
+        @restaurants = Restaurant.query(query_params).random(10)
       end
 
       def create

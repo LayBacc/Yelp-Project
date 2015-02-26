@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225001538) do
+ActiveRecord::Schema.define(version: 20150226073850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 20150225001538) do
     t.string   "lunch_prices"
     t.string   "dinner_prices"
     t.string   "purposes"
+    t.string   "front_image_url"
   end
 
   add_index "restaurants", ["area"], name: "index_restaurants_on_area", using: :btree
