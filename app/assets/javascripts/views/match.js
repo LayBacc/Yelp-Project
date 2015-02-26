@@ -163,7 +163,7 @@ App.Views.Match = Backbone.View.extend({
 				_this.initializeContestants();
 			}
 			else {
-				console.log('no more restaurants, please change parameters');
+				$('#match_message').html(I18n.no_more_restaurants);
 			}
 		});
 	}

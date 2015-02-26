@@ -32,15 +32,15 @@ App.Views.Landing = Backbone.View.extend({
 	},
 
 	fetchMatches: function() {
+		$('#match_message').html('');
 		this.match_view.fetchMatches();
+		this.matches.category_id = $('#categories_select').val();
 	},
 
 	checkSubarea: function() {
-		console.log($('#subarea_autocomplete').val(), this.matches.subarea);
 		this.matches.subarea = $('#subarea_autocomplete').val();
-		this.matches.category_id = $('#categories_select').val();
 		if ($('#subarea_autocomplete').val() != this.matches.subarea) {
-			this.match_view.fetchMatches();
+			this.fetchMatches();
 		}
 	}
 });
