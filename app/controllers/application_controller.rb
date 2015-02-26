@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_request_variant
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :first_name
@@ -37,5 +38,11 @@ class ApplicationController < ActionController::Base
 
   def query_params
   	params.permit(:location, :subarea, :latitude, :longitude, :order, :category, :category_id, :page)
+  end
+
+  private
+
+  def set_request_variant
+    request.variant = :mobile if browser.mobile?
   end
 end

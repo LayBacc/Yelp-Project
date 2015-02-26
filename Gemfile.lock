@@ -42,6 +42,7 @@ GEM
       jquery-rails
       railties
     bcrypt (3.1.10)
+    browser (0.8.0)
     builder (3.2.2)
     chronic (0.10.2)
     coffee-rails (4.0.1)
@@ -180,6 +181,7 @@ PLATFORMS
 
 DEPENDENCIES
   backbone-on-rails
+  browser
   coffee-rails (~> 4.0.0)
   devise
   geocoder
