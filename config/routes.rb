@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :questionnaires
   end
   resources :matches
+  resources :feedbacks
 
   namespace :api do
     namespace :v1 do

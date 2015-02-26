@@ -16,8 +16,6 @@ class Restaurant < ActiveRecord::Base
   enum subarea: Subarea.all.pluck(:name)
   enum price_bucket: ['～￥999', '￥1,000～￥1,999', '￥2,000～￥2,999', '￥3,000～￥3,999', '￥4,000～￥4,999', '￥5,000～￥5,999', '￥6,000～￥7,999', '￥8,000～￥9,999', '￥10,000～￥14,999', '￥15,000～￥19,999', '￥20,000～￥29,999', '￥30,000～']
 
-  default_scope { select("restaurants.*, COALESCE(restaurants.front_image_url, 'http://placehold.it/200x200') AS front_image_url") }
-
   scope :near, ->(lat, lng) do
     where('latitude BETWEEN ? AND ?', lat - DISTANCE_RADIUS, lat + DISTANCE_RADIUS)
     .where('longitude BETWEEN ? AND ?', lng - DISTANCE_RADIUS, lng + DISTANCE_RADIUS)
@@ -36,6 +34,8 @@ class Restaurant < ActiveRecord::Base
   scope :match_latlng, ->(lat, lng, cat_id, num) { with_category_id(cat_id).near(lat, lng).random(num) }
   scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
+  scope :with_default_image, ->() { select("restaurants.*, COALESCE(restaurants.front_image_url, 'http://placehold.it/200x200') AS front_image_url") }
+  
   geocoded_by :full_address
 
   # Used for geocoding
