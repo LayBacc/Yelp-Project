@@ -12,8 +12,8 @@ class Restaurant < ActiveRecord::Base
   has_many :questionnaires
   has_many :match_stats
 
-  enum area: Area.all.pluck(:name)
-  enum subarea: Subarea.all.pluck(:name)
+  # enum area: Area.all.pluck(:name)
+  # enum subarea: Subarea.all.pluck(:name)
   enum price_bucket: ['～￥999', '￥1,000～￥1,999', '￥2,000～￥2,999', '￥3,000～￥3,999', '￥4,000～￥4,999', '￥5,000～￥5,999', '￥6,000～￥7,999', '￥8,000～￥9,999', '￥10,000～￥14,999', '￥15,000～￥19,999', '￥20,000～￥29,999', '￥30,000～']
 
   scope :near, ->(lat, lng) do
@@ -85,5 +85,20 @@ class Restaurant < ActiveRecord::Base
       end
       scoped
     end
+  end
+
+  def lunch_price
+    return nil unless lunch_prices.present?
+    most_selected_bucket(lunch_prices)
+  end
+
+  def dinner_price
+    return nil unless lunch_prices.present?
+    most_selected_bucket(dinner_prices)    
+  end
+
+  def most_selected_bucket(prices)
+    prices = prices.split('-').map { |price| price.to_i }
+    Restaurant.price_buckets.keys[prices.index(prices.max)]
   end
 end

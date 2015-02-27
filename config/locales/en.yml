@@ -5,6 +5,9 @@ en:
     never_been: Never been there
     draw: Draw
     instruction: Which one is better?
+  landing:
+    pitch1: 'Ever confused about what the 5-star ratings even mean? We are, too.'
+    pitch2: 'Introducing a much more intuitive review system'
   category: Category
   area: Area
   search:

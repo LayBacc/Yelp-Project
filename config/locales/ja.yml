@@ -5,6 +5,9 @@ ja:
     never_been: 行ったことがない
     draw: 引き分け
     instruction: Which is better?
+  landing:
+    pitch1: 'Ever confused about what the 5-star ratings even mean? We are, too.'
+    pitch2: 'Introducing a much more intuitive review system'
   category: ジャンル
   area: エリア
   search:

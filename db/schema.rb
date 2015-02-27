@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227060309) do
+ActiveRecord::Schema.define(version: 20150227065028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20150227060309) do
     t.string   "tabelog_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
+    t.integer  "urbanspoon_count"
+    t.string   "urbanspoon_link"
   end
 
   add_index "areas", ["tabelog_code"], name: "index_areas_on_tabelog_code", using: :btree
@@ -142,6 +145,9 @@ ActiveRecord::Schema.define(version: 20150227060309) do
     t.string   "tabelog_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
+    t.integer  "urbanspoon_count"
+    t.string   "urbanspoon_link"
   end
 
   add_index "subareas", ["name"], name: "index_subareas_on_name", using: :btree
