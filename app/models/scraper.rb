@@ -20,7 +20,7 @@ class Scraper
       @@proxies = load_proxies if @@proxies.empty?
       proxy = select_proxy
       path = ROOT_URL + path if with_root
-      Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.yelp.com/'))
+      Nokogiri::HTML(open(path))
       # Nokogiri::HTML(open(path, proxy: "http://#{proxy}/", 'User-Agent' => USER_AGENT, 'Referer' => 'http://www.tabelog.com/'))
     rescue OpenURI::HTTPError, Errno::ETIMEDOUT => error
       puts "fetch_page error, url: #{path}"
