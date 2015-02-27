@@ -17,7 +17,7 @@ module Api
       private
 
       def match_params
-        params.require(:match).permit(:first_id, :second_id, :winner, :user_id, :category_id)
+        params.require(:match).permit(:first_id, :second_id, :winner, :category_id).merge(user_id: vote_user_id)
       end
     end
   end

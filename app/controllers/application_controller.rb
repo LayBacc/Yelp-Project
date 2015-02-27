@@ -40,6 +40,10 @@ class ApplicationController < ActionController::Base
   	params.permit(:location, :subarea, :latitude, :longitude, :order, :category, :category_id, :page)
   end
 
+  def vote_user_id
+    current_user.present? ? current_user.id : 0
+  end
+
   private
 
   def set_request_variant

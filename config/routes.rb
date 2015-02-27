@@ -26,6 +26,7 @@ Rails.application.routes.draw do
           get :subareas
         end
       end
+      resources :visits
     end
   end
 

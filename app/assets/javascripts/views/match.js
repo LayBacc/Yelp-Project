@@ -90,8 +90,22 @@ App.Views.Match = Backbone.View.extend({
 	},
 
 	matchNeverBeen: function(side) {
-		this.updateContestant(side);
-		// TODO - save never_been in server
+		var _this = this;
+		var restaurant = side == 'left' ? this.curr_left : this.curr_right;
+
+		$.ajax({
+			url: '/api/v1/visits',
+			type: 'post',
+			data: { 
+				visit: { 
+					restaurant_id: restaurant.id,
+					visited: false
+				} 
+			},
+			success: function() {
+				_this.updateContestant(side);
+			}
+		});
 	},
 
 	nextRestaurant: function(curr) {
