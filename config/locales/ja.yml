@@ -1,13 +1,14 @@
 ja:
   match:
-    title: 一番頼もしいグルメサイト
     win: 優勝
     never_been: 行ったことがない
     draw: 引き分け
-    instruction: Which is better?
+    instruction: どっちのほうが好きなの？
   landing:
-    pitch1: 'Ever confused about what the 5-star ratings even mean? We are, too.'
-    pitch2: 'Introducing a much more intuitive review system'
+    title: グルメサイト
+    pitch1: Forget about the 5-star rating system
+    pitch2: Here's something more robust and intuitive
+    sign_up: Create a Free Account
   category: ジャンル
   area: エリア
   search:

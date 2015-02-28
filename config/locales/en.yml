@@ -1,13 +1,14 @@
 en:
   match:
-    title: Reliable restaurant reviews
     win: Winner
     never_been: Never been there
     draw: Draw
-    instruction: Which one is better?
+    instruction: Which one do you like more?
   landing:
-    pitch1: 'Ever confused about what the 5-star ratings even mean? We are, too.'
-    pitch2: 'Introducing a much more intuitive review system'
+    title: Discover Local Restaurants
+    pitch1: Forget about the 5-star rating system
+    pitch2: Here's something more robust and intuitive
+    sign_up: Create a Free Account
   category: Category
   area: Area
   search:
