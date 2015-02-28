@@ -13,9 +13,9 @@ en:
   area: Area
   search:
     category: Find
-    category_hint: 'tacos, burgers, sushi'
+    category_hint: 'Sushi, French, Pizza'
     subarea: Near
-    subarea_hint: 'Toronto, Tokyo'
+    subarea_hint: 'Mission, SOMA'
   restaurants:
     index:
       results: "Showing results for %{category} in %{location}"

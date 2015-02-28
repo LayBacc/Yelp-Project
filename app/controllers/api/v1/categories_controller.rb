@@ -7,7 +7,7 @@ module Api
 
       def index
       	if params[:term].present?
-      	  @categories = Category.where("name LIKE '#{params[:term]}%'").pluck(:name)
+      	  @categories = Category.where("LOWER(name) LIKE '#{params[:term].downcase}%'").pluck(:name)
         else
           @categories = Category.all.pluck(:id, :name_jp)
         end
