@@ -1,0 +1,140 @@
+/* line 1, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+textarea {
+  resize: none;
+}
+
+/* line 5, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.bullet-after:after {
+  content: '\2022';
+  position: relative;
+  top: -1px;
+  margin: 0 3px;
+  color: #999;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+/* Sign Up */
+/* line 16, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+input.signup-name {
+  width: 49.5%;
+  display: inline-block;
+}
+
+/* line 22, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.signup-field,
+.signin-field {
+  margin-bottom: 0.6em;
+}
+
+/* line 26, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.center-cropped {
+  object-fit: none;
+  /* Do not scale the image */
+  object-position: center;
+  /* center the image within the element */
+}
+/* line 6, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+#search_category,
+#search_subarea {
+  width: 16em;
+}
+
+/* line 10, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.hidden {
+  display: none;
+}
+
+/* line 14, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+#match_config .form-control {
+  width: 10em;
+  display: inline-block;
+}
+
+/* line 19, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-restaurant-box {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* line 24, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-restaurant-box {
+  width: 14.286em;
+  height: 14.286em;
+}
+
+/* line 31, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.left-select,
+.draw-select,
+.right-select {
+  position: relative;
+  padding: 1em 1em 1em 1em;
+  background-color: #f0f0f0;
+}
+
+/* line 38, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+#left_never_been,
+#right_never_been {
+  width: 10em;
+  display: inline;
+}
+
+/* line 43, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+#draw {
+  width: 7em;
+  display: inline;
+}
+
+/* line 48, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-restaurant {
+  position: relative;
+  width: 100%;
+}
+
+/* line 53, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-image {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* line 61, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.left-description,
+.right-description {
+  cursor: pointer;
+  position: absolute;
+  width: 14.286em;
+  height: 2.5em;
+  background-color: rgba(250, 250, 250, 0.5);
+}
+
+/* line 70, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.left-description,
+.right-description {
+  bottom: 0em;
+  background-color: #FFCC00;
+}
+
+/* line 75, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.ui-menu .ui-menu-item a {
+  color: #96f226;
+  border-radius: 0px;
+  border: 1px solid #454545;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
