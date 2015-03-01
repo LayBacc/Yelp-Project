@@ -1,0 +1,58 @@
+<nav class="navbar navbar-gold">
+  <div class="text-center">Restaurant Reviews</div>
+  <div id="mobile_menu_trigger" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  	<i class="fa fa-ellipsis-v"></i>
+  </div>
+  <ul class="dropdown-menu" role="menu">
+  	<li><a href="#">Log In</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Review</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Photo</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Restaurant</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Settings</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Report a Bug</a></li>
+  </ul>
+
+  <br>
+  
+  <div id="mobile_search_small">
+  	<input class="form-control"></input>
+  	<i id="search_icon" class="fa fa-search"></i>
+  </div>
+</nav>
+
+<style>
+#mobile_menu_trigger {
+  position: absolute;
+  right: 1em;
+  top: 0.5em;
+}
+
+nav.navbar ul.dropdown-menu {
+  position: absolute;
+  right: 0em;
+  left: 50%;
+  top: 2em;
+  width: 50%;
+}
+
+#mobile_search_small {
+  padding: 0.3em;
+}
+
+#search_icon {
+  float: left;
+  margin-left: 0.5em;
+  margin-top: -1.7em;
+  z-index: 2;
+}
+
+#mobile_search_small input {
+  padding-left: 2em;
+}
+
+</style>

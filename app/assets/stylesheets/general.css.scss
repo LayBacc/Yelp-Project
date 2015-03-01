@@ -12,6 +12,21 @@ textarea {
   line-height: 18px;
 }
 
+/* navbar */
+.navbar-gold {
+  background-color: #FFCC00;
+  border-color: #FFFFCC;
+}
+
+.navbar-toggle {
+  border-color: #FFFFCC;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: #FFCC00;
+}
+
+
 @media (min-width: 700px) {
   #feedback_bar {
     position: fixed;
@@ -90,13 +105,13 @@ textarea {
     padding: 0.8em 0.8em 0.8em 0.8em;
 
     width: 20em;
-    height: 20em;
+    height: 12.5em;
     background-color: #f0f0f0;
   }
 
   #feedback_box textarea {
     resize: none;
-    height: 8em;
+    height: 4em;
   }
 }
 
