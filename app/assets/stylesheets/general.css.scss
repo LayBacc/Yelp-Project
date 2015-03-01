@@ -12,6 +12,94 @@ textarea {
   line-height: 18px;
 }
 
+@media (min-width: 700px) {
+  #feedback_bar {
+    position: fixed;
+    background-color: #3399ff;
+    padding: 1em 1em 1em 1em;
+    color: white;
+
+    width: 16em;
+    bottom: 2em;
+    right: 2em;
+
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+  }
+
+  #feedback_trigger {
+    cursor: pointer;
+    position: fixed;
+
+    height: 3em;
+    width: 16em;
+    bottom: 2em;
+    right: 2em;
+    z-index: 5;
+  }
+
+  #feedback_box {
+    position: fixed;
+    bottom: 5em;
+    right: 2em;
+    padding: 1em 1em 1em 1em;
+
+    width: 20em;
+    height: 20em;
+    background-color: #f0f0f0;
+  }
+
+  #feedback_box textarea {
+    resize: none;
+    height: 8em;
+  }
+}
+
+@media (max-width: 699px) {
+  #feedback_bar {
+    position: fixed;
+    background-color: #3399ff;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    color: white;
+
+    width: 16em;
+    bottom: 0em;
+    right: 0em;
+
+    border-radius: 0.2em;
+    -webkit-border-radius: 0.2em;
+    -moz-border-radius: 0.2em;
+  }
+
+  #feedback_trigger {
+    cursor: pointer;
+    position: fixed;
+
+    height: 2.5em;
+    width: 16em;
+    bottom: 0em;
+    right: 0em;
+    z-index: 5;
+  }
+
+  #feedback_box {
+    position: fixed;
+    bottom: 2.5em;
+    right: 0em;
+    padding: 0.8em 0.8em 0.8em 0.8em;
+
+    width: 20em;
+    height: 20em;
+    background-color: #f0f0f0;
+  }
+
+  #feedback_box textarea {
+    resize: none;
+    height: 8em;
+  }
+}
+
 /* Sign Up */
 input.signup-name {
   width: 49.5%;
