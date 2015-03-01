@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@media (min-width: 700) {
+@media (min-width: 700px) {
   #search_category,
   #search_subarea {
     width: 16em;	
@@ -42,6 +42,51 @@
     cursor: pointer;
     position: absolute;
     width: 14.286em;
+    height: 2.5em;
+    background-color: rgba(250, 250, 250, 0.5);
+  }
+}
+
+@media (max-width: 699px) {
+  #search_category,
+  #search_subarea {
+    width: 16em;  
+  }
+  
+  #match_config .form-control {
+    width: 10em;
+    display: inline-block;
+  }
+
+  .match-restaurant-box {
+    width: 10.714em;
+    height: 10.714em;
+  }
+
+  .left-select,
+  .draw-select,
+  .right-select {
+    position: relative;
+    padding: 1em 1em 1em 1em;
+    background-color: #f0f0f0;
+  }
+
+  .left-image img,
+  .right-image img {
+    width: 10.714em;
+    height: 10.714em;
+  }
+
+  .draw-button {
+    width: 20em;
+    display: inline-block;
+  }
+
+  .left-description,
+  .right-description {
+    cursor: pointer;
+    position: absolute;
+    width: 10.714em;
     height: 2.5em;
     background-color: rgba(250, 250, 250, 0.5);
   }
@@ -88,4 +133,8 @@
   color: #96f226;
   border-radius: 0px;
   border: 1px solid #454545;
+}
+
+#match_extra_buttons {
+  padding-top: 1em;
 }
