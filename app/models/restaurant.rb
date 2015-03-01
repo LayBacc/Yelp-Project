@@ -35,6 +35,7 @@ class Restaurant < ActiveRecord::Base
   scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
   scope :with_default_image, ->() { select("restaurants.*, COALESCE(restaurants.front_image_url, 'http://placehold.it/200x200') AS front_image_url") }
+  scope :results, ->() { includes(:match_stats, :reviews).select('restaurants.*, ') }
   
   geocoded_by :full_address
 

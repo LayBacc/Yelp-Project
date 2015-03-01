@@ -11,7 +11,10 @@
           <%= image_tag r.front_image_url %>
         </a>
       </td>
-      <td class="name"><%= link_to r.name, r, data: { no_turbolink: true } %></td>
+      <td class="details">
+        <%= link_to r.name, r, data: { no_turbolink: true } %><br>
+        <%=  %>
+      </td>
     </tr>
   <% end %>
 </table>
@@ -23,7 +26,7 @@
   height: 11em;
 }
 
-.list-restaurant .name {
+.list-restaurant .details {
   text-align: left;
   padding: 2em 2em 2em 2em;
 }

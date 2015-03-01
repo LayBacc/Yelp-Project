@@ -54,6 +54,7 @@
   display: block;
   margin: 0 auto;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .left-description,
@@ -68,16 +69,7 @@
 .left-description,
 .right-description {
   bottom: 0em;
-}
-
-.left-select,
-.left-description {
-  background-color: #ff5050;
-}
-
-.right-select,
-.right-description {
-  background-color: #3399ff;
+  background-color: #FFCC00;
 }
 
 .ui-menu .ui-menu-item a{

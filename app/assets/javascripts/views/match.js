@@ -8,7 +8,8 @@ App.Views.Match = Backbone.View.extend({
 	},
 
 	events: {
-		'click .match-button': 'matchResult'
+		'click .match-button': 'matchResult',
+		'click .match-image': 'matchResult'
 	},
 
 	render: function() {
@@ -141,7 +142,7 @@ App.Views.Match = Backbone.View.extend({
 		}
 
 		if (front_image_url) {
-			$('.' + side + '-image').html('<img src="' + front_image_url + '" class="center-cropped" />');
+			$('.' + side + '-image').html('<img src="' + front_image_url + '" id="' + side + '_win" class="center-cropped" />');
 		}
 
 		$('.' + side + '-description').html(name);
