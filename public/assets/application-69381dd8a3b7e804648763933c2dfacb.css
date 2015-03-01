@@ -1,0 +1,295 @@
+/* line 1, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+textarea {
+  resize: none;
+}
+
+/* line 5, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.bullet-after:after {
+  content: '\2022';
+  position: relative;
+  top: -1px;
+  margin: 0 3px;
+  color: #999;
+  font-size: 10px;
+  line-height: 18px;
+}
+
+@media (min-width: 700px) {
+  /* line 16, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_bar {
+    position: fixed;
+    background-color: #3399ff;
+    padding: 1em 1em 1em 1em;
+    color: white;
+    width: 16em;
+    bottom: 2em;
+    right: 2em;
+    border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+  }
+
+  /* line 31, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_trigger {
+    cursor: pointer;
+    position: fixed;
+    height: 3em;
+    width: 16em;
+    bottom: 2em;
+    right: 2em;
+    z-index: 5;
+  }
+
+  /* line 42, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_box {
+    position: fixed;
+    bottom: 5em;
+    right: 2em;
+    padding: 1em 1em 1em 1em;
+    width: 20em;
+    height: 20em;
+    background-color: #f0f0f0;
+  }
+
+  /* line 53, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_box textarea {
+    resize: none;
+    height: 8em;
+  }
+}
+@media (max-width: 699px) {
+  /* line 60, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_bar {
+    position: fixed;
+    background-color: #3399ff;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    color: white;
+    width: 16em;
+    bottom: 0em;
+    right: 0em;
+    border-radius: 0.2em;
+    -webkit-border-radius: 0.2em;
+    -moz-border-radius: 0.2em;
+  }
+
+  /* line 75, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_trigger {
+    cursor: pointer;
+    position: fixed;
+    height: 2.5em;
+    width: 16em;
+    bottom: 0em;
+    right: 0em;
+    z-index: 5;
+  }
+
+  /* line 86, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_box {
+    position: fixed;
+    bottom: 2.5em;
+    right: 0em;
+    padding: 0.8em 0.8em 0.8em 0.8em;
+    width: 20em;
+    height: 20em;
+    background-color: #f0f0f0;
+  }
+
+  /* line 97, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+  #feedback_box textarea {
+    resize: none;
+    height: 8em;
+  }
+}
+/* Sign Up */
+/* line 104, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+input.signup-name {
+  width: 49.5%;
+  display: inline-block;
+}
+
+/* line 110, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.signup-field,
+.signin-field {
+  margin-bottom: 0.6em;
+}
+
+/* line 114, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/general.css.scss */
+.center-cropped {
+  object-fit: none;
+  /* Do not scale the image */
+  object-position: center;
+  /* center the image within the element */
+}
+@media (min-width: 700px) {
+  /* line 7, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  #search_category,
+  #search_subarea {
+    width: 16em;
+  }
+
+  /* line 11, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  #match_config .form-control {
+    width: 10em;
+    display: inline-block;
+  }
+
+  /* line 16, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .match-restaurant-box {
+    width: 14.286em;
+    height: 14.286em;
+  }
+
+  /* line 23, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-select,
+  .draw-select,
+  .right-select {
+    position: relative;
+    padding: 1em 1em 1em 1em;
+    background-color: #f0f0f0;
+  }
+
+  /* line 30, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-image img,
+  .right-image img {
+    width: 200px;
+    height: 200px;
+  }
+
+  /* line 35, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .draw-button {
+    width: 27em;
+    display: inline-block;
+  }
+
+  /* line 41, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-description,
+  .right-description {
+    cursor: pointer;
+    position: absolute;
+    width: 14.286em;
+    height: 2.5em;
+    background-color: rgba(250, 250, 250, 0.5);
+  }
+}
+@media (max-width: 699px) {
+  /* line 52, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  #search_category,
+  #search_subarea {
+    width: 16em;
+  }
+
+  /* line 56, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  #match_config .form-control {
+    width: 10em;
+    display: inline-block;
+  }
+
+  /* line 61, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .match-restaurant-box {
+    width: 10.714em;
+    height: 10.714em;
+  }
+
+  /* line 68, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-select,
+  .draw-select,
+  .right-select {
+    position: relative;
+    padding: 1em 1em 1em 1em;
+    background-color: #f0f0f0;
+  }
+
+  /* line 75, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-image img,
+  .right-image img {
+    width: 10.714em;
+    height: 10.714em;
+  }
+
+  /* line 80, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .draw-button {
+    width: 20em;
+    display: inline-block;
+  }
+
+  /* line 86, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+  .left-description,
+  .right-description {
+    cursor: pointer;
+    position: absolute;
+    width: 10.714em;
+    height: 2.5em;
+    background-color: rgba(250, 250, 250, 0.5);
+  }
+}
+/* line 95, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.hidden {
+  display: none;
+}
+
+/* line 100, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-restaurant-box,
+.match-vs {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 105, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.never-been {
+  display: inline;
+}
+
+/* line 109, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-restaurant {
+  position: relative;
+  width: 100%;
+}
+
+/* line 114, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.match-image {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* line 122, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.never-been,
+#draw {
+  cursor: pointer;
+}
+
+/* line 127, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.left-description,
+.right-description {
+  bottom: 0em;
+  background-color: #FFCC00;
+}
+
+/* line 132, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+.ui-menu .ui-menu-item a {
+  color: #96f226;
+  border-radius: 0px;
+  border: 1px solid #454545;
+}
+
+/* line 138, /Users/johnyeung/rails_projects/restaurant_reviews/app/assets/stylesheets/match.css.scss */
+#match_extra_buttons {
+  padding-top: 1em;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+
+
+ */
+
