@@ -19,9 +19,14 @@
 
   <br>
   
-  <div id="mobile_search_small">
-  	<input class="form-control"></input>
-  	<i id="search_icon" class="fa fa-search"></i>
+  <div id="mobile_search" class="text-center">
+  	<div class="mobile-search-label hidden">Find</div>
+  	<input id="mobile_search_category" class="form-control"></input>
+  	<div class="mobile-search-label hidden">Near</div>
+  	<input id="mobile_search_area" class="form-control hidden"></input>
+  	<i id="search_icon" class="fa fa-large fa-search"></i>
+
+  	<div id="search_submit" class="btn btn-default hidden"><i class="fa fa-search"></i></div>
   </div>
 </nav>
 
@@ -40,8 +45,9 @@ nav.navbar ul.dropdown-menu {
   width: 50%;
 }
 
-#mobile_search_small {
+#mobile_search {
   padding: 0.3em;
+  width: 100%;
 }
 
 #search_icon {
@@ -51,8 +57,71 @@ nav.navbar ul.dropdown-menu {
   z-index: 2;
 }
 
-#mobile_search_small input {
+#mobile_search input {
   padding-left: 2em;
+  margin: 0 auto;
+  float: none;
+}
+
+#mobile_search_area {
+  width: 60%;
+}
+
+.mobile-search-label {
+  float: left;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#search_submit {
+  position: absolute;
+  top: 3em;
+  right: 0.3em;
+  width: 3.5em;
+  height: 5em;
+}
+
+#search_submit .fa-search {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 </style>
+
+<script>
+$('#mobile_search_category').click(function() {
+  if ($('#mobile_search_category').hasClass('expanded')) {
+  	return;
+  }
+
+  $('#mobile_search_category').addClass('expanded');
+  $("#mobile_search input#mobile_search_category").animate({
+    width: '-=40%'
+  }, 250);
+  $('#search_icon').addClass('hidden');
+  $('#mobile_search_category').css('padding', '0.5em');
+
+  $('#mobile_search_area').removeClass('hidden');
+  $('.mobile-search-label').removeClass('hidden');
+  $('#search_submit').removeClass('hidden');
+});
+
+$('#mobile_search_category').blur(function() {
+  if (!$('#mobile_search_category').hasClass('expanded')) {
+  	return;
+  }
+
+  $('#mobile_search_category').removeClass('expanded');
+  $("#mobile_search input#mobile_search_category").animate({
+    width: '+=40%'
+  }, 250);
+  $('#search_icon').removeClass('hidden');
+  $('#mobile_search_category').css('padding-left', '2em');
+
+  $('#mobile_search_area').addClass('hidden');
+  $('.mobile-search-label').addClass('hidden');
+  $('#search_submit').addClass('hidden');
+});
+
+</script>
