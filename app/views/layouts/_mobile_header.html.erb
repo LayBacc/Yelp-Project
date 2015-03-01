@@ -1,5 +1,5 @@
 <nav class="navbar navbar-gold">
-  <div class="text-center">Restaurant Reviews</div>
+  <div id="app_title" class="text-center">Restaurant Reviews</div>
   <div id="mobile_menu_trigger" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
   	<i class="fa fa-ellipsis-v"></i>
   </div>
@@ -57,8 +57,11 @@ nav.navbar ul.dropdown-menu {
   z-index: 2;
 }
 
-#mobile_search input {
+#mobile_search #mobile_search_category {
   padding-left: 2em;
+}
+
+#mobile_search input {
   margin: 0 auto;
   float: none;
 }
@@ -107,8 +110,8 @@ $('#mobile_search_category').click(function() {
   $('#search_submit').removeClass('hidden');
 });
 
-$('#mobile_search_category').blur(function() {
-  if (!$('#mobile_search_category').hasClass('expanded')) {
+$('#app_title').click(function(e) {
+  if (!$('#mobile_search_category').hasClass('expanded') || e.target.id == 'mobile_search_area') {
   	return;
   }
 
