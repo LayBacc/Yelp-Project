@@ -5,7 +5,7 @@
       <div id="left_win" class="left-description match-button"></div>
     </div>
   </div>
-
+  <div class="match-vs">VS</div>
   <div class="match-restaurant-box">
     <div class="match-restaurant right-restaurant">
       <div class="match-image right-image"></div>
@@ -14,17 +14,9 @@
   </div>
 
   <br>
-  <button id="left_never_been" class="btn btn-default match-button"><%= I18n.match.never_been %></button>
-  <button id="draw" class="btn btn-default match-button"><%= I18n.match.draw %></button>
-  <button id="right_never_been" class="btn btn-default match-button"><%= I18n.match.never_been %></button>
+  <div id="match_extra_buttons">
+    <div class="match-button never-been"><i id="left_never_been" class="fa fa-refresh"></i></div>
+    <div class="match-button draw-button"><i id="draw"><%= I18n.match.draw %></i></div>
+    <div class="match-button never-been"><i id="right_never_been" class="fa fa-refresh"></i></div>
+  </div>
 </div>
-
-<style>
-.left-image img,
-.right-image img {
-  width: 200px;
-  height: 200px;
-}
-
-
-</style>

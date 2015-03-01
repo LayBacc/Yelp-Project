@@ -2,7 +2,7 @@ en:
   match:
     win: Winner
     never_been: Never been there
-    draw: Draw
+    draw: Neither
     instruction: Which one do you like more?
   landing:
     title: Discover Local Restaurants

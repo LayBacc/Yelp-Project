@@ -16,9 +16,10 @@
   display: inline-block;
 }
 
-.match-restaurant-box {
+.match-restaurant-box,
+.match-vs {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .match-restaurant-box {
@@ -34,15 +35,13 @@
   background-color: #f0f0f0;
 }
 
-#left_never_been,
-#right_never_been {
-  width: 10em;
+.never-been {
   display: inline;
 }
 
-#draw {
-  width: 7em;
-  display: inline;
+.draw-button {
+  width: 27em;
+  display: inline-block;
 }
 
 .match-restaurant {
@@ -54,6 +53,17 @@
   display: block;
   margin: 0 auto;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.left-image img,
+.right-image img {
+  width: 200px;
+  height: 200px;
+}
+
+.never-been,
+#draw {
   cursor: pointer;
 }
 
