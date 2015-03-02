@@ -21,9 +21,9 @@
   
   <div id="mobile_search" class="text-center">
   	<div class="mobile-search-label hidden">Find</div>
-  	<input id="mobile_search_category" class="form-control"></input>
+  	<input id="mobile_search_category" class="form-control" placeholder="<%= t('search.category_hint') %>"></input>
   	<div class="mobile-search-label hidden">Near</div>
-  	<input id="mobile_search_area" class="form-control hidden"></input>
+  	<input id="mobile_search_area" class="form-control hidden" placeholder="<%= t('search.subarea_hint_mobile') %>"></input>
   	<i id="search_icon" class="fa fa-large fa-search"></i>
 
   	<div id="search_submit" class="btn btn-default hidden"><i class="fa fa-search"></i></div>
@@ -95,6 +95,14 @@ nav.navbar ul.dropdown-menu {
 </style>
 
 <script>
+// $('#mobile_search_area').autocomplete({
+//   source: '/api/v1/locations/subareas'
+// });
+
+$('#mobile_search_category').autocomplete({
+  source: '/api/v1/categories'
+});
+
 $('#mobile_search_category').click(function() {
   if ($('#mobile_search_category').hasClass('expanded')) {
   	return;

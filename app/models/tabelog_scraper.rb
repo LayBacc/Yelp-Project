@@ -170,10 +170,18 @@ class TabelogScraper < Scraper
       end
     end
 
-    # add groups to the restaurant
-    def add_groups
-      
+    def fill_categories(restaurant)
+      page = fetch_page(restaurant.tabelog_url, false)
+      return unless page.present?
+
+      categories = page.css('.genre-info .parent a')
+      categories = categories.present? ? categories.map{ |c| c.text.gsub(/（その他）/, '') } : Array.new
+
+      categories.each do |name|
+        category = Category.where(name: name).first
+        RestaurantCategory.create(restaurant_id: restaurant.id, category_id: category.id) if category.present? && !RestaurantCategory.exists?(restaurant_id: restaurant.id, category_id: category.id)
+      end
+      puts categories
     end
   end
 end
-

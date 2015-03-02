@@ -1,6 +1,6 @@
 RestaurantReviews.Routers.App = Backbone.Router.extend({
 	routes: {
-		'': 'landing',
+		// '': 'landing',
 		'restaurants/:id': 'showRestaurant'
 	},
 

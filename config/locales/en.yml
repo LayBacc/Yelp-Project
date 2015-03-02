@@ -16,6 +16,7 @@ en:
     category_hint: 'Sushi, French, Pizza'
     subarea: Near
     subarea_hint: 'Mission, SOMA'
+    subarea_hint_mobile: 'Current Location'
   restaurants:
     index:
       results: "Showing results for %{category} in %{location}"
