@@ -3,7 +3,8 @@ en:
     win: Winner
     never_been: Never been there
     draw: Neither
-    instruction: Which one do you like more?
+    delay: Your results will be displayed in just a second!
+    instruction: Which restaurant do you like better?
   landing:
     title: Discover Local Restaurants
     pitch1: Forget about the 5-star rating system
@@ -32,4 +33,4 @@ en:
   no_images: There aren't any photos yet.
   scores: Scores
   reviews: Reviews
-  no_more_restaurants: There are no more restaurants in this category in this area
+  no_more_restaurants: Thank you for rating!

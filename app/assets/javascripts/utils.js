@@ -7,6 +7,15 @@ function parse_url_params() {
 	return params;
 }
 
+function params_string(params) {
+    var p_array = [] 
+    for (var key in params) {
+        p_array.push(key + '=' + params[key]);
+    }
+
+    return '?' + p_array.join('&');
+}
+
 function user_location() {
 	if ((window.user_latitude && window.user_longitude) || window.location_not_supported) {
 		return;

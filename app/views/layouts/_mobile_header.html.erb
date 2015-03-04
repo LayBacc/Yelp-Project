@@ -1,35 +1,9 @@
-<nav class="navbar navbar-gold navbar-fixed-top">
-  <div id="app_title" class="text-center">Restaurant Reviews</div>
-  <div id="mobile_menu_trigger" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-  	<i class="fa fa-ellipsis-v"></i>
-  </div>
-  <ul class="dropdown-menu" role="menu">
-  	<li><a href="#">Log In</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Add Review</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Add Photo</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Add Restaurant</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Settings</a></li>
-    <li class="divider"></li>
-    <li><a href="#">Report a Bug</a></li>
-  </ul>
+<% if request.path == '/matches' %>
+  <%= render '/layouts/mobile_header_results' %>
+<% else %>
+  <%= render '/layouts/mobile_header_main' %> 
+<% end %>
 
-  <br>
-  
-  <div id="mobile_search" class="text-center">
-  	<div class="mobile-search-label hidden">Find</div>
-  	<input id="mobile_search_category" class="form-control" placeholder="<%= t('search.category_hint') %>"></input>
-  	<div class="mobile-search-label hidden">Near</div>
-  	<input id="mobile_search_area" class="form-control hidden" placeholder="<%= t('search.subarea_hint_mobile') %>" value="Current Location"></input>
-  	<i id="search_icon" class="fa fa-large fa-search"></i>
-
-  	<div id="search_submit" class="btn btn-default hidden"><i class="fa fa-search"></i></div>
-    <div id="autocomplete_results"></div>
-  </div>
-</nav>
 
 <style>
 #mobile_menu_trigger {
@@ -60,7 +34,7 @@ nav.navbar ul.dropdown-menu {
   z-index: 2;
 }
 
-#mobile_search #mobile_search_category {
+#mobile_nav_main #mobile_search_category {
   padding-left: 2em;
 }
 
@@ -69,7 +43,7 @@ nav.navbar ul.dropdown-menu {
   float: none;
 }
 
-#mobile_search_area {
+#mobile_nav_main #mobile_search_area {
   width: 60%;
 }
 
@@ -135,44 +109,86 @@ $('#mobile_search_category').autocomplete({
   open: function() { $('.ui-menu').css('width', '100%'); }
 });
 
-function expand_search() {
+function expand_search_common() {
+  $('#mobile_search_category').addClass('expanded');
+  $('#search_icon').addClass('hidden');
+  $('#mobile_search_category').css('padding', '0.5em');
+  
+  $('#mobile_search_area').removeClass('hidden');
+  $('.mobile-search-label').removeClass('hidden');
+  $('#search_submit').removeClass('hidden');
+}
+
+function expand_search_main() {
   if ($('#mobile_search_category').hasClass('expanded')) {
     return;
   }
 
-  $('#mobile_search_category').addClass('expanded');
+  expand_search_common();
   $("#mobile_search input#mobile_search_category").animate({
-    width: '-=40%'
+    width: '60%'
   }, 250);
-  $('#search_icon').addClass('hidden');
-  $('#mobile_search_category').css('padding', '0.5em');
 
-  $('#mobile_search_area').removeClass('hidden');
-  $('.mobile-search-label').removeClass('hidden');
-  $('#search_submit').removeClass('hidden');
-  
   $('#mobile_menu_trigger').hide();
   $('.container').hide();
 }
 
-function collapse_search() {
+function expand_search_results() {
+  if ($('#mobile_search_category').hasClass('expanded')) {
+    return;
+  }
+
+  expand_search_common();
+  $('.mobile-header-item').hide();
+}
+
+function expand_search() {
+  if (window.location.pathname == '/matches') {
+    expand_search_results();
+    return;
+  }
+  expand_search_main();
+}
+
+function collapse_search_common() {
+  $('#mobile_search_category').removeClass('expanded');
+  $('#search_icon').removeClass('hidden');
+  $('#mobile_search_category').css('padding-left', '2em');
+  
+  $('#mobile_search_area').addClass('hidden');
+  $('.mobile-search-label').addClass('hidden');
+  $('#search_submit').addClass('hidden');
+}
+
+function collapse_search_main() {
   if (!$('#mobile_search_category').hasClass('expanded')) {
     return;
   }
 
-  $('#mobile_search_category').removeClass('expanded');
+  collapse_search_common();
   $("#mobile_search input#mobile_search_category").animate({
-    width: '+=40%'
+    width: '100%'
   }, 250);
-  $('#search_icon').removeClass('hidden');
-  $('#mobile_search_category').css('padding-left', '2em');
-
-  $('#mobile_search_area').addClass('hidden');
-  $('.mobile-search-label').addClass('hidden');
-  $('#search_submit').addClass('hidden');
 
   $('#mobile_menu_trigger').show();
   $('.container').show();
+}
+
+function collapse_search_results() {
+  if (!$('#mobile_search_category').hasClass('expanded')) {
+    return;
+  }
+
+  collapse_search_common();
+  $('.mobile-header-item').show();
+}
+
+function collapse_search() {
+  if (window.location.pathname == '/matches') {
+    collapse_search_results();
+    return;
+  }
+  collapse_search_main();
 }
 
 $('#mobile_search_category').click(expand_search);
@@ -196,11 +212,11 @@ $('#search_submit').click(function() {
   }
 
   if (!'Current Location'.match(location)) {
-    window.location = encodeURI('/search?category=' + category + '&subarea=' + location);
+    window.location = encodeURI('/matches?category=' + category + '&subarea=' + location);
   }
 
   if (window.user_latitude && window.user_longitude) {
-    window.location = encodeURI('/search?category=' + category + '&latitude=' + window.user_latitude.toString() + '&longitude=' + window.user_longitude.toString());
+    window.location = encodeURI('/matches?category=' + category + '&latitude=' + window.user_latitude.toString() + '&longitude=' + window.user_longitude.toString());
   }
 
   if (window.location_not_supported) {

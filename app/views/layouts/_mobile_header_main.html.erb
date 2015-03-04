@@ -1,0 +1,34 @@
+<nav id="mobile_nav_main" class="navbar navbar-gold navbar-fixed-top">
+  <div id="app_title" class="text-center">Restaurant Reviews</div>
+  <div id="mobile_menu_trigger" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <i class="fa fa-ellipsis-v"></i>
+  </div>
+  <ul class="dropdown-menu" role="menu">
+  	<li><a href="#">Log In</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Review</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Photo</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Add Restaurant</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Settings</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Report a Bug</a></li>
+  </ul>
+
+  <br>
+  
+  <div id="mobile_search" class="text-center">
+  	<div class="mobile-search-label hidden">Find</div>
+  	<input id="mobile_search_category" class="form-control" placeholder="<%= t('search.category_hint') %>"></input>
+  	<div class="mobile-search-label hidden">Near</div>
+  	<input id="mobile_search_area" class="form-control hidden" placeholder="<%= t('search.subarea_hint_mobile') %>" value="Current Location"></input>
+    <i id="search_icon" class="fa fa-large fa-search"></i>
+    <% if request.path != '/search' %>
+    <% end %>
+
+  	<div id="search_submit" class="btn btn-default hidden"><i class="fa fa-search"></i></div>
+    <div id="autocomplete_results"></div>
+  </div>
+</nav>

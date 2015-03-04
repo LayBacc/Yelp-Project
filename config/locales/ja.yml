@@ -3,6 +3,7 @@ ja:
     win: 優勝
     never_been: 行ったことがない
     draw: 引き分け
+    delay: 間も無く検索結果を表示します
     instruction: どっちのほうが好きなの？
   landing:
     title: グルメサイト
@@ -31,4 +32,4 @@ ja:
   no_images: 今写真がない
   scores: Scores
   reviews: Reviews
-  no_more_restaurants: There are no more restaurants in this category in this area
+  no_more_restaurants: Thank you for rating!

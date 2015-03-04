@@ -113,11 +113,8 @@ App.Views.Match = Backbone.View.extend({
 
 	nextRestaurant: function(curr) {
 		if (this.collection.length == 0) {
-			// TODO - if mobile, send an event
 			this.parent.trigger('matchesDone');
-
-			this.fetchMatches();
-			return curr;
+			return undefined;
 		}
 		return this.collection.pop().attributes;
 	},
@@ -133,7 +130,7 @@ App.Views.Match = Backbone.View.extend({
 			restaurant = this.curr_right;
 		}
 
-		if (restaurant == undefined) {
+		if (!restaurant) {
 			name = I18n.no_more_restaurants;
 			front_image_url = 'http://placehold.it/200x200"';
 		}

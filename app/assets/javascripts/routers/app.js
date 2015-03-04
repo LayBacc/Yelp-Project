@@ -1,7 +1,7 @@
 RestaurantReviews.Routers.App = Backbone.Router.extend({
 	routes: {
 		// '': 'landing',
-		'search': 'search',
+		'matches': 'matches',
 		'restaurants/:id': 'showRestaurant'
 	},
 
@@ -20,8 +20,8 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 		$('.match-container').html(view.render().$el);
 	},
 
-	search: function() {
-		var view = new App.Views.Search();
+	matches: function() {
+		var view = new App.Views.Matches();
 		$('.match-container').html(view.render().$el);	
 	},
 

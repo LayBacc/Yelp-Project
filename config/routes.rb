@@ -30,8 +30,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'search' => 'restaurants#search', as: 'search'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
