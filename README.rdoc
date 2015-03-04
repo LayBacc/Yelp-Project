@@ -1,28 +1,29 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is hosted on http://antiyelp.herokuapp.com
+Since I designed it for desktop web first and then switched focus to mobile, sometimes pages are not designed for desktop so wouldn't make sense if you view them and vice versa.
 
-Things you may want to cover:
+To run the app, do a git clone.
+Run 
+`bundle install`
 
-* Ruby version
+within the directory.
+You would need to install postgresql and have it running locally.
 
-* System dependencies
+Once a local postgresql server is running, run
 
-* Configuration
+`rake db:create`
 
-* Database creation
+then run
 
-* Database initialization
+`rake db:migrate`
 
-* How to run the test suite
+After the migration is successful, run
+`rails s` to start the application server locally.
 
-* Services (job queues, cache servers, search engines, etc.)
+If all goes well, you should now be able to see the app at 
+`http://localhost:3000`
 
-* Deployment instructions
+To view the mobile (correct) landing page, either spoof the user agent in your browser, or access the page on your phone at `[ip_address of your computer]:3000`
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Remember to turn on geolocation in your browser when prompted.  The app currently doesn't handle cases without location data...

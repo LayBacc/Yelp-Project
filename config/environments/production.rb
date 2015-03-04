@@ -1,8 +1,3 @@
-# log heroku errors
-logger = Logger.new(STDOUT)
-logger.level = 2
-Rails.logger = Rails.application.config.logger = logger
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
