@@ -1,5 +1,7 @@
 App.Views.Match = Backbone.View.extend({
-	initialize: function() {
+	initialize: function(options) {
+		this.parent = options.parent;
+		
 		var _this = this;
 		this.collection.deferred.done(function() {
 			var data = _this.collection.toJSON();
@@ -111,6 +113,9 @@ App.Views.Match = Backbone.View.extend({
 
 	nextRestaurant: function(curr) {
 		if (this.collection.length == 0) {
+			// TODO - if mobile, send an event
+			this.parent.trigger('matchesDone');
+
 			this.fetchMatches();
 			return curr;
 		}

@@ -1,6 +1,7 @@
 RestaurantReviews.Routers.App = Backbone.Router.extend({
 	routes: {
 		// '': 'landing',
+		'search': 'search',
 		'restaurants/:id': 'showRestaurant'
 	},
 
@@ -9,14 +10,19 @@ RestaurantReviews.Routers.App = Backbone.Router.extend({
 		// TODO - randomly get a category the first time
 	},
 
+	// No longer used
 	landing: function() {
 		// TODO - start with random category, in a central location, instead of hard-coding
 		// select an index from 1 to 42
 
 		this.categories = new App.Collections.Categories();
 		var view = new App.Views.Landing({ categories: this.categories });
-
 		$('.match-container').html(view.render().$el);
+	},
+
+	search: function() {
+		var view = new App.Views.Search();
+		$('.match-container').html(view.render().$el);	
 	},
 
 	showRestaurant: function(id) {

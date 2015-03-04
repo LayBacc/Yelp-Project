@@ -16,9 +16,9 @@ class Restaurant < ActiveRecord::Base
   # enum subarea: Subarea.all.pluck(:name)
   enum price_bucket: ['～￥999', '￥1,000～￥1,999', '￥2,000～￥2,999', '￥3,000～￥3,999', '￥4,000～￥4,999', '￥5,000～￥5,999', '￥6,000～￥7,999', '￥8,000～￥9,999', '￥10,000～￥14,999', '￥15,000～￥19,999', '￥20,000～￥29,999', '￥30,000～']
 
-  scope :near, ->(lat, lng) do
-    where('latitude BETWEEN ? AND ?', lat - DISTANCE_RADIUS, lat + DISTANCE_RADIUS)
-    .where('longitude BETWEEN ? AND ?', lng - DISTANCE_RADIUS, lng + DISTANCE_RADIUS)
+  scope :near_latlng, ->(lat, lng) do
+    where('latitude BETWEEN ? AND ?', lat.to_f - DISTANCE_RADIUS, lat.to_f + DISTANCE_RADIUS)
+    .where('longitude BETWEEN ? AND ?', lng.to_f - DISTANCE_RADIUS, lng.to_f + DISTANCE_RADIUS)
   end
   scope :with_category_id, ->(cat_id) do
     joins('INNER JOIN restaurant_categories ON restaurants.id = restaurant_categories.restaurant_id')
@@ -31,11 +31,10 @@ class Restaurant < ActiveRecord::Base
   end
 
   scope :random, ->(num) { order('RANDOM()').limit(num) }
-  scope :match_latlng, ->(lat, lng, cat_id, num) { with_category_id(cat_id).near(lat, lng).random(num) }
+  scope :match_latlng, ->(lat, lng, cat_id, num) { with_category_id(cat_id).near_latlng(lat, lng).random(num) }
   scope :in_subarea, ->(subarea_name) { where(subarea: Subarea.id_by_name(subarea_name)) }
 
   scope :with_default_image, ->() { select("restaurants.*, COALESCE(restaurants.front_image_url, 'http://placehold.it/200x200') AS front_image_url") }
-  scope :results, ->() { includes(:match_stats, :reviews).select('restaurants.*, ') }
   
   geocoded_by :full_address
 
@@ -80,7 +79,7 @@ class Restaurant < ActiveRecord::Base
       end
 
       if params[:latitude].present? && params[:longitude].present?
-        scoped = scoped.near(params[:latitude], params[:longitude]) 
+        scoped = scoped.near_latlng(params[:latitude], params[:longitude]) 
       else
         scoped = scoped.in_subarea(params[:subarea])
       end

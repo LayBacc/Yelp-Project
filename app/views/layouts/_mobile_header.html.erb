@@ -1,4 +1,4 @@
-<nav class="navbar navbar-gold">
+<nav class="navbar navbar-gold navbar-fixed-top">
   <div id="app_title" class="text-center">Restaurant Reviews</div>
   <div id="mobile_menu_trigger" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
   	<i class="fa fa-ellipsis-v"></i>
@@ -23,10 +23,11 @@
   	<div class="mobile-search-label hidden">Find</div>
   	<input id="mobile_search_category" class="form-control" placeholder="<%= t('search.category_hint') %>"></input>
   	<div class="mobile-search-label hidden">Near</div>
-  	<input id="mobile_search_area" class="form-control hidden" placeholder="<%= t('search.subarea_hint_mobile') %>"></input>
+  	<input id="mobile_search_area" class="form-control hidden" placeholder="<%= t('search.subarea_hint_mobile') %>" value="Current Location"></input>
   	<i id="search_icon" class="fa fa-large fa-search"></i>
 
   	<div id="search_submit" class="btn btn-default hidden"><i class="fa fa-search"></i></div>
+    <div id="autocomplete_results"></div>
   </div>
 </nav>
 
@@ -92,20 +93,51 @@ nav.navbar ul.dropdown-menu {
   transform: translateY(-50%);
 }
 
+.container {
+  margin-top: 5em;
+}
+
+#autocomplete_results {
+  position: fixed;
+  top: 8.357em;
+}
+
+.ui-autocomplete {
+  border: 1px solid black;
+  width: 300px;
+  font-size: 14px;
+  max-height: 10em;
+  /*overflow-y: auto;*/
+  /*overflow-x: hidden;*/
+  padding: 0;
+  margin: 0;
+}
+
+.ui-menu-item {
+  width: 100%;
+  padding: 1em;
+  height: 3em;
+  line-height: 3em;
+  border-bottom: solid 1px #f0f0f0;
+}
+
+#mobile_search_area.form-control {
+  padding: 0.5em;
+}
+
 </style>
 
 <script>
-// $('#mobile_search_area').autocomplete({
-//   source: '/api/v1/locations/subareas'
-// });
-
 $('#mobile_search_category').autocomplete({
-  source: '/api/v1/categories'
+  source: '/api/v1/categories',
+  appendTo: '#autocomplete_results',
+  position: { at: 'center', of: '#autocomplete_results' },
+  open: function() { $('.ui-menu').css('width', '100%'); }
 });
 
-$('#mobile_search_category').click(function() {
+function expand_search() {
   if ($('#mobile_search_category').hasClass('expanded')) {
-  	return;
+    return;
   }
 
   $('#mobile_search_category').addClass('expanded');
@@ -118,11 +150,14 @@ $('#mobile_search_category').click(function() {
   $('#mobile_search_area').removeClass('hidden');
   $('.mobile-search-label').removeClass('hidden');
   $('#search_submit').removeClass('hidden');
-});
+  
+  $('#mobile_menu_trigger').hide();
+  $('.container').hide();
+}
 
-$('#app_title').click(function(e) {
-  if (!$('#mobile_search_category').hasClass('expanded') || e.target.id == 'mobile_search_area') {
-  	return;
+function collapse_search() {
+  if (!$('#mobile_search_category').hasClass('expanded')) {
+    return;
   }
 
   $('#mobile_search_category').removeClass('expanded');
@@ -135,6 +170,52 @@ $('#app_title').click(function(e) {
   $('#mobile_search_area').addClass('hidden');
   $('.mobile-search-label').addClass('hidden');
   $('#search_submit').addClass('hidden');
+
+  $('#mobile_menu_trigger').show();
+  $('.container').show();
+}
+
+$('#mobile_search_category').click(expand_search);
+$('body').click(function(e) {
+  if ($(e.target).closest('#mobile_search').get(0) == undefined) {
+    collapse_search();
+  }
 });
 
+$('#search_submit').click(function() {
+  var category = $('#mobile_search_category').val();
+  var location = $('#mobile_search_area').val();
+
+  if (category == '') {
+    $('#search_error_msg').html('You must select a category');
+    return;
+  }  
+  if (location == '') {
+    $('#search_error_msg').html('You must input a location');
+    return;
+  }
+
+  if (!'Current Location'.match(location)) {
+    window.location = encodeURI('/search?category=' + category + '&subarea=' + location);
+  }
+
+  if (window.user_latitude && window.user_longitude) {
+    window.location = encodeURI('/search?category=' + category + '&latitude=' + window.user_latitude.toString() + '&longitude=' + window.user_longitude.toString());
+  }
+
+  if (window.location_not_supported) {
+    $('#mobile_search_area').val('Can\'t access location');
+  }
+});
+
+$('#mobile_search_area').on('change', function() {
+  if ($(this).val() == '') {
+    $(this).val('Current Location');
+  }
+});
+$('#mobile_search_area').focus(function() { $(this).select(); });
+
+$(function() {
+  user_location();
+});
 </script>
